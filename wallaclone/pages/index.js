@@ -29,18 +29,18 @@ export default function Home() {
         
 
         <div className={styles.grid}>
-          <a href="https://github.com/AdrianValenzuela" className={styles.card}>
+          <a href="https://github.com/AdrianValenzuela" target="_blank" className={styles.card}>
             <h2>Adrián Valenzuela Guasp &rarr;</h2>
             <p>Backend y agile master. El mejor project manager</p>
           </a>
 
-          <a href="https://github.com/lmhmDev" className={styles.card}>
+          <a href="https://github.com/lmhmDev" target="_blank" className={styles.card}>
             <h2>Lorenzo Hermoso Moreno &rarr;</h2>
             <p>Frontend master and extremely reactive</p>
           </a>
 
           <a
-            href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/NandoLT"
+            href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/NandoLT" target="_blank"
             className={styles.card}
           >
             <h2>Fernando Lopez Trejo &rarr;</h2>
@@ -48,7 +48,7 @@ export default function Home() {
           </a>
 
           <a
-            href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/jaimeperezortega"
+            href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/jaimeperezortega" target="_blank"
             className={styles.card}
           >
             <h2>Jaime Pérez Ortega &rarr;</h2>
