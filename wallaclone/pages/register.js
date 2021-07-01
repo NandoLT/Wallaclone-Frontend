@@ -2,10 +2,10 @@
 import React from 'react'
 import Link from 'next/link';
 
-const Login = () => {
+const Register = () => {
     return (
         <div className="main-container">
-            <h1>Página de Login</h1>
+            <h1>Página de Registro de Usuario</h1>
             <Link href='/'> Go back home
             
              </Link >
@@ -25,4 +25,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

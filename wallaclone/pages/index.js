@@ -23,6 +23,7 @@ export default function Home() {
         </p>
 
         <h3> <Link href='/login'> Login Page </Link> </h3>
+        <h3> <Link href='/register'> Register Page </Link> </h3>
 
         
 
