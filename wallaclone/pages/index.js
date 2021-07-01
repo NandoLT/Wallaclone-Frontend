@@ -24,6 +24,7 @@ export default function Home() {
 
         <h3> <Link href='/login'> Login Page </Link> </h3>
         <h3> <Link href='/register'> Register Page </Link> </h3>
+        <h3> <Link href='/adverts'> Adverts Page </Link> </h3>
 
         
 
