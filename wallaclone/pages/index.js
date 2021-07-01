@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -20,6 +21,10 @@ export default function Home() {
           Una aplicación creada por:{' '}
           <code className={styles.code}>nameless-team.js</code>
         </p>
+
+        <h3> <Link href='/login'> Login Page </Link> </h3>
+
+        
 
         <div className={styles.grid}>
           <a href="https://github.com/AdrianValenzuela" className={styles.card}>
@@ -51,6 +56,14 @@ export default function Home() {
           </a>
         </div>
       </main>
+
+      <style jsx>{`
+            
+            h3{
+                color:red;
+            }
+
+            `}</style>
 
       <footer className={styles.footer}>
       

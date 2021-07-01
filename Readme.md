@@ -1,4 +1,3 @@
-Init Repo
+# INSTALAR APLICACIÓN DE NEXT
 
-Intento hacer un push en el readme
-Lorenzo was here!
+    npx create-next-app
