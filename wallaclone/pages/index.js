@@ -14,7 +14,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to WALLACLONE
+          Welcome to <span className="team-title"> WALLACLONE </span> 
         </h1>
 
         <p className={styles.description}>
@@ -62,7 +62,10 @@ export default function Home() {
       <style jsx>{`
             
             h3{
-                color:red;
+                color:#09f;
+            }
+            .team-title{
+              color:#09f;
             }
 
             `}</style>
