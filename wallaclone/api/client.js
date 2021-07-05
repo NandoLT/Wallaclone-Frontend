@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const client = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL });
 
+//------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS MODIFICAMOS Y DESCOMENTAMOS ESTO -------
+
 /* const setAuthorizationHeader = token => {
     client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
@@ -9,6 +11,8 @@ const client = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL });
 const removeAuthorizationHeader = () => {
     delete client.defaults.headers.common['Authorization'];
 }; */
+
+//------------------------------------------------------------------------------
 
 client.interceptors.response.use(
     response => response.data,
@@ -24,6 +28,8 @@ client.interceptors.response.use(
     }
 );
 
+//------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS DESCOMENTAMOS ESTO -------
+
 /* export const configureClient = ({ accessToken }) => {
     if (accessToken) {
         setAuthorizationHeader(accessToken);
@@ -33,5 +39,7 @@ client.interceptors.response.use(
 export const resetClient = () => {
     removeAuthorizationHeader();
 }; */
+
+//------------------------------------------------------------------------------
 
 export default client;

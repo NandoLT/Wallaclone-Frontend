@@ -1,4 +1,5 @@
 import client from "./client";
+import storage from "../utils/storage";
 
 const authPath = ''
 
@@ -9,12 +10,12 @@ export const login = ({ remember, ...credentials }) => {
     })
         .then(accesToken => {
             if (remember) {
-                /* aqui lo metemos en el storage */
+                storage.set('authToken', accesToken)
             }
         })
 }
 
 export const logout = () => {
-    /* hay que hacerla */
+    /* hay que hacerlo */
     return;
 }
