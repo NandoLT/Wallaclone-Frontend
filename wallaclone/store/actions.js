@@ -13,7 +13,7 @@ export const  authLogin = () =>{
     }
 }
 
-export const  authLogOUT = () =>{
+export const  authLogout = () =>{
     return {
         type: AUTH_LOGOUT,
     }
