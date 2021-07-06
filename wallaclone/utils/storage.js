@@ -1,22 +1,41 @@
+
+
 const storage = {
+
+
     get(key) {
-        const value = localStorage.getItem(key);
-        if (!value) {
-            return null;
+        if (typeof window !== "undefined"){
+
+            const value = localStorage.getItem(key);
+            if (!value) {
+                return null;
+            }
+            return JSON.parse(value);
         }
-        return JSON.parse(value);
+
+        return null
+        
     },
 
     set(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (typeof window !== "undefined"){
+
+            localStorage.setItem(key, JSON.stringify(value));
+        }
     },
 
     remove(key) {
-        localStorage.removeItem(key);
+        if (typeof window !== "undefined"){
+
+            localStorage.removeItem(key);
+        }
     },
 
     clear() {
-        localStorage.clear();
+        if (typeof window !== "undefined"){
+
+            localStorage.clear();
+        }
     },
 };
 
