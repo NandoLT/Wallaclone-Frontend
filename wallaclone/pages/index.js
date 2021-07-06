@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 import configureStore from '../store';
+import {authLogin, authLogout} from '../store/actions'
 
 
 // TODO LEER PRIMER EN EL LOCAL STORAGE SI HAY O NO TOKEN E INICIALIZAR EL ESTADO DEL STORE DE REDUX EN FUNCIÓN DE ELLO
@@ -11,7 +12,7 @@ import configureStore from '../store';
 
 
 const store = configureStore({preloadedState: {auth:false}}) //{preloadedState: {auth: !!accessToken}}
-console.log(store.getState());
+
 
 export default function Home() {
   return (
