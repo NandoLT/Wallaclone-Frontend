@@ -1,7 +1,7 @@
 import client from "./client";
 import storage from "../utils/storage";
 
-const authPath = 'users'
+const authPath = 'api/users'
 
 
 export const login = ({ remember, ...credentials }) => {
