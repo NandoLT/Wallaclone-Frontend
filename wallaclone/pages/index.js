@@ -13,8 +13,7 @@ const accessToken = storage.get('authToken');
 
 
 const store = configureStore({preloadedState: {auth: !!accessToken}})
-store.dispatch(authLogin())
-console.log(store.getState())
+
 
 
 export default function Home() {
