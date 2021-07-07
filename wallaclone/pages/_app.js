@@ -1,9 +1,24 @@
 import '../styles/globals.css'
 import '../styles/login.css'
 import '@fontsource/roboto';
+import configureStore from '../store';
+import { Provider } from 'react-redux';
+import storage from '../utils/storage';
+
+const accessToken = storage.get('auth');
+const store = configureStore({preloadedState: {auth: !!accessToken}});
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+
+ 
+
+  return(
+    <Provider store={store}>
+        <Component {...pageProps} />
+    </Provider>
+
+
+  ) 
 }
 
 export default MyApp

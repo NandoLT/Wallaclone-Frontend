@@ -8,8 +8,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { useState } from 'react';
-
-
+import {connect} from 'react-redux';
+import { getIsLogged } from '../store/selectors';
 
 
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 // }
 
 
-const Login = () => {
+const Login = ({isLogged}) => {
     const classes = useStyles();
 
 
@@ -94,5 +94,6 @@ const Login = () => {
 
     )
 }
+const mapStateToProps = (state) =>({isLogged:getIsLogged(state)})
 
-export default Login
+export default connect(mapStateToProps)(Login)
