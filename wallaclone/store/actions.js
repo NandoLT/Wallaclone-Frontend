@@ -8,11 +8,11 @@ export const  authRegister = () =>{
     }
 }
 
-// export const  authLogin = () =>{
-//     return {
-//         type: AUTH_LOGIN,
-//     }
-// }
+export const  authLogin = () =>{
+    return {
+        type: AUTH_LOGIN,
+    }
+}
 
 
 // export const authLoginRequest = () => {
@@ -36,24 +36,24 @@ export const  authRegister = () =>{
 //     }    
 // };
 
-export const authLogin = (remember, credentials) =>{ 
+// export const authLogin = (remember, credentials) =>{ 
 
-    return async function(dispatch, getState){
+//     return async function(dispatch, getState){
         
-        try {
-          await login(credentials);
-          return {
-                    type: AUTH_LOGIN,
-                }
+//         try {
+//           await login(credentials);
+//           return {
+//                     type: AUTH_LOGIN,
+//                 }
 
           
-        } catch (error) {
-          console.log(error)
-        }
+//         } catch (error) {
+//           console.log(error)
+//         }
         
-    }
+//     }
 
-  }
+//   }
 
 
 export const  authLogout = () =>{
