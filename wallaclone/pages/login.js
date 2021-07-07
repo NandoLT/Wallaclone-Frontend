@@ -10,22 +10,9 @@ import Button from '@material-ui/core/Button';
 import { useState } from 'react';
 
 
-const [credentials, setCredentials] = React.useState({
-    email:'',
-    password:''
-})
 
-const handleInputChange = event =>{
-    setCredentials(oldCredentials => {
 
-        const newCredentials = {
-            ...oldCredentials,
-            [event.target.name]: event.target.value,
-        }
-       return newCredentials
-    });
-    
-}
+
 
 
 
@@ -42,12 +29,33 @@ const useStyles = makeStyles((theme) => ({
 
 // }
 
-const handleSubmit = () =>{
-    console.log('Has hecho submit en el formulario')
-}
 
 const Login = () => {
     const classes = useStyles();
+
+
+    const [credentials, setCredentials] = React.useState({
+        email:'',
+        password:''
+    })
+
+    const handleSubmit = () =>{
+        console.log('Has hecho submit en el formulario')
+    }
+    
+
+    const handleInputChange = event =>{
+        setCredentials(oldCredentials => {
+    
+            const newCredentials = {
+                ...oldCredentials,
+                [event.target.name]: event.target.value,
+            }
+           return newCredentials
+        });
+        
+    }
+
     return (
         <div className="login-container">
             <h1>Login</h1>
@@ -59,7 +67,7 @@ const Login = () => {
                             <AccountCircle />
                         </Grid>
                         <Grid item>
-                            <TextField onChange ={handleInputChange} name="email" id="input-with-icon-grid" label="Username" />
+                            <TextField onChange ={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" />
                         </Grid>
                     </Grid>
                 </div>
