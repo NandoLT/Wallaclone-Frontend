@@ -54,7 +54,7 @@ const Adverts = ({isLogged}) => {
 
             </section>
             :
-            <h2> Usuario no loggeado</h2>
+            <h2> Usuario no loggeado, no te muestro anuncios</h2>
                  }
 
           
