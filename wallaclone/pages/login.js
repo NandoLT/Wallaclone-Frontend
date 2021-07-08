@@ -11,6 +11,7 @@ import { useState } from 'react';
 import {connect} from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogin, authLogout } from '../store/actions';
+import { login } from '../api/auth';
 
 
 
@@ -39,9 +40,25 @@ const Login = ({isLogged, onLogin, onLogout}) => {
         email:'',
         password:''
     })
+    const [remember, setRemember] = React.useState(false);
 
-    const handleSubmit = () =>{
-        console.log('Has hecho submit en el formulario')
+    const {email, password} = credentials;
+
+    const handleSubmit = async (event) =>{
+        event.preventDefault()
+        
+
+        try {
+            console.log(credentials)
+            console.log(remember)
+            await login(remember,credentials)
+            dispatch(authLogin)
+            
+        } catch (error) {
+            console.log(error)
+        }
+        
+
     }
     
 
@@ -57,6 +74,10 @@ const Login = ({isLogged, onLogin, onLogout}) => {
         
     }
 
+    const handleCheckBoxChange = event =>{
+        setRemember(!remember);
+    }
+
     return (
         <div className="login-container">
             <h1>Login</h1>
@@ -64,7 +85,41 @@ const Login = ({isLogged, onLogin, onLogout}) => {
             <button onClick={()=> onLogin()}>Hacer Login de prueba</button>
             <button onClick={()=> onLogout()}>Hacer Logout de prueba</button>
 
-            <FormControl onSubmit={handleSubmit}>
+            <h2>Formulario de coña para probar el Login</h2>
+
+            <form className="loginForm" onSubmit={(event) => handleSubmit(event)}>
+                <div>
+                <input 
+                    name="email" 
+                    value={email}
+                    placeholder="email" 
+                    onChange={handleInputChange} />
+                </div>
+                 <div>
+                 <input
+                        type="password"
+                        placeholder="password"
+                        className= 'loginForm-field'
+                        name="password"
+                        value={password}
+                        onChange={handleInputChange}
+                    />
+
+                 </div>
+                    
+                    <input
+                        type="checkbox"
+                        name="remember"
+                        placeholder="remember"
+                        checked={remember}
+                        onChange={handleCheckBoxChange}
+                    />
+                    <button >Login</button>
+    </form>
+
+
+
+            {/* <FormControl onSubmit={handleSubmit}>
                 <div className={classes.margin, "login-input"}>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
@@ -89,7 +144,7 @@ const Login = ({isLogged, onLogin, onLogout}) => {
                 <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Login
                 </Button>
-            </FormControl>
+            </FormControl> */}
 
             <Link href='/'>
                 Go back home
