@@ -22,6 +22,7 @@ export const  authLogout = () =>{
 
 
 export const authLoginAction = (remember, credentials) => {
+    console.log(remember, credentials);
     return async function(dispatch, getState) {
 
         try {

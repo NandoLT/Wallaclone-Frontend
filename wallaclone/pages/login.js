@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogin, authLoginAction, authLogout } from '../store/actions';
-
+import {useDispatch, useSelector} from 'react-redux';
 
 
 
@@ -30,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
 // }
 
 
-const Login = ({ isLogged, onLogin, onLogout }) => {
+const Login = () => {
 
-
+    const dispatch = useDispatch();
     const classes = useStyles();
 
 
@@ -45,9 +45,9 @@ const Login = ({ isLogged, onLogin, onLogout }) => {
     const { email, password } = credentials;
 
     const handleSubmit = (event) => {
-
+        console.log(remember, credentials)
         event.preventDefault();
-        onLogin(remember, credentials);
+        dispatch(authLoginAction(remember, credentials))
 
     }
 
@@ -141,11 +141,12 @@ const Login = ({ isLogged, onLogin, onLogout }) => {
 
     )
 }
-const mapStateToProps = (state) => ({ isLogged: getIsLogged(state) }); // Para poder conectar el componente al estado de redux
+// const mapStateToProps = (state) => ({ isLogged: getIsLogged(state) }); // Para poder conectar el componente al estado de redux
 
-const mapDispatchToProps = (dispatch) => ({
-    onLogin: () => dispatch(authLoginAction()),
-    onLogout: () => dispatch(authLogout())
-}); //Para poder conectar el componente al dispatch de redux
+// const mapDispatchToProps = (dispatch) => ({
+//     onLogin: () => dispatch(authLoginAction()),
+//     onLogout: () => dispatch(authLogout())
+// }); //Para poder conectar el componente al dispatch de redux
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+//export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login;
