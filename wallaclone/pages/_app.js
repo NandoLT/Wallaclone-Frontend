@@ -5,20 +5,20 @@ import configureStore from '../store';
 import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 
-const accessToken = storage.get('auth');
-const store = configureStore({preloadedState: {auth: !!accessToken}});
+const accessToken = storage.get('authToken');
+const store = configureStore({ preloadedState: { auth: !!accessToken } });
 
 function MyApp({ Component, pageProps }) {
 
- 
 
-  return(
+
+  return (
     <Provider store={store}>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </Provider>
 
 
-  ) 
+  )
 }
 
 export default MyApp

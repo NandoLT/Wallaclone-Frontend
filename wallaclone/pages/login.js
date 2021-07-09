@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogin, authLogout } from '../store/actions';
 import { login } from '../api/auth';
@@ -30,90 +30,92 @@ const useStyles = makeStyles((theme) => ({
 // }
 
 
-const Login = ({isLogged, onLogin, onLogout}) => {
+const Login = ({ isLogged, onLogin, onLogout }) => {
 
-    
+
     const classes = useStyles();
 
 
     const [credentials, setCredentials] = React.useState({
-        email:'',
-        password:''
+        email: '',
+        password: ''
     })
     const [remember, setRemember] = React.useState(false);
 
-    const {email, password} = credentials;
+    const { email, password } = credentials;
 
-    const handleSubmit = async (event) =>{
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        
+
 
         try {
+
 
             await login(remember,credentials)
             onLogin();
             
             
+
         } catch (error) {
             console.log(error)
         }
-        
+
 
     }
-    
 
-    const handleInputChange = event =>{
+
+    const handleInputChange = event => {
         setCredentials(oldCredentials => {
-    
+
             const newCredentials = {
                 ...oldCredentials,
                 [event.target.name]: event.target.value,
             }
-           return newCredentials
+            return newCredentials
         });
-        
+
     }
 
-    const handleCheckBoxChange = event =>{
+    const handleCheckBoxChange = event => {
         setRemember(!remember);
     }
 
     return (
         <div className="login-container">
             <h1>Login</h1>
-            
+
 
             <h2>Formulario de coña para probar el Login</h2>
 
             <form className="loginForm" onSubmit={(event) => handleSubmit(event)}>
                 <div>
-                <input 
-                    name="email" 
-                    value={email}
-                    placeholder="email" 
-                    onChange={handleInputChange} />
+                    <input
+                        name="email"
+                        value={email}
+                        placeholder="email"
+                        onChange={handleInputChange} />
                 </div>
-                 <div>
-                 <input
+                <div>
+                    <input
                         type="password"
                         placeholder="password"
-                        className= 'loginForm-field'
+                        className='loginForm-field'
                         name="password"
                         value={password}
                         onChange={handleInputChange}
                     />
 
-                 </div>
-                    
-                    <input
-                        type="checkbox"
-                        name="remember"
-                        placeholder="remember"
-                        checked={remember}
-                        onChange={handleCheckBoxChange}
-                    />
-                    <button >Login</button>
-    </form>
+                </div>
+
+                <input
+                    type="checkbox"
+                    name="remember"
+                    placeholder="remember"
+                    checked={remember}
+                    onChange={handleCheckBoxChange}
+                />
+                <button >Login</button>
+            </form>
 
 
 
@@ -151,11 +153,11 @@ const Login = ({isLogged, onLogin, onLogout}) => {
 
     )
 }
-const mapStateToProps = (state) =>({isLogged:getIsLogged(state)}); // Para poder conectar el componente al estado de redux
+const mapStateToProps = (state) => ({ isLogged: getIsLogged(state) }); // Para poder conectar el componente al estado de redux
 
 const mapDispatchToProps = (dispatch) => ({
     onLogin: () => dispatch(authLogin()),
     onLogout: () => dispatch(authLogout())
 }); //Para poder conectar el componente al dispatch de redux
 
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
