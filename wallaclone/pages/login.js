@@ -49,10 +49,10 @@ const Login = ({isLogged, onLogin, onLogout}) => {
         
 
         try {
-            console.log(credentials)
-            console.log(remember)
+
             await login(remember,credentials)
-            dispatch(authLogin)
+            onLogin();
+            
             
         } catch (error) {
             console.log(error)
@@ -81,9 +81,7 @@ const Login = ({isLogged, onLogin, onLogout}) => {
     return (
         <div className="login-container">
             <h1>Login</h1>
-            {isLogged && <h3>Logged es True en el estado de redux</h3>}
-            <button onClick={()=> onLogin()}>Hacer Login de prueba</button>
-            <button onClick={()=> onLogout()}>Hacer Logout de prueba</button>
+            
 
             <h2>Formulario de coña para probar el Login</h2>
 

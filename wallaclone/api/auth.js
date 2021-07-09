@@ -4,7 +4,9 @@ import storage from "../utils/storage";
 const authPath = 'api/users'
 
 
-export const login = ({ remember, credentials }) => {
+export const login = (remember, credentials) => {
+    console.log("Remember",remember);
+    console.log("Credentials", credentials);
    
     return client.post(`${authPath}/login`, credentials).then(({ accesToken }) => {
         return accesToken;
