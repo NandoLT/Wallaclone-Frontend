@@ -10,8 +10,8 @@ import Button from '@material-ui/core/Button';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
-import { authLogin, authLogout } from '../store/actions';
-import { login } from '../api/auth';
+import { authLogin, authLoginAction, authLogout } from '../store/actions';
+
 
 
 
@@ -44,22 +44,10 @@ const Login = ({ isLogged, onLogin, onLogout }) => {
 
     const { email, password } = credentials;
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+    const handleSubmit = (event) => {
 
-
-        try {
-
-
-            await login(remember,credentials)
-            onLogin();
-            
-            
-
-        } catch (error) {
-            console.log(error)
-        }
-
+        event.preventDefault();
+        onLogin(remember, credentials);
 
     }
 
@@ -156,7 +144,7 @@ const Login = ({ isLogged, onLogin, onLogout }) => {
 const mapStateToProps = (state) => ({ isLogged: getIsLogged(state) }); // Para poder conectar el componente al estado de redux
 
 const mapDispatchToProps = (dispatch) => ({
-    onLogin: () => dispatch(authLogin()),
+    onLogin: () => dispatch(authLoginAction()),
     onLogout: () => dispatch(authLogout())
 }); //Para poder conectar el componente al dispatch de redux
 
