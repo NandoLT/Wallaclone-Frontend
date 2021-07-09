@@ -1,11 +1,11 @@
 import client from "./client";
 import storage from "../utils/storage";
 
-const authPath = 'api/users'
+const authPath = '/api/users'
 
 
 export const login = ({ remember, credentials }) => {
-   
+
     return client.post(`${authPath}/login`, credentials).then(({ accesToken }) => {
         return accesToken;
     })
