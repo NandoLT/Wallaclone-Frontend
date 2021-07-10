@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const client = axios.create({ baseURL: "http://18.188.214.80"});
+const client = axios.create({ baseURL: "http://18.188.214.80:4000"});
 
 //------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS MODIFICAMOS Y DESCOMENTAMOS ESTO -------
 
