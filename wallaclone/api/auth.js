@@ -9,12 +9,14 @@ export const login = (remember, credentials) => {
     console.log("Credentials", credentials);
    
 
-    return client.post(`${authPath}/login`, credentials).then(({ accesToken }) => {
-        return accesToken;
+    return client.post(`${authPath}/login`, credentials).then(({ token }) => {
+        console.log(token);
+        return token;
     })
-        .then(accesToken => {
+        .then(token => {
             if (remember) {
-                storage.set('authToken', accesToken)
+                console.log(token)
+                storage.set('authToken', token)
             }
         })
 }
