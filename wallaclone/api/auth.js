@@ -5,9 +5,9 @@ const authPath = '/api/users'
 
 
 export const login = (remember, credentials) => {
-    console.log("Remember",remember);
+    console.log("Remember", remember);
     console.log("Credentials", credentials);
-   
+
 
     return client.post(`${authPath}/login`, credentials).then(({ token }) => {
         console.log(token);
@@ -19,6 +19,10 @@ export const login = (remember, credentials) => {
                 storage.set('authToken', token)
             }
         })
+}
+
+export const register = (credentials) => {
+    console.log(credentials)
 }
 
 export const logout = () => {

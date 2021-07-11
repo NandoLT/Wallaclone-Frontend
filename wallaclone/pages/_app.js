@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import '../styles/login.css'
+import '../styles/register.css'
 import '@fontsource/roboto';
 import configureStore from '../store';
 import { Provider } from 'react-redux';

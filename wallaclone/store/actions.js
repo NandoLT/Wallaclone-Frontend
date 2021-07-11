@@ -36,3 +36,14 @@ export const authLoginAction = (remember, credentials) => {
     }
 
 }
+
+export const authRegisterAction = (credentials) => {
+    return async function (dispatch, getState, { api, router }) {
+        try {
+            await api.auth.register(credentials)
+            router.push('/adverts')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
