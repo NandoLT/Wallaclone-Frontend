@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogin, authLoginAction, authLogout } from '../store/actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -73,9 +73,8 @@ const Login = () => {
             <h1>Login</h1>
 
 
-            <h2>Formulario de coña para probar el Login</h2>
 
-            <form className="loginForm" onSubmit={(event) => handleSubmit(event)}>
+            {/* <form className="loginForm" onSubmit={(event) => handleSubmit(event)}>
                 <div>
                     <input
                         name="email"
@@ -103,18 +102,18 @@ const Login = () => {
                     onChange={handleCheckBoxChange}
                 />
                 <button >Login</button>
-            </form>
+            </form> */}
 
 
 
-            {/* <FormControl onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="login-form">
                 <div className={classes.margin, "login-input"}>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
                             <AccountCircle />
                         </Grid>
                         <Grid item>
-                            <TextField onChange ={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" />
+                            <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" />
                         </Grid>
                     </Grid>
                 </div>
@@ -124,15 +123,27 @@ const Login = () => {
                             <LockIcon />
                         </Grid>
                         <Grid item>
-                            <TextField onChange ={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" />
+                            <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" />
                         </Grid>
                     </Grid>
                 </div>
+                <div className="remember-check">
+                    <label htmlFor="remember">Remember</label>
+                    <input
+                        type="checkbox"
+                        name="remember"
+                        id="remember"
+                        checked={remember}
+                        onChange={handleCheckBoxChange}
+                    />
+                </div>
+
+
 
                 <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Login
                 </Button>
-            </FormControl> */}
+            </form>
 
             <Link href='/'>
                 Go back home

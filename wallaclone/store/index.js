@@ -3,11 +3,12 @@ import reducer from './reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunk from 'redux-thunk';
-import * as api from '../api'
+import * as api from '../api';
+import router from 'next/router';
 
 
-const configureStore = ({ preloadedState, api }) => {
-    const store = createStore(reducer, preloadedState, composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ api }))));
+const configureStore = ({ preloadedState }) => {
+    const store = createStore(reducer, preloadedState, composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ api, router }))));
 
     return store
 }

@@ -10,7 +10,8 @@
 }
 
 .login-form{
-    height: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .login-input{
@@ -18,5 +19,9 @@
 }
 
 .login-container button{
+    margin-top: 30px;
+}
+
+.remember-check{
     margin-top: 30px;
 }

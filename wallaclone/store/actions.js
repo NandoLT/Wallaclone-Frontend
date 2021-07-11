@@ -1,6 +1,5 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE } from "./types";
 import { login } from '../api/auth';
-import router, {useRouter} from 'next/router';
 
 export const authRegister = () => {
     return {
@@ -15,7 +14,7 @@ export const authLogin = () => {
 }
 
 
-export const  authLogout = () =>{
+export const authLogout = () => {
     return {
         type: AUTH_LOGOUT,
     }
@@ -24,12 +23,12 @@ export const  authLogout = () =>{
 
 export const authLoginAction = (remember, credentials) => {
     console.log(remember, credentials);
-    return async function(dispatch, getState) {
+    return async function (dispatch, getState, { api, router }) {
 
         try {
-            await login(remember,credentials)
+            await login(remember, credentials)
             router.push('/adverts');
-            
+
         } catch (error) {
             console.log(error)
         }
