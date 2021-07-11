@@ -1,5 +1,6 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE } from "./types";
 import { login } from '../api/auth';
+import router, {useRouter} from 'next/router';
 
 export const authRegister = () => {
     return {
@@ -27,7 +28,7 @@ export const authLoginAction = (remember, credentials) => {
 
         try {
             await login(remember,credentials)
-            
+            router.push('/adverts');
             
         } catch (error) {
             console.log(error)
