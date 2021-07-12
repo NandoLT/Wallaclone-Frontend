@@ -1,5 +1,4 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS } from "./types";
-import { login } from '../api/auth';
 
 export const authRegister = () => {
     return {
@@ -27,23 +26,16 @@ export const authLogout = () => {
 }
 
 
-export const authLoginAction = (remember, credentials) => {
-   
-    
+export const authLoginAction = (remember, credentials) => {    
     return async function (dispatch, getState, { api, router }) {
-       
-
         try {
-            await login(remember, credentials);
+            await api.auth.login(remember, credentials);
             dispatch(authLoginSuccess());
             router.push('/adverts');
-
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
-
     }
-
 }
 
 export const authRegisterAction = (credentials) => {
