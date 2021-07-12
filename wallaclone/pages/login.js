@@ -33,7 +33,7 @@ const Login = () => {
 
 
     const [credentials, setCredentials] = React.useState({
-        username: '',
+        email: '',
         password: ''
     })
     const [remember, setRemember] = React.useState(false);
@@ -76,7 +76,7 @@ const Login = () => {
                             <AccountCircle />
                         </Grid>
                         <Grid item>
-                            <TextField onChange={event => handleInputChange(event)} name="username" id="input-with-icon-grid" label="Username" value={credentials.email} />
+                            <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
                         </Grid>
                     </Grid>
                 </div>
