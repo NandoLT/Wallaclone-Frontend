@@ -8,7 +8,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { authLoginAction } from '../store/actions';
 import { useDispatch } from 'react-redux';
-
+import Loading from '../components/Loading';
 
 
 
@@ -66,6 +66,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <h1>Login</h1>
+            <Loading/>
 
 
 

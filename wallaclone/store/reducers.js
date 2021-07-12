@@ -7,6 +7,7 @@ import {combineReducers} from 'redux';
 
 const initialState = {
     auth: false,
+    loading:false,
     //adverts: [],
     //ui: {}
 }

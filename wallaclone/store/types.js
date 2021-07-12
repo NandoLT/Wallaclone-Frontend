@@ -9,5 +9,6 @@ export const AUTH_REGISTER_SUCCESS = 'AUTH_REGISTER_SUCCESS';
 // export const AUTH_LOGIN_FAILURE  = 'AUTH_LOGIN_FAILURE';
 
 
+
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
