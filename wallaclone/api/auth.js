@@ -21,8 +21,14 @@ export const login = (remember, credentials) => {
         })
 }
 
+// export const register = (credentials) => {
+//     console.log(credentials)
+// }
+
 export const register = (credentials) => {
-    console.log(credentials)
+   
+
+    return client.post(`${authPath}/register`, credentials)
 }
 
 export const logout = () => {

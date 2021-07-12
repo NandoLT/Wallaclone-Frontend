@@ -65,7 +65,7 @@ const Register = () => {
                                 <AccountCircle />
                             </Grid>
                             <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Username" value={credentials.name} />
+                                <TextField onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Name" value={credentials.name} />
                             </Grid>
                         </Grid>
                     </div>
@@ -75,7 +75,7 @@ const Register = () => {
                                 <AccountCircle />
                             </Grid>
                             <Grid item>
-                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Surname" type="password" value={credentials.surname} />
+                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Surname"  value={credentials.surname} />
                             </Grid>
                         </Grid>
                     </div>
