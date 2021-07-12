@@ -7,8 +7,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { authLoginAction } from '../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
+import { getIsLogged, getIsLoading } from '../store/selectors';
 
 
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 // }
 
 
-const Login = () => {
+const Login = ({isLogged, isLoading}) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -66,62 +67,73 @@ const Login = () => {
     return (
         <div className="login-container">
             <h1>Login</h1>
-            <Loading/>
+            
 
+            
+                 <form onSubmit={handleSubmit} className="login-form">
+                 <div className={classes.margin, "login-input"}>
+                     <Grid container spacing={1} alignItems="flex-end">
+                         <Grid item>
+                             <AccountCircle />
+                         </Grid>
+                         <Grid item>
+                             <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
+                         </Grid>
+                     </Grid>
+                 </div>
+                 <div className={classes.margin, "login-input"}>
+                     <Grid container spacing={1} alignItems="flex-end">
+                         <Grid item>
+                             <LockIcon />
+                         </Grid>
+                         <Grid item>
+                             <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
+                         </Grid>
+                     </Grid>
+                 </div>
+                 <div className="remember-check">
+                     <label htmlFor="remember">Remember</label>
+                     <input
+                         type="checkbox"
+                         name="remember"
+                         id="remember"
+                         checked={remember}
+                         onChange={handleCheckBoxChange}
+                     />
+                 </div>
+ 
+                {!isLoading &&  <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                     Login
+                 </Button>}
+            
+                
+                 
+             </form>
+            
 
+           
 
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <AccountCircle />
-                        </Grid>
-                        <Grid item>
-                            <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
-                        </Grid>
-                    </Grid>
-                </div>
-                <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <LockIcon />
-                        </Grid>
-                        <Grid item>
-                            <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
-                        </Grid>
-                    </Grid>
-                </div>
-                <div className="remember-check">
-                    <label htmlFor="remember">Remember</label>
-                    <input
-                        type="checkbox"
-                        name="remember"
-                        id="remember"
-                        checked={remember}
-                        onChange={handleCheckBoxChange}
-                    />
-                </div>
-
-
-
-                <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                    Login
-                </Button>
-            </form>
+          
+            {isLoading && <Loading/>}
 
             <Link href='/'>
                 Go back home
             </Link >
         </div>
 
+        
+
     )
 }
-// const mapStateToProps = (state) => ({ isLogged: getIsLogged(state) }); // Para poder conectar el componente al estado de redux
+const mapStateToProps = (state) => ({ 
+    isLogged: getIsLogged(state),
+    isLoading: getIsLoading(state), 
+}); // Para poder conectar el componente al estado de redux
 
 // const mapDispatchToProps = (dispatch) => ({
 //     onLogin: () => dispatch(authLoginAction()),
 //     onLogout: () => dispatch(authLogout())
 // }); //Para poder conectar el componente al dispatch de redux
 
-//export default connect(mapStateToProps, mapDispatchToProps)(Login)
-export default Login;
+export default connect(mapStateToProps)(Login)
+//export default Login;
