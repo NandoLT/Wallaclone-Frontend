@@ -8,6 +8,7 @@ import {combineReducers} from 'redux';
 const initialState = {
     auth: false,
     loading:false,
+    error:false,
     //adverts: [],
     //ui: {}
 }
@@ -34,7 +35,8 @@ const reducer = (state= initialState, action) => {
         case AUTH_LOGIN_FAILURE:
             return {...state, 
                 auth:false,
-                loading:false,    
+                loading:false,
+                error:true,    
             };
         case AUTH_LOGOUT:
             return {...state, auth:false};

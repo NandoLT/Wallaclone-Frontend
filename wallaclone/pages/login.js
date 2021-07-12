@@ -9,8 +9,8 @@ import Button from '@material-ui/core/Button';
 import { authLoginAction } from '../store/actions';
 import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
-import { getIsLogged, getIsLoading } from '../store/selectors';
-
+import { getIsLogged, getIsLoading, getError } from '../store/selectors';
+import Alert from '../components/Alert'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 // }
 
 
-const Login = ({isLogged, isLoading}) => {
+const Login = ({isLogged, isLoading, error}) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -67,7 +67,8 @@ const Login = ({isLogged, isLoading}) => {
     return (
         <div className="login-container">
             <h1>Login</h1>
-            
+
+           
 
             
                  <form onSubmit={handleSubmit} className="login-form">
@@ -106,6 +107,7 @@ const Login = ({isLogged, isLoading}) => {
                      Login
                  </Button>}
             
+                 {error &&  <Alert/> }
                 
                  
              </form>
@@ -127,7 +129,8 @@ const Login = ({isLogged, isLoading}) => {
 }
 const mapStateToProps = (state) => ({ 
     isLogged: getIsLogged(state),
-    isLoading: getIsLoading(state), 
+    isLoading: getIsLoading(state),
+    error: getError(state), 
 }); // Para poder conectar el componente al estado de redux
 
 // const mapDispatchToProps = (dispatch) => ({
