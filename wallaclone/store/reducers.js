@@ -19,7 +19,8 @@ const reducer = (state= initialState, action) => {
 
         case AUTH_LOGIN_REQUEST:
             return {...state, 
-                loading:true,    
+                loading:true,
+                error:false,    
             };
 
         case AUTH_REGISTER_SUCCESS:
