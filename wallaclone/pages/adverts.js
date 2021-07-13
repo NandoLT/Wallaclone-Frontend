@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { getIsLogged, getAdverts } from '../store/selectors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction } from '../store/actions';
 
 
@@ -29,10 +29,10 @@ const Adverts = ({ isLogged, adverts }) => {
 
     const dispatch = useDispatch()
     
-    useEffect(() => {
-        dispatch(advertsGetAction())
+    // useEffect(() => {
+    //     dispatch(advertsGetAction())
         
-    }, [])
+    // }, [])
     
     
 
@@ -113,6 +113,8 @@ const Adverts = ({ isLogged, adverts }) => {
         </div>
     )
 }
-const mapStateToProps = state => ({ isLogged: getIsLogged(state), adverts: getAdverts(state) })
+const mapStateToProps = state => ({ isLogged: getIsLogged(state), adverts: getAdverts(state)  })
+
+
 
 export default connect(mapStateToProps)(Adverts)

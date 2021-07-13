@@ -9,7 +9,7 @@ const initialState = {
     auth: false,
     loading:false,
     error: false,
-    adverts: []
+    adverts: [],
     //ui: {}
 }
 
