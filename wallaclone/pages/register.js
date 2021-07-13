@@ -9,7 +9,10 @@ import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { authRegisterAction } from '../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
+import Loading from '../components/Loading';
+import { getIsLogged, getIsLoading, getError } from '../store/selectors';
+import Alert from '../components/Alert'
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Register = () => {
+const Register = ({isLogged, isLoading, error}) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -104,17 +107,31 @@ const Register = () => {
                 </div>
 
 
+                {!isLoading &&  <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                     Register
+                 </Button>}
+                 {error &&  <Alert/> }
 
 
-
-                <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                    Register
-                </Button>
             </form>
+            {isLoading && <Loading/>}
             <Link href='/'> Go back home</Link >
 
         </div>
     )
 }
 
-export default Register
+
+
+const mapStateToProps = (state) => ({ 
+    isLogged: getIsLogged(state),
+    isLoading: getIsLoading(state),
+    error: getError(state), 
+}); // Para poder conectar el componente al estado de redux
+
+// const mapDispatchToProps = (dispatch) => ({
+//     onLogin: () => dispatch(authLoginAction()),
+//     onLogout: () => dispatch(authLogout())
+// }); //Para poder conectar el componente al dispatch de redux
+
+export default connect(mapStateToProps)(Register)

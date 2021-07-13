@@ -25,12 +25,23 @@ export const authLoginFailure = () => {
     }
 }
 
+export const authRegisterRequest = () => {
+    return {
+        type: AUTH_LOGIN_REQUEST,
+    }
+}
+
 export const authRegisterSuccess = () => {
     return {
         type: AUTH_REGISTER_SUCCESS,
     }
 }
 
+export const authRegisterFailure = () => {
+    return {
+        type: AUTH_LOGIN_FAILURE,
+    }
+}
 
 
 
@@ -49,7 +60,7 @@ export const authLoginAction = (remember, credentials) => {
         dispatch(authLoginRequest())
         
         try {
-            await login(remember, credentials);
+            await api.auth.login(remember, credentials);
             dispatch(authLoginSuccess());
             router.push('/adverts');
 
@@ -64,12 +75,14 @@ export const authLoginAction = (remember, credentials) => {
 
 export const authRegisterAction = (credentials) => {
     return async function (dispatch, getState, { api, router }) {
+        dispatch(authRegisterRequest());
         try {
             await api.auth.register(credentials)
             dispatch(authRegisterSuccess());
             router.push('/adverts')
         } catch (err) {
             console.log(err)
+            dispatch(authRegisterFailure());
             
         }
     }
