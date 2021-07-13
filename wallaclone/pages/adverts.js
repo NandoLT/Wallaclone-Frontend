@@ -1,8 +1,8 @@
 
 import React from 'react'
 import Link from 'next/link';
-import {connect} from 'react-redux';
-import { getIsLogged } from '../store/selectors';
+import { connect } from 'react-redux';
+import { getIsLogged, getAdverts } from '../store/selectors';
 
 const fakeAdverts = [
     {
@@ -22,43 +22,43 @@ const fakeAdverts = [
     },
 ]
 
-const Adverts = ({isLogged}) => {
+const Adverts = ({ isLogged, adverts }) => {
 
 
     return (
         <div className="main-container">
             <h1>Página de Anuncios</h1>
             <Link href='/'> Go back home
-            
-             </Link >
-             
-            {isLogged 
-            ? 
-            <section className="ads-container">
-                
-                {fakeAdverts.map(advert => {
-                const {name, price, onSale} = advert;
-                return (
-                        
-                             <div className="ad-wrapper">
-                            <h3>{name}</h3>
-                            <p>Precio: {price} €</p>
-                            {advert ? <p>En venta</p> : <p>Compro</p>}
+
+            </Link >
+
+            {isLogged
+                ?
+                <section className="ads-container">
+
+                    {fakeAdverts.map(advert => {
+                        const { name, price, onSale } = advert;
+                        return (
+
+                            <div className="ad-wrapper">
+                                <h3>{name}</h3>
+                                <p>Precio: {price} €</p>
+                                {advert ? <p>En venta</p> : <p>Compro</p>}
                             </div>
 
-                        
-                       
-                    )
-                })}
-            
 
-            </section>
-            :
-            <h2> Usuario no loggeado, no te muestro anuncios</h2>
-                 }
 
-          
-          
+                        )
+                    })}
+
+
+                </section>
+                :
+                <h2> Usuario no loggeado, no te muestro anuncios</h2>
+            }
+
+
+
 
             <style jsx>{`
             
@@ -102,6 +102,6 @@ const Adverts = ({isLogged}) => {
         </div>
     )
 }
-const mapStateToProps = state => ({isLogged: getIsLogged(state)})
+const mapStateToProps = state => ({ isLogged: getIsLogged(state), adverts: getAdverts(state) })
 
 export default connect(mapStateToProps)(Adverts)

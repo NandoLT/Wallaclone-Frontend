@@ -11,3 +11,5 @@ export const AUTH_REGISTER_SUCCESS = 'AUTH_REGISTER_SUCCESS';
 
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
+export const ADVERTS_GET = 'ADVERTS_GET';
+

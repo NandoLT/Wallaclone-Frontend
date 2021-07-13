@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, ADVERTS_GET } from "./types";
 
 export const authRegister = () => {
     return {
@@ -25,8 +25,14 @@ export const authLogout = () => {
     }
 }
 
+export const advertsGet = (adverts) => {
+    return {
+        type: ADVERTS_GET,
+        payload: adverts
+    }
+}
 
-export const authLoginAction = (remember, credentials) => {    
+export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         try {
             await api.auth.login(remember, credentials);
@@ -44,6 +50,17 @@ export const authRegisterAction = (credentials) => {
             await api.auth.register(credentials)
             dispatch(authRegisterSuccess());
             router.push('/adverts')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export const advertsGetAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+        try {
+            const adverts = await api.adverts.getAdverts();
+            dispatch(advertsGet(adverts));
         } catch (err) {
             console.log(err)
         }
