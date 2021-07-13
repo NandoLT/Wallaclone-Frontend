@@ -7,7 +7,13 @@ import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 
 const accessToken = storage.get('authToken');
-const store = configureStore({ preloadedState: { auth: !!accessToken, adverts:[]  } });
+const store = configureStore({ preloadedState: { 
+  auth: !!accessToken,
+  ui:{
+    loading:false,
+    error:null,
+  }, 
+  adverts:[]  } });
 
 function MyApp({ Component, pageProps }) {
 
