@@ -1,8 +1,11 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { getIsLogged, getAdverts } from '../store/selectors';
+import { useDispatch } from 'react-redux';
+import { advertsGetAction } from '../store/actions';
+
 
 const fakeAdverts = [
     {
@@ -24,6 +27,14 @@ const fakeAdverts = [
 
 const Adverts = ({ isLogged, adverts }) => {
 
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(advertsGetAction())
+        
+    }, [])
+    
+    
 
     return (
         <div className="main-container">
@@ -32,11 +43,11 @@ const Adverts = ({ isLogged, adverts }) => {
 
             </Link >
 
-            {isLogged
+            {adverts
                 ?
                 <section className="ads-container">
 
-                    {fakeAdverts.map(advert => {
+                    {adverts.map(advert => {
                         const { name, price, onSale } = advert;
                         return (
 
@@ -54,7 +65,7 @@ const Adverts = ({ isLogged, adverts }) => {
 
                 </section>
                 :
-                <h2> Usuario no loggeado, no te muestro anuncios</h2>
+                <h2> No hay anuncios que mostrar</h2>
             }
 
 

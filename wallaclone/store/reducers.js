@@ -1,7 +1,7 @@
 
 
 
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQUEST, AUTH_LOGIN_FAILURE, AUTH_REGISTER_REQUEST, AUTH_REGISTER_FAILURE, AUTH_RESET_STATE } from "./types";
+import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQUEST, AUTH_LOGIN_FAILURE, AUTH_REGISTER_REQUEST, AUTH_REGISTER_FAILURE, AUTH_RESET_STATE, ADVERTS_GET } from "./types";
 import {combineReducers} from 'redux';
 
 
@@ -9,7 +9,7 @@ const initialState = {
     auth: false,
     loading:false,
     error: false,
-    //adverts: [],
+    adverts: []
     //ui: {}
 }
 
@@ -46,6 +46,8 @@ const reducer = (state= initialState, action) => {
             };
         case AUTH_LOGOUT:
             return {...state, auth:false};
+        case ADVERTS_GET:
+                return {...state, adverts: action.payload};
         default:
             return state;
     }
