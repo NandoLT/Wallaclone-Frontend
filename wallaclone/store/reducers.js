@@ -9,7 +9,7 @@ import {combineReducers} from 'redux';
 const initialState = {
     auth: false,
     ui: {
-        loading:false,
+        loading: false,
         error: null,
     },
     
@@ -58,7 +58,7 @@ const initialState = {
 
 // }
 
-const auth = (state,action) => {
+export const auth = (state= initialState.auth,action) => {
     switch (action.type) {
     case AUTH_LOGIN_SUCCESS:
     case AUTH_REGISTER_SUCCESS:
@@ -74,7 +74,7 @@ const auth = (state,action) => {
     }
 }
 
-const adverts = (state, action) => {
+export const adverts = (state= initialState.adverts, action) => {
     switch (action.type) {
         case ADVERTS_GET:
             return action.payload
@@ -83,7 +83,7 @@ const adverts = (state, action) => {
     }
 }
 
-const ui = (state, action) => {
+export const ui = (state= initialState.ui, action) => {
     switch(action.type) {
         case AUTH_RESET_STATE:
             return { 
@@ -116,18 +116,18 @@ const ui = (state, action) => {
     }
 }
 
-function reducer (state= initialState, action) {
-    return {
-        auth: auth(state.auth, action),
-        ui: ui(state.ui, action),
-        adverts: adverts(state.adverts, action)
-    }
-}
+// function reducerBeforeCombineReducer (state= initialState, action) {
+//     return {
+//         auth: auth(state.auth, action),
+//         ui: ui(state.ui, action),
+//         adverts: adverts(state.adverts, action)
+//     }
+// }
 
-// const reducer = combineReducers({
-//     auth,
-//     ui,
-//     adverts
-// })
+const reducer = combineReducers({
+    auth:auth,
+    ui:ui,
+    adverts:adverts
+})
 
 export default reducer;

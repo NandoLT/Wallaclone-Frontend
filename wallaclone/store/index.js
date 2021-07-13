@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware } from 'redux';
-import reducer from './reducers';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import  * as reducers from './reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunk from 'redux-thunk';
@@ -8,7 +8,7 @@ import router from 'next/router';
 
 
 const configureStore = ({ preloadedState }) => {
-    const store = createStore(reducer, preloadedState, composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ api, router }))));
+    const store = createStore(combineReducers(reducers), preloadedState, composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ api, router }))));
 
     return store
 }
