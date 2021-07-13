@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const client = axios.create({ baseURL: "http://18.188.214.80:4000"});
+const client = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL_DEPLOYED });
 
 //------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS MODIFICAMOS Y DESCOMENTAMOS ESTO -------
 
