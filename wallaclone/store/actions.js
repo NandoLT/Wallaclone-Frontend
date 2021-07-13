@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE } from "./types";
 import { login } from '../api/auth';
 
 export const authRegister = () => {
@@ -43,7 +43,11 @@ export const authRegisterFailure = () => {
     }
 }
 
-
+export const authResetState = () =>{
+    return {
+        type:AUTH_RESET_STATE,
+    }
+}
 
 export const authLogout = () => {
     return {

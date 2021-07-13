@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
-import { authRegisterAction } from '../store/actions';
+import { authRegisterAction, authResetState } from '../store/actions';
 import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
@@ -26,6 +26,11 @@ const Register = ({isLogged, isLoading, error}) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
+
+    useEffect(() => {
+        
+        dispatch(authResetState());
+    }, []);
 
 
     const [credentials, setCredentials] = React.useState({
