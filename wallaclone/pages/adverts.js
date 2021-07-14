@@ -45,7 +45,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
-           
+
             <section className="adverts-section">
                 {isLoading ? <Loading align="center" /> :
                     adverts.result
@@ -116,12 +116,14 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                         <h2> No hay anuncios que mostrar</h2>
                 }
 
-           
+
 
             </section>
-            <div className={styles.card} >
-                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
-            </div>
+            <Link className={styles.card} href='/'>
+                <div className={styles.card} >
+                    <h3>  Go Back Home &rarr; </h3>
+                </div>
+            </Link>
 
         </div>
     )
