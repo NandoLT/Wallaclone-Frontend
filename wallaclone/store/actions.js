@@ -19,9 +19,11 @@ export const authLoginRequest = () => {
     }
 }
 
-export const authLoginFailure = () => {
+export const authLoginFailure = (error) => {
     return {
         type: AUTH_LOGIN_FAILURE,
+        payload:error,
+        error:true
     }
 }
 
@@ -78,8 +80,7 @@ export const authLoginAction = (remember, credentials) => {
             dispatch(authLoginSuccess());
             router.push('/adverts');
         } catch (error) {
-            console.log(error)
-            dispatch(authLoginFailure())
+            dispatch(authLoginFailure(error))
         }
     }
 }
