@@ -37,6 +37,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
         dispatch(advertsGetAction())
     }, [])
 
@@ -55,7 +56,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                                 {adverts.result.map(advert => {
                                     const { name, price, onSale } = advert;
                                     return (
-                                        <Grid item xs={6} sm={4} md={3} >
+                                        <Grid item xs={6} sm={4} md={3} key={advert.id}>
                                             <Card className={classes.root}>
                                                 <CardActionArea>
                                                     <CardMedia
@@ -71,7 +72,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                                                         </Typography>
                                                         <div className="tags">
                                                             {advert.tags.map(tag => {
-                                                                return <Chip variant="outlined" size="small" label={tag} />
+                                                                return <Chip variant="outlined" size="small" label={tag} key={tag} />
                                                             })}
                                                         </div>
 
@@ -119,7 +120,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
 
 
             </section>
-            <Link className={styles.card} href='/'>
+            <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr; </h3>
                 </div>

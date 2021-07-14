@@ -120,7 +120,7 @@ const Register = ({ isLogged, isLoading, error }) => {
 
             </form>
             {isLoading && <Loading />}
-            <Link className={styles.card} href='/'>
+            <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr;  </h3>
                 </div>

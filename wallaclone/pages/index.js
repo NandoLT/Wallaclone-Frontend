@@ -23,18 +23,18 @@ export default function Home() {
         </h1>
 
         <div className={styles.grid}>
-          <Link className={styles.card} href='/login'>
+          <Link className={styles.card} href='/login' passHref>
             <div className={styles.card} >
               <h3>  Login Page &rarr;  </h3>
             </div>
           </Link>
 
-          <Link className={styles.card} href='/register'>
+          <Link className={styles.card} href='/register' passHref>
             <div className={styles.card} >
               <h3>  Register Page &rarr;  </h3>
             </div>
           </Link>
-          <Link className={styles.card} href='/adverts'>
+          <Link className={styles.card} href='/adverts' passHref>
             <div className={styles.card} >
               <h3>  Adverts Page &rarr;  </h3>
             </div>
