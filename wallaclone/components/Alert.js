@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import {connect} from 'react-redux';
+import { getError } from '../store/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,13 +13,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleAlerts() {
+function SimpleAlerts({error}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Alert severity="error">Email o password incorrectos</Alert>
+      <Alert severity="error">{error}</Alert>
      
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+    
+    error: getError(state),
+}); 
+
+export default connect(mapStateToProps)(SimpleAlerts)
