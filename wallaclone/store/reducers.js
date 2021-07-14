@@ -2,7 +2,7 @@
 
 
 import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQUEST, AUTH_LOGIN_FAILURE, AUTH_REGISTER_REQUEST, AUTH_REGISTER_FAILURE, AUTH_RESET_STATE, ADVERTS_GET } from "./types";
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 
 
@@ -12,9 +12,9 @@ const initialState = {
         loading: false,
         error: null,
     },
-    
+
     adverts: [],
-    
+
 }
 
 
@@ -40,7 +40,7 @@ const initialState = {
 //                 auth:true,
 //                 loading:false,    
 //             };
-        
+
 //         case AUTH_LOGIN_FAILURE:
 //         case AUTH_REGISTER_FAILURE:
 //             return {...state, 
@@ -58,12 +58,12 @@ const initialState = {
 
 // }
 
-export const auth = (state= initialState.auth,action) => {
+export const auth = (state = initialState.auth, action) => {
     switch (action.type) {
-    case AUTH_LOGIN_SUCCESS:
-    case AUTH_REGISTER_SUCCESS:
-      return true ;
-        
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTER_SUCCESS:
+            return true;
+
         case AUTH_LOGIN_FAILURE:
         case AUTH_REGISTER_FAILURE:
             return false;
@@ -74,7 +74,7 @@ export const auth = (state= initialState.auth,action) => {
     }
 }
 
-export const adverts = (state= initialState.adverts, action) => {
+export const adverts = (state = initialState.adverts, action) => {
     switch (action.type) {
         case ADVERTS_GET:
             return action.payload
@@ -83,33 +83,33 @@ export const adverts = (state= initialState.adverts, action) => {
     }
 }
 
-export const ui = (state= initialState.ui, action) => {
-    switch(action.type) {
+export const ui = (state = initialState.ui, action) => {
+    switch (action.type) {
         case AUTH_RESET_STATE:
-            return { 
-                loading:false,
-                error:null,    
+            return {
+                loading: false,
+                error: null,
             };
-    
+
         case AUTH_LOGIN_REQUEST:
         case AUTH_REGISTER_REQUEST:
             return {
-                loading:true,
-                error:null,    
-                    };
+                loading: true,
+                error: null,
+            };
 
         case AUTH_REGISTER_SUCCESS:
         case AUTH_LOGIN_SUCCESS:
-             return { 
-                 loading:false,    
-                    error:null,
-                            };
+            return {
+                loading: false,
+                error: null,
+            };
         case AUTH_LOGIN_FAILURE:
         case AUTH_REGISTER_FAILURE:
-             return {
-                    loading:false,
-                    error:true,    
-                                    };
+            return {
+                loading: false,
+                error: true,
+            };
         default:
             return state;
 
@@ -125,9 +125,9 @@ export const ui = (state= initialState.ui, action) => {
 // }
 
 const reducer = combineReducers({
-    auth:auth,
-    ui:ui,
-    adverts:adverts
+    auth,
+    ui,
+    adverts
 })
 
 export default reducer;
