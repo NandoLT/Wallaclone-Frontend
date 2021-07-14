@@ -8,6 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
+import Chip from '@material-ui/core/Chip';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         textAlign: 'center',
     },
+
 }));
 
 
@@ -39,31 +50,65 @@ const Adverts = ({ isLogged, adverts }) => {
 
                 {adverts.result
                     ?
+                    <Box pl={1} pr={1}>
+                        <Grid container spacing={2}>
+                            {adverts.result.map(advert => {
+                                const { name, price, onSale } = advert;
+                                return (
+                                    <Grid item xs={6} sm={4} md={3} >
+                                        <Card className={classes.root}>
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    component="img"
+                                                    alt="Contemplative Reptile"
+                                                    height="200"
+                                                    image="/img/image-not-available.png"
+                                                    title="no image available"
+                                                />
+                                                <CardContent>
+                                                    <Typography gutterBottom variant="h5" component="h2">
+                                                        {name}
+                                                    </Typography>
+                                                    <div className="tags">
+                                                        {advert.tags.map(tag => {
+                                                            return <Chip variant="outlined" size="small" label={tag} />
+                                                        })}
+                                                    </div>
 
-                    <Grid container spacing={2}>
-                        {adverts.result.map(advert => {
-                            const { name, price, onSale } = advert;
-                            return (
+                                                    <Typography variant="body2" color="textSecondary" component="p">
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate eget mauris vel sodales.
+                                                        Integer magna sapien, varius id quam in, dignissim iaculis leo. Sed efficitur mauris rutrum magna vehicula.
+                                                    </Typography>
+                                                    <Box mt={2} mb={2}>
+                                                        <Divider />
+                                                    </Box>
+                                                    <Typography variant="body3" color="textSecondary" component="p" align="right">
+                                                        {statusEnum[advert.status]}
+                                                    </Typography>
+                                                    <Typography variant="body3" color="Secondary" component="p" align="right">
+                                                        {price}€
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                            <CardActions>
+                                                <Button size="small" color="primary">
+                                                    Share
+                                                </Button>
+                                                <Button size="small" color="primary">
+                                                    Learn More
+                                                </Button>
+                                            </CardActions>
+                                        </Card>
 
-                                <Grid item xs={6} sm={4} md={3} >
-                                    <div className='advert-item'>
-                                        <h3>{name}</h3>
-                                        <p className="advert-price">Precio: {price} €</p>
-                                        <div className="tags">
-                                            {advert.tags.map(tag => {
-                                                return <p className="advert-tag">{tag}</p>
-                                            })}
-                                        </div>
-                                        <p className="advert-status">{statusEnum[advert.status]}</p>
-                                    </div>
-
-                                </Grid>
+                                    </Grid>
 
 
 
-                            )
-                        })}
-                    </Grid>
+                                )
+                            })}
+                        </Grid>
+                    </Box>
+
 
 
 
