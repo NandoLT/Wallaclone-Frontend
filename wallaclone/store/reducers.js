@@ -85,7 +85,7 @@ export const adverts = (state = initialState.adverts, action) => {
 
 export const ui = (state = initialState.ui, action) => {
     if (action.error) {
-        return {...state, loading:false, error:action.payload.result }
+        return {...state, loading:false, error:action.payload.message }
     }
     switch (action.type) {
         case AUTH_RESET_STATE:

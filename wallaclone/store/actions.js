@@ -39,9 +39,11 @@ export const authRegisterSuccess = () => {
     }
 }
 
-export const authRegisterFailure = () => {
+export const authRegisterFailure = (error) => {
     return {
         type: AUTH_LOGIN_FAILURE,
+        payload:error,
+        error:true
     }
 }
 
@@ -92,9 +94,8 @@ export const authRegisterAction = (credentials) => {
             await api.auth.register(credentials)
             dispatch(authRegisterSuccess());
             router.push('/adverts')
-        } catch (err) {
-            console.log(err)
-            dispatch(authRegisterFailure());
+        } catch (error) {
+            dispatch(authLoginFailure(error))
 
         }
     }
