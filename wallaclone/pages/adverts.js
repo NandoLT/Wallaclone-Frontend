@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import Loading from '../components/Loading';
+import styles from '../styles/Home.module.css'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,9 +45,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
-            <Link href='/'> Go back home
-
-            </Link >
+           
             <section className="adverts-section">
                 {isLoading ? <Loading align="center" /> :
                     adverts.result
@@ -117,10 +116,12 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                         <h2> No hay anuncios que mostrar</h2>
                 }
 
-
+           
 
             </section>
-
+            <div className={styles.card} >
+                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
+            </div>
 
         </div>
     )

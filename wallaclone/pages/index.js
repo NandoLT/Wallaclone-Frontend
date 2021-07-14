@@ -22,45 +22,21 @@ export default function Home() {
                   Welcome to <span className="team-title"> WALLACLONE </span> 
                 </h1>
 
-                <p className={styles.description}>
-                  Una aplicación creada por:{' '}
-                  <code className={styles.code}>nameless-team.js</code>
-                </p>
-
-                <h3> <Link href='/login'> Login Page </Link> </h3>
-                <h3> <Link href='/register'> Register Page </Link> </h3>
-                <h3> <Link href='/adverts'> Adverts Page </Link> </h3>
-
-                
-
                 <div className={styles.grid}>
-                  <a href="https://github.com/AdrianValenzuela" target="_blank" className={styles.card}>
-                    <h2>Adrián Valenzuela Guasp &rarr;</h2>
-                    <p>Backend y agile master. El mejor project manager</p>
-                  </a>
+                
+                  <div className={styles.card} >
+                  <h3> <Link className={styles.card} href='/login'> Login Page &rarr; </Link> </h3>
+                  </div>
 
-                  <a href="https://github.com/lmhmDev" target="_blank" className={styles.card}>
-                    <h2>Lorenzo Hermoso Moreno &rarr;</h2>
-                    <p>Frontend master and extremely reactive</p>
-                  </a>
+                  <div className={styles.card} >
+                  <h3> <Link className={styles.card} href='/register'> Register Page &rarr; </Link> </h3>
+                  </div>
 
-                  <a
-                    href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/NandoLT" target="_blank"
-                    className={styles.card}
-                  >
-                    <h2>Fernando Lopez Trejo &rarr;</h2>
-                    <p>Backend Master and token fanatics</p>
-                  </a>
+                  <div className={styles.card} >
+                  <h3> <Link className={styles.card} href='/adverts'> Adverts Page &rarr; </Link> </h3>
+                  </div>
 
-                  <a
-                    href="https://github.com/orgs/ProyectoFinal-Wallaclone/people/jaimeperezortega" target="_blank"
-                    className={styles.card}
-                  >
-                    <h2>Jaime Pérez Ortega &rarr;</h2>
-                    <p>
-                      Master og nothing and fake afro hair in his github profile
-                    </p>
-                  </a>
+               
                 </div>
               </main>
 

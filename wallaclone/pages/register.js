@@ -12,7 +12,8 @@ import { authRegisterAction, authResetState } from '../store/actions';
 import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
-import Alert from '../components/Alert'
+import Alert from '../components/Alert';
+import styles from '../styles/Home.module.css'
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -28,7 +29,6 @@ const Register = ({isLogged, isLoading, error}) => {
     const classes = useStyles();
 
     useEffect(() => {
-        
         dispatch(authResetState());
     }, []);
 
@@ -120,7 +120,9 @@ const Register = ({isLogged, isLoading, error}) => {
 
             </form>
             {isLoading && <Loading/>}
-            <Link href='/'> Go back home</Link >
+            <div className={styles.card} >
+                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
+            </div>
 
         </div>
     )
