@@ -40,6 +40,12 @@ export default function Home() {
             </div>
           </Link>
 
+          <Link className={styles.card} href='/create-advert' passHref>
+            <div className={styles.card} >
+              <h3>  Create new Advert &rarr;  </h3>
+            </div>
+          </Link>
+
 
         </div>
       </main>
