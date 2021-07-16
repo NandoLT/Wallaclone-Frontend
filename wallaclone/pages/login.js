@@ -126,11 +126,12 @@ const Login = ({ isLogged, isLoading, error }) => {
 
 
             {isLoading && <Loading />}
-
-            <div className={styles.card} >
-                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
-            </div>
-        </div>
+            <Link className={styles.card} href='/' passHref>
+                <div className={styles.card} >
+                    <h3>  Go Back Home &rarr;  </h3>
+                </div>
+            </Link>
+        </div >
 
 
 

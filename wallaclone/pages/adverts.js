@@ -37,6 +37,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
         dispatch(advertsGetAction())
     }, [])
 
@@ -45,7 +46,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
-           
+
             <section className="adverts-section">
                 {isLoading ? <Loading align="center" /> :
                     adverts.result
@@ -55,7 +56,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                                 {adverts.result.map(advert => {
                                     const { name, price, onSale } = advert;
                                     return (
-                                        <Grid item xs={6} sm={4} md={3} >
+                                        <Grid item xs={6} sm={4} md={3} key={advert.id}>
                                             <Card className={classes.root}>
                                                 <CardActionArea>
                                                     <CardMedia
@@ -71,7 +72,7 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                                                         </Typography>
                                                         <div className="tags">
                                                             {advert.tags.map(tag => {
-                                                                return <Chip variant="outlined" size="small" label={tag} />
+                                                                return <Chip variant="outlined" size="small" label={tag} key={tag} />
                                                             })}
                                                         </div>
 
@@ -116,12 +117,14 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                         <h2> No hay anuncios que mostrar</h2>
                 }
 
-           
+
 
             </section>
-            <div className={styles.card} >
-                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
-            </div>
+            <Link className={styles.card} href='/' passHref>
+                <div className={styles.card} >
+                    <h3>  Go Back Home &rarr; </h3>
+                </div>
+            </Link>
 
         </div>
     )

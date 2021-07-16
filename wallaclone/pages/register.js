@@ -1,5 +1,5 @@
 
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Register = ({isLogged, isLoading, error}) => {
+const Register = ({ isLogged, isLoading, error }) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -83,7 +83,7 @@ const Register = ({isLogged, isLoading, error}) => {
                                 <AccountCircle />
                             </Grid>
                             <Grid item>
-                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Surname"  value={credentials.surname} />
+                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Surname" value={credentials.surname} />
                             </Grid>
                         </Grid>
                     </div>
@@ -112,17 +112,19 @@ const Register = ({isLogged, isLoading, error}) => {
                 </div>
 
 
-                {!isLoading &&  <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                     Register
-                 </Button>}
-                 {error &&  <Alert/> }
+                {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                    Register
+                </Button>}
+                {error && <Alert />}
 
 
             </form>
-            {isLoading && <Loading/>}
-            <div className={styles.card} >
-                  <h3> <Link className={styles.card} href='/'> Go Back Home &rarr; </Link> </h3>
-            </div>
+            {isLoading && <Loading />}
+            <Link className={styles.card} href='/' passHref>
+                <div className={styles.card} >
+                    <h3>  Go Back Home &rarr;  </h3>
+                </div>
+            </Link>
 
         </div>
     )
@@ -130,10 +132,10 @@ const Register = ({isLogged, isLoading, error}) => {
 
 
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
-    error: getError(state), 
+    error: getError(state),
 }); // Para poder conectar el componente al estado de redux
 
 // const mapDispatchToProps = (dispatch) => ({
