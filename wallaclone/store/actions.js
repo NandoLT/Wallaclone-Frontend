@@ -82,7 +82,7 @@ export const authLoginAction = (remember, credentials) => {
             dispatch(authLoginSuccess());
             router.push('/adverts');
         } catch (error) {
-            dispatch(authLoginFailure(error))
+            dispatch(authLoginFailure(error.message))
         }
     }
 }
@@ -95,7 +95,7 @@ export const authRegisterAction = (credentials) => {
             dispatch(authRegisterSuccess());
             router.push('/adverts')
         } catch (error) {
-            dispatch(authLoginFailure(error))
+            dispatch(authLoginFailure(error.message))
 
         }
     }
