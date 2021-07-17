@@ -48,23 +48,44 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
     
     const classes = useStyles();
 
-    const [tags, setTags] = React.useState({
-        tecnologia: false,
-        movil: false,
-        deporte: false,
-      });
+    // const [tags, setTags] = React.useState({
+    //     tecnologia: false,
+    //     movil: false,
+    //     deporte: false,
+    //   });
     
-    const {tecnologia, movil, deporte} = tags;
+    //const {tecnologia, movil, deporte} = tags;
     
-    const tagsError = [tecnologia, movil, deporte].filter((v) => v).length < 1;
+    //const tagsError = [tecnologia, movil, deporte].filter((v) => v).length < 1;
 
     const [adDetails, setAdDetails] = React.useState({
         name: '',
         description: '',
         price: '',
+        tags:[],
         onSale: true,
         photo:null,
     })
+
+    const handleChangeCheck = ev => {
+        const clickedTag = ev.target.name
+        setAdDetails(oldAdDetails => {
+            const newTags = oldAdDetails.tags;
+
+            if (newTags.includes(clickedTag)) {
+                newTags.splice(newTags.indexOf(clickedTag), 1);
+            } else {
+                newTags.push(clickedTag);
+            }
+
+            const newAdDetails = {
+                ...oldAdDetails,
+                'tags': newTags
+            }
+            return newAdDetails;
+        }
+        );
+    };
 
     const handleSubmit = (event) => {
         console.log(adDetails)
@@ -73,16 +94,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
         //dispatch(authRegisterAction(credentials))
 
     }
-
-
-
-    const handleTagsInput = (event) => {
-        setTags({ ...tags, [event.target.name]: event.target.checked });
-       return tags;
     
-      };
-    
-
 
     const handleInputChange = event => {
         setAdDetails(oldAdDetails => {
@@ -157,7 +169,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                   
                   
                 </div>
-                <FormControl required error={tagsError} className={classes.margin}>
+                <FormControl  className={classes.margin}>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -176,19 +188,22 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                     <FormLabel component="legend">Elige al menos una categoría</FormLabel>
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={tags.tecnologia} onChange={handleTagsInput} name="tecnologia" />}
+                            control={<Checkbox 
+                            checked={adDetails.tags.includes("tecnologia")} 
+                            onChange={handleChangeCheck} 
+                            name="tecnologia" />}
                             label="Tecnologia"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={tags.movil} onChange={handleTagsInput} name="movil" />}
+                            control={<Checkbox checked={adDetails.tags.includes("movil")}  onChange={handleChangeCheck} name="movil" />}
                             label="Movil"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={tags.deporte} onChange={handleTagsInput} name="deporte" />}
+                            control={<Checkbox checked={adDetails.tags.includes("deporte")} onChange={handleChangeCheck} name="deporte" />}
                             label="Deporte"
                         />
                     </FormGroup>
-                    <FormHelperText>{tagsError && <p className={classes.tagError}>No has elegido ninguna categoría</p>}</FormHelperText>
+                   
             </FormControl>
                   
 
