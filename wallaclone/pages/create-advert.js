@@ -89,7 +89,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
     const handleSubmit = (event) => {
         console.log(adDetails)
-        console.log(tags);
+        
         event.preventDefault();
         //dispatch(authRegisterAction(credentials))
 
@@ -156,19 +156,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                     
                 </div>
 
-                <div>
-                <div className={classes.margin, "register-input"}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                           
-                            <Grid item>
-                                <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Tags" type="password" value={adDetails.tags} />
-                            </Grid>
-                        </Grid>
-                    </div>
-                
-                  
-                  
-                </div>
+              
                 <FormControl  className={classes.margin}>
                 <Select
                     labelId="demo-simple-select-label"
