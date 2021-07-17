@@ -18,6 +18,12 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FormControl } from '@material-ui/core';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import { red } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
       },
+      formControl: {
+        margin: theme.spacing(3),
+      },
+      tagError:{
+          color:red,
+      }
 }));
 
 
@@ -36,22 +48,40 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
     
     const classes = useStyles();
 
-
+    const [tags, setTags] = React.useState({
+        tecnologia: false,
+        movil: false,
+        deporte: false,
+      });
+    
+    const {tecnologia, movil, deporte} = tags;
+    
+    const tagsError = [tecnologia, movil, deporte].filter((v) => v).length < 1;
 
     const [adDetails, setAdDetails] = React.useState({
         name: '',
         description: '',
         price: '',
         onSale: true,
-        tags: [],
+        photo:null,
     })
 
     const handleSubmit = (event) => {
         console.log(adDetails)
+        console.log(tags);
         event.preventDefault();
         //dispatch(authRegisterAction(credentials))
 
     }
+
+
+
+    const handleTagsInput = (event) => {
+        setTags({ ...tags, [event.target.name]: event.target.checked });
+       return tags;
+    
+      };
+    
 
 
     const handleInputChange = event => {
@@ -127,7 +157,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                   
                   
                 </div>
-                <FormControl>
+                <FormControl required error={tagsError} className={classes.margin}>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -141,6 +171,25 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                     </Select>
                 </FormControl>
                 <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
+
+                <FormControl  component="fieldset" className={classes.formControl}>
+                    <FormLabel component="legend">Elige al menos una categoría</FormLabel>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox checked={tags.tecnologia} onChange={handleTagsInput} name="tecnologia" />}
+                            label="Tecnologia"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={tags.movil} onChange={handleTagsInput} name="movil" />}
+                            label="Movil"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={tags.deporte} onChange={handleTagsInput} name="deporte" />}
+                            label="Deporte"
+                        />
+                    </FormGroup>
+                    <FormHelperText>{tagsError && <p className={classes.tagError}>No has elegido ninguna categoría</p>}</FormHelperText>
+            </FormControl>
                   
 
 
