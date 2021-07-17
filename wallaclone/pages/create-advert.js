@@ -13,12 +13,20 @@ import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
 import Alert from '../components/Alert';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { FormControl } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+      },
 }));
 
 
@@ -28,13 +36,13 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
     
     const classes = useStyles();
 
-   
 
 
     const [adDetails, setAdDetails] = React.useState({
         name: '',
         description: '',
         price: '',
+        onSale: true,
         tags: [],
     })
 
@@ -64,12 +72,14 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
             <h1>Publica un nuevo anuncio</h1>
 
             <form onSubmit={handleSubmit} className="register-form">
+            
+   
                 <div>
                     <div className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                             
                             <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={adDetails.name} />
+                                <TextField  onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={adDetails.name} />
                             </Grid>
                         </Grid>
                     </div>
@@ -82,23 +92,30 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                         <Grid container spacing={1} alignItems="flex-end">
                             
                             <Grid item>
-                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
+                                <TextField multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
                             </Grid>
                         </Grid>
                     </div>
                     </div>
         
+               
                 <div>
-                
-                    <div className={classes.margin, "register-input"}>
+                <div className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                            
                             <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Precio" value={adDetails.price} />
+                                <TextField onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={adDetails.price} />
                             </Grid>
                         </Grid>
                     </div>
-                    <div className={classes.margin, "register-input"}>
+                </div>
+                
+                <div>
+                    
+                </div>
+
+                <div>
+                <div className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                            
                             <Grid item>
@@ -106,7 +123,25 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                             </Grid>
                         </Grid>
                     </div>
+                
+                  
+                  
                 </div>
+                <FormControl>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={adDetails.onSale}
+                    onChange={handleInputChange}
+                    name= "onSale"
+                    >
+                        <MenuItem value={true}>Vendo</MenuItem>
+                        <MenuItem value={false}>Compro</MenuItem>
+                        
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
+                  
 
 
                 {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
