@@ -2,13 +2,22 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
-import { authLogin, authLogout } from '../store/actions'
+import { authLogin, authLogout } from '../store/actions';
+import { makeStyles } from '@material-ui/core/styles';
 
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+      margin: theme.spacing(1),
+  },
+}));
 
 export default function Home() {
+  
+  const classes = useStyles();
+
+
   return (
-
-
 
     <div className={styles.container}>
       <Head>
