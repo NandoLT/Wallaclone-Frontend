@@ -38,7 +38,7 @@ export default function NavBar() {
             <Button color="inherit">Login</Button>
           </Link>
          
-          <Link href='/' passHref>
+          <Link href='/register' passHref>
             <Button color="inherit">Registro</Button>
           </Link>
           <Link href='/adverts' passHref>
