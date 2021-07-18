@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import Link from 'next/link';
 import statusEnum from '../utils/advertsEnum';
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading } from '../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
@@ -20,7 +20,7 @@ import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import Loading from '../components/Loading';
 import styles from '../styles/Home.module.css'
-
+import Alert from '../components/Alert';
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Adverts = ({ isLogged, adverts, isLoading }) => {
+const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const classes = useStyles();
 
     const dispatch = useDispatch()
@@ -46,6 +46,10 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
+            <div>
+            {error && <Alert/> }
+            </div>
+            
 
             <section className="adverts-section">
                 {isLoading ? <Loading align="center" /> :
@@ -132,7 +136,8 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
 const mapStateToProps = state => ({
     isLogged: getIsLogged(state),
     adverts: getAdverts(state),
-    isLoading: getIsLoading(state)
+    isLoading: getIsLoading(state),
+    error:getError(state),
 })
 
 

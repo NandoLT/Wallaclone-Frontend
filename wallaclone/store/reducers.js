@@ -5,7 +5,6 @@ import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQU
 import { combineReducers } from 'redux';
 
 
-
 const initialState = {
     auth: false,
     ui: {

@@ -141,6 +141,7 @@ export const advertCreationAction = (advertDetails) => {
         try {
             await api.adverts.createAdvert();
             dispatch(advertCreationSuccess(advertDetails));
+            router.push('/adverts');
         } catch (err) {
             dispatch(advertCreationFailure(error.message));
         }
