@@ -4,12 +4,8 @@ import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmailIcon from '@material-ui/icons/Email';
-import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
-import { authRegisterAction, authResetState } from '../store/actions';
-import { useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
 import Alert from '../components/Alert';
@@ -21,10 +17,11 @@ import { FormControl } from '@material-ui/core';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { red } from '@material-ui/core/colors';
-
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { display } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -38,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
       },
       tagError:{
           color:red,
-      }
+      },
+      upload: {
+        display: 'none',
+      },
 }));
 
 
@@ -66,6 +66,17 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
         onSale: true,
         photo:null,
     })
+
+    const setPhoto = event => {
+        console.log(event.target.files[0])
+        setAdDetails(oldAdDetails => {
+            const newAdDetails = {
+                ...oldAdDetails,
+                'photo': event.target.files[0]
+            }
+            return newAdDetails;
+        });
+    }
 
     const handleChangeCheck = ev => {
         const clickedTag = ev.target.name
@@ -117,11 +128,11 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
             
    
                 <div>
-                    <div className={classes.margin, "register-input"}>
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                             
                             <Grid item>
-                                <TextField  onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={adDetails.name} />
+                                <TextField required onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={adDetails.name} />
                             </Grid>
                         </Grid>
                     </div>
@@ -130,11 +141,11 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
                 <div>
 
-                <div className={classes.margin, "register-input"}>
+                <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                             
                             <Grid item>
-                                <TextField multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
+                                <TextField  required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
                             </Grid>
                         </Grid>
                     </div>
@@ -142,11 +153,11 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
         
                
                 <div>
-                <div className={classes.margin, "register-input"}>
+                <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
                            
                             <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={adDetails.price} />
+                                <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={adDetails.price} />
                             </Grid>
                         </Grid>
                     </div>
@@ -157,8 +168,8 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                 </div>
 
               
-                <FormControl  className={classes.margin}>
-                <Select
+                <FormControl style={{ margin: 8 }}  className={classes.margin}>
+                <Select style={{ margin: 8 }} required
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={adDetails.onSale}
@@ -173,7 +184,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                 <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
 
                 <FormControl  component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">Elige al menos una categoría</FormLabel>
+                    <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={<Checkbox 
@@ -192,7 +203,27 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                         />
                     </FormGroup>
                    
-            </FormControl>
+            </FormControl >
+                    <div  className={classes.root}>
+                    <input
+                    className={classes.upload}
+                    onChange={setPhoto}
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                />
+                <label  htmlFor="contained-button-file">
+                    <Button variant="contained" color="primary" component="span">
+                    Subir foto
+                    </Button>
+                    <label htmlFor="contained-button-file">
+                    <IconButton color="primary" aria-label="upload picture" component="span">
+                    <PhotoCamera />
+                    </IconButton>
+      </label>
+                </label>
+                </div>
                   
 
 
