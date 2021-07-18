@@ -63,7 +63,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
         description: '',
         price: '',
         tags:[],
-        onSale: true,
+        statusEnum: 0,
         photo:null,
     })
 
@@ -172,12 +172,12 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                 <Select style={{ margin: 8 }} required
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={adDetails.onSale}
+                    value={adDetails.statusEnum}
                     onChange={handleInputChange}
-                    name= "onSale"
+                    name= "statusEnum"
                     >
-                        <MenuItem value={true}>Vendo</MenuItem>
-                        <MenuItem value={false}>Compro</MenuItem>
+                        <MenuItem value={0}>Vendo</MenuItem>
+                        <MenuItem value={1}>Compro</MenuItem>
                         
                     </Select>
                 </FormControl>
