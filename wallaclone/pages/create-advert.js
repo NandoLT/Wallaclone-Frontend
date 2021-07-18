@@ -114,6 +114,25 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
     }
 
+    const validation = () => {
+        if(!adDetails.name){
+            return true
+        };
+        if(!adDetails.description){
+            return true
+        };
+        if(!adDetails.price){
+            return true
+        };
+
+        if(adDetails.tags.length < 1){
+            return true
+        }
+
+
+        return false
+    }
+
 
     return (
         <div className="register-container">
@@ -222,7 +241,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                   
                 {error && <Alert />}
 
-                {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Publicar anuncio
                 </Button>}
                 {error && <Alert />}
