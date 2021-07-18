@@ -21,7 +21,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import { display } from '@material-ui/system';
+import { useDispatch } from 'react-redux';
+import { advertCreationAction, authResetState } from '../store/actions';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -45,18 +46,14 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(authResetState())
+        
+    }, [])
     
     const classes = useStyles();
-
-    // const [tags, setTags] = React.useState({
-    //     tecnologia: false,
-    //     movil: false,
-    //     deporte: false,
-    //   });
-    
-    //const {tecnologia, movil, deporte} = tags;
-    
-    //const tagsError = [tecnologia, movil, deporte].filter((v) => v).length < 1;
 
     const [adDetails, setAdDetails] = React.useState({
         name: '',
@@ -99,10 +96,8 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
     };
 
     const handleSubmit = (event) => {
-        console.log(adDetails)
-        
         event.preventDefault();
-        //dispatch(authRegisterAction(credentials))
+        dispatch(advertCreationAction(adDetails));
 
     }
     
@@ -225,7 +220,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                 </label>
                 </div>
                   
-
+                {error && <Alert />}
 
                 {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Publicar anuncio
@@ -235,6 +230,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
             </form>
             {isLoading && <Loading />}
+            {error && <Alert/>}
             <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr;  </h3>

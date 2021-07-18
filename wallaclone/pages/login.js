@@ -50,7 +50,7 @@ const Login = ({ isLogged, isLoading, error }) => {
 
 
     const handleSubmit = (event) => {
-        console.log(remember, credentials)
+        
         event.preventDefault();
         dispatch(authLoginAction(remember, credentials))
 
