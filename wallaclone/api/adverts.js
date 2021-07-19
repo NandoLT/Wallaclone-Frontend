@@ -15,12 +15,9 @@ export const getAdverts = async () => {
     }
 }
 
-export const createAdvert = async () => {
+export const createAdvert = async (advertDetails) => {
 
-    try {
-        const newAdvertID= await client.post(createAdvertPath) // Suponiendo que el back me devolviese el ID del anuncio recien creado
-        
-    } catch (err) {
-        console.log(err);
-    }
+    return client.post(`${advertsPath}/new-advert`, advertDetails);
+
+    
 }
