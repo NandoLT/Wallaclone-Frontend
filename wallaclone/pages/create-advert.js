@@ -23,6 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
 import { advertCreationAction, authResetState } from '../store/actions';
+import provinces from '../utils/spainProvinces';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -46,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateNewAd = ({ isLogged, isLoading, error }) => {
 
+    
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -59,6 +62,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
         name: '',
         description: '',
         price: '',
+        province:'',
         tags:[],
         statusEnum: 0,
         photo:null,
@@ -96,6 +100,7 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
     };
 
     const handleSubmit = (event) => {
+        console.log(adDetails);
         event.preventDefault();
         dispatch(advertCreationAction(adDetails));
 
@@ -122,6 +127,10 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
             return true
         };
         if(!adDetails.price){
+            return true
+        };
+
+        if(!adDetails.province){
             return true
         };
 
@@ -197,6 +206,21 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                 </FormControl>
                 <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
 
+                <FormControl style={{ margin: 8 }}  className={classes.margin}>
+                <Select style={{ margin: 8 }} required
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={adDetails.province}
+                    onChange={handleInputChange}
+                    name= "province"
+                    >
+                        {provinces.map(province => <MenuItem value={province.nombre}>{province.nombre}</MenuItem> )}
+                        
+                        
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+
                 <FormControl  component="fieldset" className={classes.formControl}>
                     <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
                     <FormGroup>
@@ -228,14 +252,14 @@ const CreateNewAd = ({ isLogged, isLoading, error }) => {
                     type="file"
                 />
                 <label  htmlFor="contained-button-file">
-                    <Button variant="contained" color="primary" component="span">
-                    Subir foto
-                    </Button>
-                    <label htmlFor="contained-button-file">
-                    <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                    </IconButton>
-      </label>
+                        <Button variant="contained" color="primary" component="span">
+                        Subir foto
+                        </Button>
+                        <label htmlFor="contained-button-file">
+                        <IconButton color="primary" aria-label="upload picture" component="span">
+                        <PhotoCamera />
+                        </IconButton>
+                </label>
                 </label>
                 </div>
                   
