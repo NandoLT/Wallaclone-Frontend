@@ -12,3 +12,12 @@ export const getAdverts = async () => {
         console.log(err);
     }
 }
+
+export const getAdvertDetail = async (id) => {
+    try {
+        const advert = await client.get(advertsPath + `/${id}`)
+        return advert
+    } catch (err) {
+        console.log(err)
+    }
+}
