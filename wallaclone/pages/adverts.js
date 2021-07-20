@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Link from 'next/link';
 import statusEnum from '../utils/advertsEnum';
 import { connect } from 'react-redux';
@@ -38,6 +38,14 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const classes = useStyles();
 
     const [searchValue, setSearchValue] = React.useState("");
+    const adsFilteredBySearch = useMemo(() =>{
+        if (!searchValue){
+            return adverts.result
+        }
+        return adverts.result.filter(ad => {
+            return ad.name.toLowerCase().includes(searchValue.toLowerCase())
+        })
+    }, [searchValue, adverts.result])
 
     const dispatch = useDispatch()
 
@@ -67,6 +75,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         margin="normal"
                         variant="outlined"
                         InputProps={{ ...params.InputProps, type: 'search' }}
+                        onChange ={e => setSearchValue(e.target.value)}
+                        value= {searchValue}
                     />
                     )}
                 />
@@ -84,7 +94,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
-                                {adverts.result.map(advert => {
+                                {adsFilteredBySearch.map(advert => {
                                     const { name, price, onSale } = advert;
                                     return (
                                         <Grid item xs={6} sm={4} md={3} key={advert.id}>
