@@ -21,6 +21,9 @@ import Chip from '@material-ui/core/Chip';
 import Loading from '../components/Loading';
 import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -34,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const classes = useStyles();
 
+    const [searchValue, setSearchValue] = React.useState("");
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -46,6 +51,28 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
+            {adverts.result && 
+            
+            <div style={{ width: 300 }}>
+                
+                <Autocomplete
+                    freeSolo
+                    id="free-solo-2-demo"
+                    disableClearable
+                    options={adverts.result.map((option) => option.name)}
+                    renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Search input"
+                        margin="normal"
+                        variant="outlined"
+                        InputProps={{ ...params.InputProps, type: 'search' }}
+                    />
+                    )}
+                />
+            </div>
+
+            }
             <div>
             {error && <Alert/> }
             </div>
