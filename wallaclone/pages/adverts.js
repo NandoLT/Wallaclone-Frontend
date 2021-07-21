@@ -23,7 +23,8 @@ import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-
+import { FormControl, Select, MenuItem, InputLabel  } from '@material-ui/core';
+import provinces from '../utils/spainProvinces';
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -54,14 +55,72 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         dispatch(advertsGetAction())
     }, [])
 
+    const tags =["mobile", "software", "tech"];
 
+    const [filters, setFilters] = React.useState({
+        //search: adsFilteredBySearch(),
+        priceMin: 0,
+        priceMax:1000000,
+        tags:[],
+        province:"",
+        statusEnum: "",
+    })
 
+    // Crearme un estado local para los filtros (un objeto) inputSearch, arrayTags, province, priceMin (0), priceMax(100.000.000 || dinamico llamando al back)
+    // Conseguir los tags (ahora hardcodeado) array con los tags. Por cada elemento de este array renderizo un checkbox que se pueda marcar y desmarcar. Cada checkbox tiene un value correspondiente a cada tag. 
+    // Al hacer clic en el checkbox, tiene que añadir ese valor en el array de tags del opbjeto de filtros
+    // Select mostrando todas las provincias disponibles y al marcar una provincia se añade al objeto de filtros
+    // 
+
+    const handleFilterChange= (event) => {
+        setFilters(oldFilters => {
+            const newFilters = {
+                ...oldFilters,
+                [event.target.name]: event.target.value,
+            }
+            return newFilters
+        })
+    }
+
+    
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
             {adverts.result && 
+
+           
             
             <div style={{ width: 300 }}>
+
+            <FormControl style={{ margin: 8 }}  className={classes.margin}>
+                <Select style={{ margin: 8 }} required
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={filters.statusEnum}
+                    onChange={handleFilterChange}
+                    name= "statusEnum"
+                    >
+                        <MenuItem value={0}>Vendo</MenuItem>
+                        <MenuItem value={1}>Compro</MenuItem>
+                        
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">¿Venta o compra?</InputLabel>
+
+                <FormControl style={{ margin: 8 }}  className={classes.margin}>
+                    <Select style={{ margin: 8 }} required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={filters.province}
+                        onChange={handleFilterChange}
+                        name= "province"
+                        >
+                            {provinces.map(province => <MenuItem value={province.nombre}>{province.nombre}</MenuItem> )}
+                        
+                        
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
                 
                 <Autocomplete
                     freeSolo
