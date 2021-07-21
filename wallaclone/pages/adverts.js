@@ -23,7 +23,7 @@ import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, Select, MenuItem, InputLabel  } from '@material-ui/core';
+import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox  } from '@material-ui/core';
 import provinces from '../utils/spainProvinces';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +82,26 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         })
     }
 
+    const handleChangeCheck = ev => {
+        const clickedTag = ev.target.name
+        setFilters(oldAdDetails => {
+            const newTags = oldAdDetails.tags;
+
+            if (newTags.includes(clickedTag)) {
+                newTags.splice(newTags.indexOf(clickedTag), 1);
+            } else {
+                newTags.push(clickedTag);
+            }
+
+            const newAdDetails = {
+                ...oldAdDetails,
+                'tags': newTags
+            }
+            return newAdDetails;
+        }
+        );
+    };
+
     
     return (
         <div className="adverts-container">
@@ -121,6 +141,28 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                     </Select>
                 </FormControl>
                 <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+
+                <FormControl  component="fieldset" className={classes.formControl}>
+                    <FormLabel style={{ margin: 8 }} component="legend">Tags</FormLabel>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox 
+                            checked={filters.tags.includes("software")} 
+                            onChange={handleChangeCheck} 
+                            name="software" />}
+                            label="software"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={filters.tags.includes("mobile")}  onChange={handleChangeCheck} name="mobile" />}
+                            label="mobile"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={filters.tags.includes("tech")} onChange={handleChangeCheck} name="tech" />}
+                            label="tech"
+                        />
+                    </FormGroup>
+                   
+                </FormControl >
                 
                 <Autocomplete
                     freeSolo
