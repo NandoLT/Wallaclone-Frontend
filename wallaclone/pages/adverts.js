@@ -23,7 +23,7 @@ import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox  } from '@material-ui/core';
+import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox, Slider  } from '@material-ui/core';
 import provinces from '../utils/spainProvinces';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,8 +59,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
     const [filters, setFilters] = React.useState({
         //search: adsFilteredBySearch(),
-        priceMin: 0,
-        priceMax:1000000,
+        priceRange: [0,10000],
         tags:[],
         province:"",
         statusEnum: "",
@@ -82,6 +81,18 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         })
     }
 
+    const handleChangePrice = (event, newValue) => {
+        setFilters(oldFilters => {
+            const newFilters = {
+                ...oldFilters,
+                ["priceRange"]: newValue,
+            }
+            return newFilters
+        })
+
+        
+      };
+
     const handleChangeCheck = ev => {
         const clickedTag = ev.target.name
         setFilters(oldAdDetails => {
@@ -102,6 +113,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         );
     };
 
+    function valuetext(value) {
+        return `${value}€`;
+      }
     
     return (
         <div className="adverts-container">
@@ -111,6 +125,23 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
            
             
             <div style={{ width: 300 }}>
+
+                <div className={classes.root}>
+                    <Typography id="range-slider" gutterBottom>
+                        Rango de precios
+                    </Typography>
+                    <Slider
+                        value={filters.priceRange}
+                        onChange={handleChangePrice}
+                        min={0}
+                        max={10000}
+                        step={50}
+                        valueLabelDisplay="on"
+                        aria-labelledby="range-slider"
+                        getAriaValueText={valuetext}
+                        name="priceRange"
+                    />
+                    </div>
 
             <FormControl style={{ margin: 8 }}  className={classes.margin}>
                 <Select style={{ margin: 8 }} required
