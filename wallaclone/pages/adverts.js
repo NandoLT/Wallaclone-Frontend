@@ -41,12 +41,12 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const [searchValue, setSearchValue] = React.useState("");
     const adsFilteredBySearch = useMemo(() =>{
         if (!searchValue){
-            return adverts.result
+            return adverts
         }
-        return adverts.result.filter(ad => {
+        return adverts.filter(ad => {
             return ad.name.toLowerCase().includes(searchValue.toLowerCase())
         })
-    }, [searchValue, adverts.result])
+    }, [searchValue, adverts])
 
     const dispatch = useDispatch()
 
@@ -59,17 +59,21 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
     const [filters, setFilters] = React.useState({
         //search: adsFilteredBySearch(),
-        priceRange: [0,10000],
+        priceRange: [0,1000],
         tags:[],
         province:"",
         statusEnum: "",
     })
 
-    // Crearme un estado local para los filtros (un objeto) inputSearch, arrayTags, province, priceMin (0), priceMax(100.000.000 || dinamico llamando al back)
-    // Conseguir los tags (ahora hardcodeado) array con los tags. Por cada elemento de este array renderizo un checkbox que se pueda marcar y desmarcar. Cada checkbox tiene un value correspondiente a cada tag. 
-    // Al hacer clic en el checkbox, tiene que añadir ese valor en el array de tags del opbjeto de filtros
-    // Select mostrando todas las provincias disponibles y al marcar una provincia se añade al objeto de filtros
-    // 
+    const [filteredAdverts, setFilteredAdverts]= React.useState([]);
+
+    React.useEffect(() => {
+
+        setFilteredAdverts(adverts.filter(advert => advert.province.toLowerCase().includes(filters.province.toLowerCase()) && advert.statusEnum.includes(filters.statusEnum) && advert.priceRange[0] >= filters.priceRange[0] && advert.price <= filters.priceRange[1]  && (filters.tags.length > 0 ? advert.tags.some(function (e) {
+            return filters.tags.includes(e);
+        }) : true)))
+
+    }, [filters]);
 
     const handleFilterChange= (event) => {
         setFilters(oldFilters => {
@@ -82,6 +86,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     }
 
     const handleChangePrice = (event, newValue) => {
+
         setFilters(oldFilters => {
             const newFilters = {
                 ...oldFilters,
@@ -120,7 +125,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
-            {adverts.result && 
+            {adverts && 
 
            
             
@@ -134,7 +139,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         value={filters.priceRange}
                         onChange={handleChangePrice}
                         min={0}
-                        max={10000}
+                        max={1000}
                         step={50}
                         valueLabelDisplay="on"
                         aria-labelledby="range-slider"
@@ -199,7 +204,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                     freeSolo
                     id="free-solo-2-demo"
                     disableClearable
-                    options={adverts.result.map((option) => option.name)}
+                    options={adverts.map((option) => option.name)}
                     renderInput={(params) => (
                     <TextField
                         {...params}
@@ -222,7 +227,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
             <section className="adverts-section">
                 {isLoading ? <Loading align="center" /> :
-                    adverts.result
+                    adverts
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
