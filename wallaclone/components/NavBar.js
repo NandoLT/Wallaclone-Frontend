@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsLogged } from '../store/selectors';
+import { authLogoutAction } from '../store/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
+  const isLogged = useSelector(getIsLogged);
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const onLogout = () =>{
+    dispatch(authLogoutAction());
+  }
 
   return (
     <div className={classes.root}>
@@ -34,9 +43,7 @@ export default function NavBar() {
           <Typography variant="h6" className={classes.title}>
            <Link href="/" passHref> Wallaclone </Link> 
           </Typography>
-          <Link href='/login' passHref>
-            <Button color="inherit">Login</Button>
-          </Link>
+          
          
           <Link href='/register' passHref>
             <Button color="inherit">Registro</Button>
@@ -47,6 +54,19 @@ export default function NavBar() {
           <Link href='create-advert' passHref>
             <Button color="inherit">Crear nuevo anuncio</Button>
           </Link>
+          
+
+            {isLogged ? 
+
+                <Button onClick={onLogout} variant="contained" color="secondary">Logout</Button>
+                :
+                <Link href='/login' passHref>
+                    <Button variant="contained" color="secondary">Login</Button>
+                </Link>
+            
+            }
+         
+          
 
         </Toolbar>
       </AppBar>

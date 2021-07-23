@@ -108,6 +108,16 @@ export const authLoginAction = (remember, credentials) => {
     }
 }
 
+export const authLogoutAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+
+            await api.auth.logout();
+            dispatch(authLogout());
+            router.push('/login');
+            
+    }
+}
+
 export const authRegisterAction = (credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authRegisterRequest());

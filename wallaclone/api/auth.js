@@ -4,6 +4,7 @@ import storage from "../utils/storage";
 const authPath = '/api/users'
 
 
+
 export const login = (remember, credentials) => {
 
     return client.post(`${authPath}/login`, credentials).then(({ token }) => {
@@ -18,18 +19,14 @@ export const login = (remember, credentials) => {
         })
 }
 
-// export const register = (credentials) => {
-//     console.log(credentials)
-// }
+
 
 export const register = (credentials) => {
    
-
     return client.post(`${authPath}/register`, credentials)
     //.then RECIBIR EL TOKEN POR PARTE DEL BACK PARA GUARDARLO EN EL STORAGE
 }
 
 export const logout = () => {
-    /* hay que hacerlo */
-    return;
-}
+    return Promise.resolve().then(storage.clear);
+  };
