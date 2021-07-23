@@ -60,6 +60,26 @@ const Register = ({ isLogged, isLoading, error }) => {
 
     }
 
+    const validation = () => {
+        if(!credentials.name){
+            return true;
+        }
+
+        if(!credentials.surname){
+            return true
+        }
+
+        if(!credentials.email) {
+            return true
+        }
+
+        if(!credentials.password){
+            return true
+        }
+
+        return false
+    }
+
 
     return (
         <div className="register-container">
@@ -112,7 +132,7 @@ const Register = ({ isLogged, isLoading, error }) => {
                 </div>
 
 
-                {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Register
                 </Button>}
                 {error && <Alert />}

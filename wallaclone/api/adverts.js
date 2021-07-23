@@ -2,6 +2,8 @@ import client from "./client";
 
 const advertsPath = '/api/adverts'
 
+const createAdvertPath = '';
+
 
 export const getAdverts = async () => {
 
@@ -20,4 +22,10 @@ export const getAdvertDetail = async (id) => {
     } catch (err) {
         console.log(err)
     }
+}
+export const createAdvert = async (advertDetails) => {
+
+    return client.post(`${advertsPath}/new-advert`, advertDetails);
+
+    
 }

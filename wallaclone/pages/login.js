@@ -50,7 +50,7 @@ const Login = ({ isLogged, isLoading, error }) => {
 
 
     const handleSubmit = (event) => {
-        console.log(remember, credentials)
+        
         event.preventDefault();
         dispatch(authLoginAction(remember, credentials))
 
@@ -73,6 +73,18 @@ const Login = ({ isLogged, isLoading, error }) => {
         setRemember(!remember);
     }
 
+    const validation = () => {
+
+        if (!credentials.email) {
+            return true
+        };
+
+        if(!credentials.password){
+            return true
+        }
+
+        return false;
+    }
 
     return (
         <div className="login-container">
@@ -88,7 +100,7 @@ const Login = ({ isLogged, isLoading, error }) => {
                             <AccountCircle />
                         </Grid>
                         <Grid item>
-                            <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
+                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
                         </Grid>
                     </Grid>
                 </div>
@@ -98,7 +110,7 @@ const Login = ({ isLogged, isLoading, error }) => {
                             <LockIcon />
                         </Grid>
                         <Grid item>
-                            <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
+                            <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
                         </Grid>
                     </Grid>
                 </div>
@@ -113,7 +125,7 @@ const Login = ({ isLogged, isLoading, error }) => {
                     />
                 </div>
 
-                {!isLoading && <Button size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Login
                 </Button>}
 
