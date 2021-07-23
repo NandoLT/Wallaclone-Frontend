@@ -67,13 +67,13 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
     const [filteredAdverts, setFilteredAdverts]= React.useState([]);
 
-    React.useEffect(() => {
+    // React.useEffect(() => {
 
-        setFilteredAdverts(adverts.filter(advert => advert.province.toLowerCase().includes(filters.province.toLowerCase()) && advert.statusEnum.includes(filters.statusEnum) && advert.priceRange[0] >= filters.priceRange[0] && advert.price <= filters.priceRange[1]  && (filters.tags.length > 0 ? advert.tags.some(function (e) {
-            return filters.tags.includes(e);
-        }) : true)))
+    //     setFilteredAdverts(adverts.filter(advert => advert.province.toLowerCase().includes(filters.province.toLowerCase()) && advert.statusEnum.includes(filters.statusEnum) && advert.priceRange[0] >= filters.priceRange[0] && advert.price <= filters.priceRange[1]  && (filters.tags.length > 0 ? advert.tags.some(function (e) {
+    //         return filters.tags.includes(e);
+    //     }) : true)))
 
-    }, [filters]);
+    // }, [filters]);
 
     const handleFilterChange= (event) => {
         setFilters(oldFilters => {
@@ -125,7 +125,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     return (
         <div className="adverts-container">
             <h1>Página de Anuncios</h1>
-            {adverts && 
+            {adsFilteredBySearch && 
 
            
             
