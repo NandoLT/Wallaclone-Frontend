@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogoutAction } from '../store/actions';
-import LogoutButton from '../components/ConfirmationPopup'
+import ConfirmationPopup from '../components/ConfirmationPopup'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +30,12 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const onLogout = () =>{
+ 
+
+  const logoutConfirmation = () =>{
     dispatch(authLogoutAction());
-  }
+
+}
 
   return (
     <div className={classes.root}>
@@ -60,7 +63,12 @@ export default function NavBar() {
             {isLogged ? 
 
                 // <Button onClick={onLogout} variant="contained" color="secondary">Logout</Button>
-                <LogoutButton/>
+                <ConfirmationPopup
+                buttonText="Logout" 
+                popupTitle="Logout" 
+                popupDescription="¿Quieres confirmar el cierre de sesión?" 
+                handleConfirmation={logoutConfirmation}
+                />
                 :
                 <Link href='/login' passHref>
                     <Button variant="contained" color="secondary">Login</Button>

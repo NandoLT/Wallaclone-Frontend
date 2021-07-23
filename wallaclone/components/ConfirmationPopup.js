@@ -18,7 +18,11 @@ function PaperComponent(props) {
   );
 }
 
-export default function LogoutButton() {
+export default function ConfirmationPopup({
+    buttonText, 
+    popupTitle, 
+    popupDescription, 
+    handleConfirmation }) {
   
   const dispatch = useDispatch();
 
@@ -32,16 +36,12 @@ export default function LogoutButton() {
     setOpen(false);
   };
 
-  const logoutConfirmation = () =>{
-      setOpen(false);
-      dispatch(authLogoutAction());
-
-  }
+  
 
   return (
     <div>
       <Button  variant="contained" color="secondary" onClick={handleClickOpen}>
-        Logout
+        {buttonText}
       </Button>
       <Dialog
         open={open}
@@ -50,18 +50,18 @@ export default function LogoutButton() {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Logout
+          {popupTitle}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Quieres confirmar el cierre de sesión?
+            {popupDescription}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
             No
           </Button>
-          <Button onClick={logoutConfirmation} color="primary">
+          <Button onClick={handleConfirmation } color="primary">
             Si
           </Button>
         </DialogActions>
