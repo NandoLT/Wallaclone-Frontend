@@ -10,6 +10,7 @@ import { useDispatch, connect } from 'react-redux';
 import Loading from '../Loading';
 import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
 import Alert from '../Alert'
+import { authLoginAction } from '../../store/actions';
 import styles from '../../styles/Home.module.css'
 
 
@@ -19,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LoginForm = ({handleSubmit,  isLoading, error  }) => {
+const LoginForm = ({isLoading, error  }) => {
     const classes = useStyles();
+    const dispatch= useDispatch();
 
     const [credentials, setCredentials] = React.useState({
         email: '',
@@ -55,6 +57,13 @@ const LoginForm = ({handleSubmit,  isLoading, error  }) => {
         }
 
         return false;
+    }
+
+    const handleSubmit = (event) => {
+        
+        event.preventDefault();
+        dispatch(authLoginAction(remember, credentials))
+
     }
 
     return (
