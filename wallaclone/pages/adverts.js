@@ -231,7 +231,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
-                                {adverts.result.map(advert => {
+                                {adverts.map(advert => {
                                     const { name, price, onSale, _id } = advert;
                                     return (
                                         <Grid item xs={6} sm={4} md={3} key={_id}>
