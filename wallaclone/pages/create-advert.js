@@ -24,6 +24,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
 import { advertCreationAction, authResetState } from '../store/actions';
 import provinces from '../utils/spainProvinces';
+import WithAuth from '../components/hocs/WithAuth';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -291,11 +292,6 @@ const mapStateToProps = (state) => ({
     isLoading: getIsLoading(state),
     error: getError(state),
     userId: getUserId(state),
-}); // Para poder conectar el componente al estado de redux
+}); 
 
-// const mapDispatchToProps = (dispatch) => ({
-//     onLogin: () => dispatch(authLoginAction()),
-//     onLogout: () => dispatch(authLogout())
-// }); //Para poder conectar el componente al dispatch de redux
-
-export default connect(mapStateToProps)(CreateNewAd)
+export default connect(mapStateToProps)(WithAuth(CreateNewAd))
