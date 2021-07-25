@@ -6,6 +6,7 @@ import { combineReducers } from 'redux';
 
 
 const initialState = {
+    userId: "",
     auth: false,
     ui: {
         loading: false,
@@ -40,6 +41,23 @@ export const adverts = (state = initialState.adverts, action) => {
         default:
             return state;
     }
+}
+
+export const userId = (state = initialState.userId, action) => {
+    switch (action.type){
+        case AUTH_LOGIN_SUCCESS:
+            
+            return action.userId
+        case AUTH_LOGOUT:
+            return ""
+
+        default:
+            return state;
+
+    }
+    
+            
+    
 }
 
 export const ui = (state = initialState.ui, action) => {
@@ -85,8 +103,11 @@ export const ui = (state = initialState.ui, action) => {
     }
 }
 
+
+
 const reducer = combineReducers({
     auth,
+    userId,
     ui,
     adverts
 })

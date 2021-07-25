@@ -10,9 +10,10 @@ import NavBar from '../components/NavBar';
 import parseAuthToken from '../utils/parseAuthToken';
 
 const accessToken = storage.get('authToken');
-const store = configureStore({ preloadedState: { auth: !!accessToken } });
+const userId = parseAuthToken(accessToken);
+const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });
 
-parseAuthToken(accessToken);
+
 
 
 function MyApp({ Component, pageProps }) {

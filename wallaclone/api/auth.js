@@ -1,5 +1,6 @@
 import client from "./client";
 import storage from "../utils/storage";
+import parseAuthToken from "../utils/parseAuthToken";
 
 const authPath = '/api/users'
 
@@ -12,11 +13,14 @@ export const login = (remember, credentials) => {
         return token;
     })
         .then(token => {
+            const userId = parseAuthToken(token);
             if (remember) {
                
                 storage.set('authToken', token)
             }
+            return userId;
         })
+        
 }
 
 

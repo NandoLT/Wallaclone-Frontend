@@ -1,4 +1,3 @@
-import createAdvert from "../pages/create-advert";
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, ADVERTS_REQUEST, ADVERTS_SUCCESS, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS } from "./types";
 
 
@@ -8,9 +7,10 @@ export const authRegister = () => {
     }
 }
 
-export const authLoginSuccess = () => {
+export const authLoginSuccess = (userId) => {
     return {
         type: AUTH_LOGIN_SUCCESS,
+        userId : userId
     }
 }
 
@@ -37,6 +37,7 @@ export const authRegisterRequest = () => {
 export const authRegisterSuccess = () => {
     return {
         type: AUTH_REGISTER_SUCCESS,
+        
     }
 }
 
@@ -99,8 +100,8 @@ export const authLoginAction = (remember, credentials) => {
         dispatch(authLoginRequest())
 
         try {
-            await api.auth.login(remember, credentials);
-            dispatch(authLoginSuccess());
+            const userId = await api.auth.login(remember, credentials);
+            dispatch(authLoginSuccess(userId));
             router.push('/adverts');
         } catch (error) {
             dispatch(authLoginFailure(error.message))

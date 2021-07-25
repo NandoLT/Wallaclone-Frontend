@@ -7,7 +7,7 @@ import * as api from '../api';
 import router from 'next/router';
 
 
-const configureStore = ({ preloadedState }) => {
+const configureStore = ( {preloadedState} ) => {
     const store = createStore(combineReducers(reducers), preloadedState, composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ api, router }))));
 
     return store
