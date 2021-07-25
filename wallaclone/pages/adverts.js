@@ -25,6 +25,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox, Slider } from '@material-ui/core';
 import provinces from '../utils/spainProvinces';
+import WithAuth from '../components/hocs/WithAuth'
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -318,4 +319,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps)(Adverts)
+export default connect(mapStateToProps)(WithAuth(Adverts))
