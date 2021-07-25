@@ -25,7 +25,9 @@ export const getAdvertDetail = async (id) => {
 }
 export const createAdvert = async (advertDetails) => {
 
-    return client.post(`${advertsPath}/new-advert`, advertDetails);
+    console.log(advertDetails);
+
+    //return client.post(`${advertsPath}/new-advert`, advertDetails);
 
     
 }

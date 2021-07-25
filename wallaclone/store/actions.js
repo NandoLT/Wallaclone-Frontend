@@ -80,9 +80,10 @@ export const advertCreationRequest = () => {
     }
 }
 
-export const advertCreationSuccess = () =>{
+export const advertCreationSuccess = (advertDetails) =>{
     return {
         type: ADVERT_CREATION_SUCCESS,
+        advertDetails: advertDetails,
     }
 }
 
@@ -150,7 +151,7 @@ export const advertCreationAction = (advertDetails) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(advertCreationRequest());
         try {
-            await api.adverts.createAdvert();
+            await api.adverts.createAdvert(advertDetails);
             dispatch(advertCreationSuccess(advertDetails));
             router.push('/adverts');
         } catch (error) {

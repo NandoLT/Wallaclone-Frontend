@@ -66,6 +66,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         tags:[],
         statusEnum: 0,
         photo:null,
+        userId:userId,
     })
 
     const setPhoto = event => {
