@@ -54,43 +54,45 @@ const Adverts = ({ isLogged, adverts, isLoading }) => {
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
                                 {adverts.result.map(advert => {
-                                    const { name, price, onSale } = advert;
+                                    const { name, price, onSale, _id } = advert;
                                     return (
-                                        <Grid item xs={6} sm={4} md={3} key={advert.id}>
+                                        <Grid item xs={6} sm={4} md={3} key={_id}>
                                             <Card className={classes.root}>
-                                                <CardActionArea>
-                                                    <CardMedia
-                                                        component="img"
-                                                        alt="Contemplative Reptile"
-                                                        height="200"
-                                                        image="/img/image-not-available.png"
-                                                        title="no image available"
-                                                    />
-                                                    <CardContent>
-                                                        <Typography gutterBottom variant="h5" component="h2">
-                                                            {name}
-                                                        </Typography>
-                                                        <div className="tags">
-                                                            {advert.tags.map(tag => {
-                                                                return <Chip variant="outlined" size="small" label={tag} key={tag} />
-                                                            })}
-                                                        </div>
+                                                <Link href={`/adverts/${_id}`} passHref>
+                                                    <CardActionArea>
+                                                        <CardMedia
+                                                            component="img"
+                                                            alt="Contemplative Reptile"
+                                                            height="200"
+                                                            image="/img/image-not-available.png"
+                                                            title="no image available"
+                                                        />
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                {name}
+                                                            </Typography>
+                                                            <div className="tags">
+                                                                {advert.tags.map(tag => {
+                                                                    return <Chip variant="outlined" size="small" label={tag} key={tag} />
+                                                                })}
+                                                            </div>
 
-                                                        <Typography variant="body2" color="textSecondary" component="p">
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate eget mauris vel sodales.
-                                                            Integer magna sapien, varius id quam in, dignissim iaculis leo. Sed efficitur mauris rutrum magna vehicula.
-                                                        </Typography>
-                                                        <Box mt={2} mb={2}>
-                                                            <Divider />
-                                                        </Box>
-                                                        <Typography variant="body3" color="textSecondary" component="p" align="right">
-                                                            {statusEnum[advert.status]}
-                                                        </Typography>
-                                                        <Typography variant="body3" color="Secondary" component="p" align="right">
-                                                            {price}€
-                                                        </Typography>
-                                                    </CardContent>
-                                                </CardActionArea>
+                                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate eget mauris vel sodales.
+                                                                Integer magna sapien, varius id quam in, dignissim iaculis leo. Sed efficitur mauris rutrum magna vehicula.
+                                                            </Typography>
+                                                            <Box mt={2} mb={2}>
+                                                                <Divider />
+                                                            </Box>
+                                                            <Typography variant="body3" color="textSecondary" component="p" align="right">
+                                                                {statusEnum[advert.status]}
+                                                            </Typography>
+                                                            <Typography variant="body3" color="Secondary" component="p" align="right">
+                                                                {price}€
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Link>
                                                 <CardActions>
                                                     <Button size="small" color="primary">
                                                         Share
