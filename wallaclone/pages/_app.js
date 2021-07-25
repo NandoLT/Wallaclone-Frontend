@@ -7,9 +7,13 @@ import configureStore from '../store';
 import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 import NavBar from '../components/NavBar';
+import parseAuthToken from '../utils/parseAuthToken';
 
 const accessToken = storage.get('authToken');
 const store = configureStore({ preloadedState: { auth: !!accessToken } });
+
+parseAuthToken(accessToken);
+
 
 function MyApp({ Component, pageProps }) {
 
