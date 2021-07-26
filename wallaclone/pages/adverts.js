@@ -132,7 +132,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
                 <div style={{ width: 300 }}>
 
-                    <div className={classes.root}>
+                    {/* <div className={classes.root}>
                         <Typography id="range-slider" gutterBottom>
                             Rango de precios
                         </Typography>
@@ -199,7 +199,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                             />
                         </FormGroup>
 
-                    </FormControl >
+                    </FormControl > */}
 
                     <Autocomplete
                         freeSolo
@@ -232,7 +232,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
-                                {adverts.map(advert => {
+                                {adsFilteredBySearch.map(advert => {
                                     const { name, price, onSale, _id } = advert;
                                     return (
                                         <Grid item xs={6} sm={4} md={3} key={_id}>
