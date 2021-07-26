@@ -5,7 +5,7 @@ const client = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL_DEPLOY
 //------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS MODIFICAMOS Y DESCOMENTAMOS ESTO -------
 
 const setAuthorizationHeader = token => {
-    client.defaults.headers.common['Authorization'] = `${token}`;
+    client.defaults.headers.common['Authorization'] = token;
 };
 
 const removeAuthorizationHeader = () => {
@@ -30,7 +30,7 @@ client.interceptors.response.use(
 
 //------ CUANDO SEPAMOS COMO QUIERE EL BACK LOS HEADERS DESCOMENTAMOS ESTO -------
 
-export const configureClient = ({ accessToken }) => {
+export const configureClient = ( accessToken ) => {
     if (accessToken) {
         setAuthorizationHeader(accessToken);
     }
