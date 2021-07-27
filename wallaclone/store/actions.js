@@ -90,7 +90,7 @@ export const advertCreationSuccess = (advertDetails) =>{
 export const advertCreationFailure = error =>{
     return{
         type:ADVERT_CREATION_FAILURE,
-        paload:error,
+        payload:error,
         error:true,
     }
 }
