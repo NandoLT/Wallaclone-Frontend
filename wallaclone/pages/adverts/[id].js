@@ -24,7 +24,7 @@ const advert = () => {
         <div>
             {advert ?
                 <div>
-                    <img src={advert.photo ? advert.photo : '/img/image-not-available.png'} />
+                    <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
                     {advert.name} |
                     {advert.price} |
                     {statusEnum[advert.status]} |

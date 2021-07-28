@@ -221,9 +221,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                 </div>
 
             }
-            <div>
-                {error && <Alert />}
-            </div>
+            
+           
 
 
             <section className="adverts-section">
@@ -302,6 +301,10 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
 
             </section>
+            {
+                error &&  <div> {error && <Alert />} </div>
+
+            }
             <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr; </h3>

@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, ADVERTS_REQUEST, ADVERTS_SUCCESS, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS } from "./types";
 
 
 export const authRegister = () => {
@@ -61,16 +61,24 @@ export const authLogout = () => {
     }
 }
 
-export const advertsGet = (adverts) => {
+export const getAdvertsSuccess = (adverts) => {
     return {
-        type: ADVERTS_SUCCESS,
+        type: GET_ADVERTS_SUCCESS,
         payload: adverts
     }
 }
 
-export const advertsRequest = () => {
+export const getAdvertsRequest = () => {
     return {
-        type: ADVERTS_REQUEST
+        type: GET_ADVERTS_REQUEST
+    }
+}
+
+export const getAdvertsFailure = error =>{
+    return{
+        type: GET_ADVERTS_FAILURE,
+        payload:error,
+        error:true,
     }
 }
 
@@ -136,12 +144,12 @@ export const authRegisterAction = (credentials) => {
 
 export const advertsGetAction = () => {
     return async function (dispatch, getState, { api, router }) {
-        dispatch(advertsRequest());
+        dispatch(getAdvertsRequest());
         try {
             const adverts = await api.adverts.getAdverts();
-            dispatch(advertsGet(adverts));
-        } catch (err) {
-            console.log(err)
+            dispatch(getAdvertsSuccess(adverts));
+        } catch (error) {
+            dispatch(getAdvertsFailure(error.message));
         }
     }
 }
