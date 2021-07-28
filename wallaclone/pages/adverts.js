@@ -233,7 +233,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
                                 {adsFilteredBySearch.map(advert => {
-                                    const { name, price, onSale, _id } = advert;
+                                    const { name, price, onSale, _id, photo, description } = advert;
+                                    console.log(price)
+                                    
                                     return (
                                         <Grid item xs={6} sm={4} md={3} key={_id}>
                                             <Card className={classes.root}>
@@ -243,7 +245,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                             component="img"
                                                             alt="Contemplative Reptile"
                                                             height="200"
-                                                            image="/img/image-not-available.png"
+                                                            image= {photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${photo}` : '/img/image-not-available.png'}
                                                             title="no image available"
                                                         />
                                                         <CardContent>
@@ -257,8 +259,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                             </div>
 
                                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate eget mauris vel sodales.
-                                                                Integer magna sapien, varius id quam in, dignissim iaculis leo. Sed efficitur mauris rutrum magna vehicula.
+                                                               {description}
                                                             </Typography>
                                                             <Box mt={2} mb={2}>
                                                                 <Divider />

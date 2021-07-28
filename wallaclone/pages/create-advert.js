@@ -107,6 +107,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
             formData.append('name', adDetails.name);
             formData.append('description', adDetails.description);
+            formData.append('price', adDetails.price);
             formData.append('province', adDetails.province);
             formData.append('tags', adDetails.tags);
             formData.append('status', adDetails.status);
