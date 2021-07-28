@@ -65,7 +65,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         price: 0,
         province:'',
         tags:[],
-        statusEnum: 0,
+        status: 0,
         photo:null,
         userId:userId,
     })
@@ -103,7 +103,20 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(advertCreationAction(adDetails));
+        const formData = new FormData();
+
+            formData.append('name', adDetails.name);
+            formData.append('description', adDetails.description);
+            formData.append('province', adDetails.province);
+            formData.append('tags', adDetails.tags);
+            formData.append('status', adDetails.status);
+            formData.append('userId', adDetails.userId);
+            if (adDetails.photo) {
+                formData.append('photo', adDetails.photo);
+            }
+
+            
+        dispatch(advertCreationAction(formData));
 
     }
     
@@ -196,7 +209,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
                 <Select style={{ margin: 8 }} required
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={adDetails.statusEnum}
+                    value={adDetails.status}
                     onChange={handleInputChange}
                     name= "statusEnum"
                     >
