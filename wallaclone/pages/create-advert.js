@@ -62,7 +62,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
     const [adDetails, setAdDetails] = React.useState({
         name: '',
         description: '',
-        price: '',
+        price: 0,
         province:'',
         tags:[],
         statusEnum: 0,
@@ -127,7 +127,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         if(!adDetails.description){
             return true
         };
-        if(!adDetails.price){
+        if(!adDetails.price || adDetails.price <=0 || adDetails.price >100000 || isNaN(adDetails.price) ){
             return true
         };
 
