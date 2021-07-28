@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { authResetState } from '../store/actions';
 import { useDispatch} from 'react-redux';
 import LoginForm from '../components/Login/LoginForm'
+import { Link } from '@material-ui/core';
 
 
 const Login = () => {
@@ -20,6 +21,7 @@ const Login = () => {
             <h1>Login</h1>
 
             <LoginForm />
+            <Link href='forgot-password'>Olvidé mi contraseña</Link>
 
         </div >
 

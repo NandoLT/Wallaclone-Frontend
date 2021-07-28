@@ -1,7 +1,7 @@
 
 
 
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQUEST, AUTH_LOGIN_FAILURE, AUTH_REGISTER_REQUEST, AUTH_REGISTER_FAILURE, AUTH_RESET_STATE, ADVERTS_SUCCESS, ADVERTS_REQUEST, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, ADVERT_CREATION_FAILURE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE } from "./types";
+import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_REGISTER_SUCCESS, AUTH_LOGIN_REQUEST, AUTH_LOGIN_FAILURE, AUTH_REGISTER_REQUEST, AUTH_REGISTER_FAILURE, AUTH_RESET_STATE, ADVERTS_SUCCESS, ADVERTS_REQUEST, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, ADVERT_CREATION_FAILURE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_FAILURE } from "./types";
 import { combineReducers } from 'redux';
 
 
@@ -75,6 +75,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_REGISTER_REQUEST:
         case ADVERT_CREATION_REQUEST:
         case GET_ADVERTS_REQUEST:
+        case AUTH_RECOVER_PASSWORD_REQUEST:
             return {
                 loading: true,
                 error: null,
@@ -84,6 +85,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_LOGIN_SUCCESS:
         case ADVERT_CREATION_SUCCESS:
         case GET_ADVERTS_SUCCESS:
+        case AUTH_REGISTER_SUCCESS:
             return {
                 loading: false,
                 error: null,
@@ -92,6 +94,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_REGISTER_FAILURE:
         case ADVERT_CREATION_FAILURE:
         case GET_ADVERTS_FAILURE:
+        case AUTH_RECOVER_PASSWORD_FAILURE:
             return {
                 loading: false,
                 error: true,

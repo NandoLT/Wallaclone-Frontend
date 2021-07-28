@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_SUCCESS, AUTH_RECOVER_PASSWORD_FAILURE } from "./types";
 
 
 export const authRegister = () => {
@@ -23,6 +23,26 @@ export const authLoginRequest = () => {
 export const authLoginFailure = (error) => {
     return {
         type: AUTH_LOGIN_FAILURE,
+        payload:error,
+        error:true
+    }
+}
+
+export const authRecoverPasswordRequest = () => {
+    return {
+        type: AUTH_RECOVER_PASSWORD_REQUEST,
+    }
+}
+
+export const authRecoverPasswordSuccess = () => {
+    return {
+        type: AUTH_RECOVER_PASSWORD_SUCCESS,
+    }
+}
+
+export const authRecoverPasswordFailure = (error) => {
+    return {
+        type: AUTH_RECOVER_PASSWORD_FAILURE,
         payload:error,
         error:true
     }
@@ -114,6 +134,21 @@ export const authLoginAction = (remember, credentials) => {
             router.push('/adverts');
         } catch (error) {
             dispatch(authLoginFailure(error.message))
+        }
+    }
+}
+
+export const authrecoverPasswordAction = (email) => {
+    return async function (dispatch, getState, { api, router }) {
+
+        dispatch(authRecoverPasswordRequest())
+
+        try {
+            await api.auth.recoverPassword(email);
+            dispatch(authRecoverPasswordSuccess());
+            router.push('/login');
+        } catch (error) {
+            dispatch(authRecoverPasswordFailure(error.message))
         }
     }
 }

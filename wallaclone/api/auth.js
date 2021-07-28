@@ -25,12 +25,14 @@ export const login = (remember, credentials) => {
         
 }
 
-
-
 export const register = (credentials) => {
    
     return client.post(`${authPath}/register`, credentials)
     //.then RECIBIR EL TOKEN POR PARTE DEL BACK PARA GUARDARLO EN EL STORAGE
+}
+
+export const recoverPassword = (email) => {
+    return client.post(`${authPath}/recoverpassword`, email);
 }
 
 export const logout = () => {
