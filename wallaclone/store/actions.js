@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_SUCCESS, AUTH_RECOVER_PASSWORD_FAILURE } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_SUCCESS, AUTH_RECOVER_PASSWORD_FAILURE, AUTH_RESET_PASSWORD_REQUEST, AUTH_RESET_PASSWORD_SUCCESS, AUTH_RESET_PASSWORD_FAILURE } from "./types";
 
 
 export const authRegister = () => {
@@ -43,6 +43,26 @@ export const authRecoverPasswordSuccess = () => {
 export const authRecoverPasswordFailure = (error) => {
     return {
         type: AUTH_RECOVER_PASSWORD_FAILURE,
+        payload:error,
+        error:true
+    }
+}
+
+export const authResetPasswordRequest = () => {
+    return {
+        type: AUTH_RESET_PASSWORD_REQUEST,
+    }
+}
+
+export const authResetPasswordSuccess = () => {
+    return {
+        type: AUTH_RESET_PASSWORD_SUCCESS,
+    }
+}
+
+export const authResetPasswordFailure = (error) => {
+    return {
+        type: AUTH_RESET_PASSWORD_FAILURE,
         payload:error,
         error:true
     }
@@ -152,6 +172,23 @@ export const authrecoverPasswordAction = (email) => {
         }
     }
 }
+
+export const authresetPasswordAction = (passwords) => {
+    return async function (dispatch, getState, { api, router }) {
+
+        dispatch(authResetPasswordRequest())
+
+        try {
+            await api.auth.resetPassword(passwords);
+            dispatch(authResetPasswordSuccess());
+            router.push('/login');
+        } catch (error) {
+            dispatch(authResetPasswordFailure(error.message))
+        }
+    }
+}
+
+
 
 export const authLogoutAction = () => {
     return async function (dispatch, getState, { api, router }) {

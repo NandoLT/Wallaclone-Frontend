@@ -10,6 +10,7 @@ import {getIsLoading, getError, getUserId} from '../store/selectors'
 import styles from '../styles/Home.module.css'
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
+import { authresetPasswordAction } from '../store/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +69,7 @@ const ResetPassword = ({isLoading, error}) => {
         
         event.preventDefault();
         console.log(passwords)
-        //dispatch(authrecoverPasswordAction(email));
+        dispatch(authresetPasswordAction(passwords));
 
     }
 

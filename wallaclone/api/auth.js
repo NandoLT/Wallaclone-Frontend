@@ -35,6 +35,10 @@ export const recoverPassword = (email) => {
     return client.post(`${authPath}/recoverpassword`, email);
 }
 
+export const resetPassword = (passwords) => {
+    return client.post(`${authPath}/resetpassword`, passwords);
+}
+
 export const logout = () => {
     return Promise.resolve().then(storage.clear);
   };
