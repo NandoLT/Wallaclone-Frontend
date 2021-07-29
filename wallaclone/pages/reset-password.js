@@ -10,7 +10,7 @@ import {getIsLoading, getError, getUserId} from '../store/selectors'
 import styles from '../styles/Home.module.css'
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
-import { authresetPasswordAction } from '../store/actions';
+import { authresetPasswordAction, confirmPasswordFailureAction, authResetState } from '../store/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +32,10 @@ const ResetPassword = ({isLoading, error}) => {
         confirmNewPassword:'',
 
     });
+
+    React.useEffect(() => {
+        dispatch(authResetState());
+    }, [])
     
 
     const handleInputChange = event => {
@@ -57,18 +61,24 @@ const ResetPassword = ({isLoading, error}) => {
             return true
         };
 
-        if(passwords.newPassword !== passwords.confirmNewPassword){
-            return true
-        }
-
-
         return false;
     }
 
     const handleSubmit = (event) => {
         
         event.preventDefault();
-        console.log(passwords)
+        if(passwords.newPassword !== passwords.confirmNewPassword){
+            dispatch(confirmPasswordFailureAction("Las contraseñas no coinciden"));
+            setPasswords(oldPasswords => {
+
+                const newPasswords = {
+                    ...oldPasswords,
+                    confirmNewPassword:'',
+                }
+                return newPasswords
+            });
+            return
+        }
         dispatch(authresetPasswordAction(passwords));
 
     }
@@ -99,8 +109,8 @@ const ResetPassword = ({isLoading, error}) => {
                         </Grid>
                     </Grid>
         </div>
-               
-                
+        
+            
 
                 {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Recuperar contraseña
