@@ -11,6 +11,7 @@ const initialState = {
     ui: {
         loading: false,
         error: null,
+        successMessage: null,
     },
 
     adverts: [],
@@ -64,11 +65,15 @@ export const ui = (state = initialState.ui, action) => {
     if (action.error) {
         return {...state, loading:false, error:action.payload }
     }
+    if (action.successMessage){
+        return {...state, loading: false, error: null, successMessage: action.payload }
+    }
     switch (action.type) {
         case AUTH_RESET_STATE:
             return {
                 loading: false,
                 error: null,
+                successMessage: null,
             };
 
         case AUTH_LOGIN_REQUEST:
@@ -88,11 +93,16 @@ export const ui = (state = initialState.ui, action) => {
         case GET_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
         case AUTH_RECOVER_PASSWORD_SUCCESS:
-        case AUTH_RESET_PASSWORD_SUCCESS:
             return {
                 loading: false,
                 error: null,
             };
+        case AUTH_RESET_PASSWORD_SUCCESS:
+            return {
+                loading: false,
+                error: null,
+                successMessage:action.payload
+                };
         case AUTH_LOGIN_FAILURE:
         case AUTH_REGISTER_FAILURE:
         case ADVERT_CREATION_FAILURE:

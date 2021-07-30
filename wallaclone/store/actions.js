@@ -54,9 +54,11 @@ export const authResetPasswordRequest = () => {
     }
 }
 
-export const authResetPasswordSuccess = () => {
+export const authResetPasswordSuccess = (successMessage) => {
     return {
         type: AUTH_RESET_PASSWORD_SUCCESS,
+        payload:successMessage,
+        successMessage:true,
     }
 }
 
@@ -189,7 +191,7 @@ export const authresetPasswordAction = (passwords) => {
 
         try {
             await api.auth.resetPassword(passwords);
-            dispatch(authResetPasswordSuccess());
+            dispatch(authResetPasswordSuccess("Contraseña reestablecida con éxito"));
             router.push('/login');
         } catch (error) {
             dispatch(authResetPasswordFailure(error.message))

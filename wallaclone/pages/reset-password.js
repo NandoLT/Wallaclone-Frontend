@@ -6,11 +6,12 @@ import Button from '@material-ui/core/Button';
 import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert'
-import {getIsLoading, getError, getUserId} from '../store/selectors'
+import {getIsLoading, getError, getUserId, getSuccessMessage} from '../store/selectors'
 import styles from '../styles/Home.module.css'
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import { authresetPasswordAction, confirmPasswordFailureAction, authResetState } from '../store/actions';
+import SuccessAlert from '../components/SuccessAlert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ResetPassword = ({isLoading, error}) => {
+const ResetPassword = ({isLoading, error, successMessage}) => {
 
     const classes = useStyles();
     const dispatch= useDispatch();
@@ -32,6 +33,8 @@ const ResetPassword = ({isLoading, error}) => {
         confirmNewPassword:'',
 
     });
+
+    const [validationSuccess, setValidationSuccess] = React.useState(false);
 
     React.useEffect(() => {
         dispatch(authResetState());
@@ -80,6 +83,7 @@ const ResetPassword = ({isLoading, error}) => {
             return
         }
         dispatch(authresetPasswordAction(passwords));
+        
 
     }
 
@@ -117,6 +121,7 @@ const ResetPassword = ({isLoading, error}) => {
                 </Button>}
 
                 {error && <Alert />}
+                {(successMessage) &&  <SuccessAlert message="Contraseña actualizada con éxito"/> }
 
 
             </form>
@@ -129,6 +134,7 @@ const ResetPassword = ({isLoading, error}) => {
 const mapStateToProps = (state) => ({
     isLoading: getIsLoading(state),
     error: getError(state),
+    successMessage: getSuccessMessage(state),
     
 }); 
 
