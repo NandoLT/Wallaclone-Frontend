@@ -231,7 +231,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
-                                {adsFilteredBySearch.map(advert => {
+                                {adsFilteredBySearch.slice(0).reverse().map(advert => {
                                     const { name, price, onSale, _id, photo, description } = advert;
                                     console.log(price)
                                     
