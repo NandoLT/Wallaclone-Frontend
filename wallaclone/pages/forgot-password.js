@@ -49,7 +49,6 @@ const ForgotPassword = ({isLoading, error, successMessage}) => {
     const handleSubmit = (event) => {
         
         event.preventDefault();
-        console.log(email)
         dispatch(authrecoverPasswordAction(email));
 
     }

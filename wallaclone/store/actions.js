@@ -179,9 +179,7 @@ export const authrecoverPasswordAction = (email) => {
         try {
             await api.auth.recoverPassword(email);
             dispatch(authRecoverPasswordSuccess("Te acabamos de enviar un email para reestablecer tu contraseña"));
-            setTimeout(() => {
-                router.push('/login');
-            }, 2000);
+           
            
         } catch (error) {
             dispatch(authRecoverPasswordFailure(error.message))
