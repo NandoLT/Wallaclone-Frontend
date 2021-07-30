@@ -6,10 +6,11 @@ import Button from '@material-ui/core/Button';
 import { useDispatch, connect } from 'react-redux';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert'
-import {getIsLoading, getError, getUserId} from '../store/selectors'
+import {getIsLoading, getError, getUserId, getSuccessMessage} from '../store/selectors'
 import styles from '../styles/Home.module.css'
 import EmailIcon from '@material-ui/icons/Email';
 import { authrecoverPasswordAction } from '../store/actions';
+import SuccessAlert from '../components/SuccessAlert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ForgotPassword = ({isLoading, error}) => {
+const ForgotPassword = ({isLoading, error, successMessage}) => {
 
     const classes = useStyles();
     const dispatch= useDispatch();
@@ -77,6 +78,7 @@ const ForgotPassword = ({isLoading, error}) => {
                 </Button>}
 
                 {error && <Alert />}
+                {successMessage && <SuccessAlert message={successMessage}/>}
 
 
             </form>
@@ -89,6 +91,7 @@ const ForgotPassword = ({isLoading, error}) => {
 const mapStateToProps = (state) => ({
     isLoading: getIsLoading(state),
     error: getError(state),
+    successMessage: getSuccessMessage(state),
     
 }); 
 

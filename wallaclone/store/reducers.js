@@ -66,6 +66,7 @@ export const ui = (state = initialState.ui, action) => {
         return {...state, loading:false, error:action.payload }
     }
     if (action.successMessage){
+        console.log(action.successMessage)
         return {...state, loading: false, error: null, successMessage: action.payload }
     }
     switch (action.type) {

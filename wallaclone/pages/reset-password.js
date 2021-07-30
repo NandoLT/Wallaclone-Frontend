@@ -34,7 +34,6 @@ const ResetPassword = ({isLoading, error, successMessage}) => {
 
     });
 
-    const [validationSuccess, setValidationSuccess] = React.useState(false);
 
     React.useEffect(() => {
         dispatch(authResetState());

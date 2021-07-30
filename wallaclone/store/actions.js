@@ -34,9 +34,11 @@ export const authRecoverPasswordRequest = () => {
     }
 }
 
-export const authRecoverPasswordSuccess = () => {
+export const authRecoverPasswordSuccess = (successMessage) => {
     return {
         type: AUTH_RECOVER_PASSWORD_SUCCESS,
+        payload: successMessage,
+        successMessage:true,
     }
 }
 
@@ -176,8 +178,11 @@ export const authrecoverPasswordAction = (email) => {
 
         try {
             await api.auth.recoverPassword(email);
-            dispatch(authRecoverPasswordSuccess());
-            router.push('/login');
+            dispatch(authRecoverPasswordSuccess("Te acabamos de enviar un email para reestablecer tu contraseña"));
+            setTimeout(() => {
+                router.push('/login');
+            }, 2000);
+           
         } catch (error) {
             dispatch(authRecoverPasswordFailure(error.message))
         }
