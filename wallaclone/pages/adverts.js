@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react'
 import Link from 'next/link';
 import statusEnum from '../utils/advertsEnum';
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError } from '../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError, getUserId } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Loading from '../components/Loading';
 import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Adverts = ({ isLogged, adverts, isLoading, error }) => {
+const Adverts = ({ isLogged, adverts, isLoading, error, userId }) => {
     const classes = useStyles();
 
     const [searchValue, setSearchValue] = React.useState("");
@@ -257,7 +259,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                                     return <Chip variant="outlined" size="small" label={tag} key={tag} />
                                                                 })}
                                                             </div>
-
                                                             <Typography variant="body2" color="textSecondary" component="p">
                                                                {description}
                                                             </Typography>
@@ -279,6 +280,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                     </Button>
                                                     <Button size="small" color="primary">
                                                         Learn More
+                                                    </Button>
+                                                    <Button size="small">
+                                                        {advert.userId == userId ? <StarIcon /> : <StarBorderIcon />}
                                                     </Button>
                                                 </CardActions>
                                             </Card>
@@ -316,6 +320,7 @@ const mapStateToProps = state => ({
     adverts: getAdverts(state),
     isLoading: getIsLoading(state),
     error: getError(state),
+    userId: getUserId(state)
 })
 
 
