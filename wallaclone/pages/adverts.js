@@ -1,11 +1,10 @@
-
 import React, { useEffect, useMemo } from 'react'
 import Link from 'next/link';
 import statusEnum from '../utils/advertsEnum';
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError, getUserId } from '../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction } from '../store/actions';
+import { advertsGetAction, advertGetFavoritesAction, advertAddFavoritesAction, advertDeleteFavoritesAction } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Adverts = ({ isLogged, adverts, isLoading, error, userId }) => {
+const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
     const classes = useStyles();
 
     const [searchValue, setSearchValue] = React.useState("");
@@ -56,6 +55,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error, userId }) => {
     useEffect(() => {
 
         dispatch(advertsGetAction())
+        dispatch(advertGetFavoritesAction())
     }, [])
 
     const tags = ["mobile", "software", "tech"];
@@ -123,6 +123,14 @@ const Adverts = ({ isLogged, adverts, isLoading, error, userId }) => {
 
     function valuetext(value) {
         return `${value}€`;
+    }
+
+    const handleFavoriteCheck = ev => {
+        if (favoriteAdverts.includes(ev.target.id)) {
+            dispatch(advertAddFavoritesAction({ advertId: ev.target.id }));
+        } else {
+            dispatch(advertDeleteFavoritesAction({ advertId: ev.target.id }));
+        }
     }
 
     return (
@@ -281,8 +289,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error, userId }) => {
                                                     <Button size="small" color="primary">
                                                         Learn More
                                                     </Button>
-                                                    <Button size="small">
-                                                        {advert.userId == userId ? <StarIcon /> : <StarBorderIcon />}
+                                                    <Button size="small" onClick={handleFavoriteCheck}>
+                                                        { favoriteAdverts && favoriteAdverts.includes(_id) ? <StarIcon id={_id}/> : <StarBorderIcon id={_id}/>}
                                                     </Button>
                                                 </CardActions>
                                             </Card>
@@ -320,7 +328,7 @@ const mapStateToProps = state => ({
     adverts: getAdverts(state),
     isLoading: getIsLoading(state),
     error: getError(state),
-    userId: getUserId(state)
+    favoriteAdverts: getFavoritesAdverts(state)
 })
 
 

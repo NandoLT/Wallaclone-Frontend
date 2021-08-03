@@ -118,6 +118,69 @@ export const advertCreationFailure = error =>{
     }
 }
 
+export const advertGetFavoritesRequest = () => {
+    return {
+        type: ADVERT_GET_FAVORITES_REQUEST
+    }
+}
+
+export const advertGetFavoritesSuccess = (advertsIds) => {
+    return {
+        type: ADVERT_GET_FAVORITES_SUCCESS,
+        payload: advertsIds
+    }
+}
+
+export const advertGetFavoritesFailure = (error) => {
+    return {
+        type: ADVERT_GET_FAVORITES_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+export const advertAddFavoritesRequest = () => {
+    return {
+        type: ADVERT_ADD_FAVORITE_REQUEST
+    }
+}
+
+export const advertAddFavoritesSuccess = (advertId) => {
+    return {
+        type: ADVERT_ADD_FAVORITE_SUCCESS,
+        payload: advertId
+    }
+}
+
+export const advertAddFavoritesFailure = (error) => {
+    return {
+        type: ADVERT_ADD_FAVORITE_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+export const advertDeleteFavoritesRequest = () => {
+    return {
+        type: ADVERT_DELETE_FAVORITE_REQUEST
+    }
+}
+
+export const advertDeleteFavoritesSuccess = (advertId) => {
+    return {
+        type: ADVERT_DELETE_FAVORITE_SUCCESS,
+        payload: advertId
+    }
+}
+
+export const advertDeleteFavoritesFailure = (error) => {
+    return {
+        type: ADVERT_DELETE_FAVORITE_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
 export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
 
@@ -183,4 +246,38 @@ export const advertCreationAction = (advertDetails) => {
     }
 }
 
+export const advertGetFavoritesAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(advertGetFavoritesRequest());
+        try {
+            const advertsIds = await api.adverts.getFavorites();
+            dispatch(advertGetFavoritesSuccess(advertsIds));
+        } catch (error) {
+            dispatch(advertGetFavoritesFailure(error));
+        }
+    }
+}
 
+export const advertAddFavoritesAction = (advertId) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(advertAddFavoritesRequest());
+        try {
+            await api.adverts.addFavorites(advertId);
+            dispatch(advertAddFavoritesSuccess(advertId));
+        } catch (error) {
+            dispatch(advertAddFavoritesFailure(error));
+        }
+    }
+}
+
+export const advertDeleteFavoritesAction = (advertId) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(advertDeleteFavoritesRequest());
+        try {
+            await api.adverts.removeFavorites(advertId);
+            dispatch(advertDeleteFavoritesSuccess(advertId));
+        } catch (error) {
+            dispatch(advertDeleteFavoritesFailure(error));
+        }
+    }
+}

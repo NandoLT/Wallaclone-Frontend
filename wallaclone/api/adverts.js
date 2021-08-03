@@ -3,23 +3,27 @@ import client  from "./client";
 const advertsPath = '/api/adverts'
 
 export const getAdverts = async () => {
-
-    try {
-        const adverts = await client.get(advertsPath)
-        return adverts;
-    } catch (err) {
-        console.log(err);
-    }
+    const adverts = await client.get(advertsPath)
+    return adverts;
 }
 
 export const getAdvertDetail = async (id) => {
-    try {
-        const advert = await client.get(advertsPath + `/${id}`)
-        return advert.result
-    } catch (err) {
-        console.log(err)
-    }
+    const advert = await client.get(advertsPath + `/${id}`)
+    return advert.result
 }
+
 export const createAdvert = async (advertDetails) => {
     return client.post(`${advertsPath}`, advertDetails);    
+}
+
+export const getFavorites = async () => {
+    return await client.post(`${advertsPath}/getFavorites`);
+}
+
+export const addFavorites = async (advertId) => {
+    return await client.post(`${advertsPath}/addFavorite`, advertId);
+}
+
+export const removeFavorites = async (advertId) => {
+    return await client.post(`${advertsPath}/removeFavorite`, advertId);
 }

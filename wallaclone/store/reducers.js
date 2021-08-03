@@ -28,7 +28,7 @@ import { combineReducers } from 'redux';
 const initialState = {
     auth: false,
     userId: "",
-    userFavoriteAdverts: [],
+    favoriteAdverts: [],
     ui: {
         loading: false,
         error: null,
@@ -77,10 +77,13 @@ export const userId = (state = initialState.userId, action) => {
     }    
 }
 
-export const userFavoriteAdverts = (state = initialState.userFavoriteAdverts, action) => {
+export const userFavoriteAdverts = (state = initialState.favoriteAdverts, action) => {
     switch (action.type) {
         case ADVERT_GET_FAVORITES_SUCCESS:
             return action.payload
+
+        case ADVERT_ADD_FAVORITE_SUCCESS:
+            return [ ...state, action.payload ]
 
         default:
             return state;
