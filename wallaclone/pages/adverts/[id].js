@@ -20,14 +20,20 @@ const advert = () => {
     }, [id])
 
 
+
+
     return (
         <div>
             {advert ?
                 <div>
                     <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
-                    {advert.name} |
-                    {advert.price} |
-                    {statusEnum[advert.status]} |
+                    <div>{advert.name}</div>
+                    <div>{advert.description}</div>
+                    <div> {advert.price} €</div>
+                    <div>{statusEnum[advert.status]}</div>
+                    <div>{advert.province}</div>
+                    
+                     
                     <ul>
                         {advert.tags.map(tag => {
                             return <li key={tag}>{tag}</li>
