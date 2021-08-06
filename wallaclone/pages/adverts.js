@@ -52,10 +52,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-
-        dispatch(advertsGetAction())
-        dispatch(advertGetFavoritesAction())
+    useEffect(async () => {
+        await dispatch(advertsGetAction())
+        await dispatch(advertGetFavoritesAction())
     }, [])
 
     const tags = ["mobile", "software", "tech"];
