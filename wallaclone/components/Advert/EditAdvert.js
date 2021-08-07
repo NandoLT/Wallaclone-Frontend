@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -21,10 +20,10 @@ import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
-import { advertCreationAction, authResetState } from '../../store/actions';
+import { updateAdvertAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
-import ConfirmationPopup from '../ConfirmationPopup';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditAdvertForm = ({advert, isLogged, isLoading, error, userId}) => {
+
+  const dispatch = useDispatch();
 
   const [newAdDetails, setNewAdDetails] = React.useState({
     name: advert.name,
@@ -104,22 +105,22 @@ const setPhoto = event => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(newAdDetails)
-    // const formData = new FormData();
+    
+    const formData = new FormData();
 
-    //     formData.append('name', adDetails.name);
-    //     formData.append('description', adDetails.description);
-    //     formData.append('price', adDetails.price);
-    //     formData.append('province', adDetails.province);
-    //     formData.append('tags', adDetails.tags);
-    //     formData.append('status', adDetails.status);
-    //     formData.append('userId', adDetails.userId);
-    //     if (adDetails.photo) {
-    //         formData.append('photo', adDetails.photo);
-    //     }
+        formData.append('name', newAdDetails.name);
+        formData.append('description', newAdDetails.description);
+        formData.append('price', newAdDetails.price);
+        formData.append('province', newAdDetails.province);
+        formData.append('tags', newAdDetails.tags);
+        formData.append('status', newAdDetails.status);
+        formData.append('userId', userId);
+        if (newAdDetails.photo) {
+            formData.append('photo', newAdDetails.photo);
+        }
 
         
-    // dispatch(advertCreationAction(formData));
+    dispatch(updateAdvertAction(formData));
 
 }
 

@@ -25,5 +25,5 @@ export const createAdvert = async (advertDetails) => {
 }
 
 export const updateAdvert = async (newAdvertDetails) => {
-    return client.put(`${advertsPath}/updateAdvert`, advertDetails);
+    return client.put(`${advertsPath}/updateAdvert`, newAdvertDetails);
 }

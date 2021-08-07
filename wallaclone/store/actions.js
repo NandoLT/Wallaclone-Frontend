@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_SUCCESS, AUTH_RECOVER_PASSWORD_FAILURE, AUTH_RESET_PASSWORD_REQUEST, AUTH_RESET_PASSWORD_SUCCESS, AUTH_RESET_PASSWORD_FAILURE, CONFIRM_PASSWORD_FAILURE } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, AUTH_LOGIN_REQUEST, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE, AUTH_REGISTER_SUCCESS, AUTH_RESET_STATE, GET_ADVERTS_REQUEST, GET_ADVERTS_SUCCESS, GET_ADVERTS_FAILURE, ADVERT_CREATION_FAILURE, ADVERT_CREATION_REQUEST, ADVERT_CREATION_SUCCESS, AUTH_RECOVER_PASSWORD_REQUEST, AUTH_RECOVER_PASSWORD_SUCCESS, AUTH_RECOVER_PASSWORD_FAILURE, AUTH_RESET_PASSWORD_REQUEST, AUTH_RESET_PASSWORD_SUCCESS, AUTH_RESET_PASSWORD_FAILURE, CONFIRM_PASSWORD_FAILURE, ADVERT_UPDATE_REQUEST, ADVERT_UPDATE_SUCCESS, ADVERT_UPDATE_FAILURE } from "./types";
 
 
 export const authRegister = () => {
@@ -156,6 +156,27 @@ export const advertCreationFailure = error =>{
     }
 }
 
+export const advertUpdateRequest = () => {
+    return {
+        type: ADVERT_UPDATE_REQUEST,
+    }
+}
+
+export const advertUpdateSuccess = (newAdvertDetails) =>{
+    return {
+        type: ADVERT_UPDATE_SUCCESS,
+        newAdvertDetails: newAdvertDetails,
+    }
+}
+
+export const advertUpdateFailure = error =>{
+    return{
+        type:ADVERT_UPDATE_FAILURE,
+        payload:error,
+        error:true,
+    }
+}
+
 export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
 
@@ -254,4 +275,17 @@ export const advertCreationAction = (advertDetails) => {
     }
 }
 
+
+export const updateAdvertAction = (newAdvertDetails) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(advertUpdateRequest());
+        try {
+            await api.adverts.updateAdvert(newAdvertDetails);
+            dispatch(advertUpdateSuccess(newAdvertDetails));
+            router.push('/adverts');
+        } catch (error) {
+            dispatch(advertUpdateFailure(error.message));
+        }
+    }
+}
 
