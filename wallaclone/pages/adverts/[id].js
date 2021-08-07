@@ -58,10 +58,14 @@ const handleEditMode= () => {
             {advert ?
                 <div >
                     <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
-                    {editMode && <DeleteForeverIcon onClick={()=> console.log("Boorar anuncio")} color="secondary" fontsize="large"/>}
+                    {editMode && <DeleteForeverIcon onClick={()=> console.log("Borrar imagen")} color="secondary" fontsize="large"/>}
+                    {editMode && <div><Button  onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
+                    Deshacer cambios
+                </Button></div>}
                     {editMode ? 
                     <div>
                        <EditAdvertForm advert={advert}/>
+                       
 
                     </div>
 
@@ -91,13 +95,10 @@ const handleEditMode= () => {
                 : ''
             }
             <div>
-                {!editMode ?  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!editMode &&  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Editar anuncio
-                </Button> :
+                </Button> 
                 
-                <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                    Deshacer cambios
-                </Button>
                 }
            
             </div>
