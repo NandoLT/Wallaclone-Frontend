@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { advertCreationAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
+import ConfirmationPopup from '../ConfirmationPopup';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -265,9 +266,18 @@ const validation = () => {
               
             {error && <Alert />}
 
-            {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
-                Modificar anuncio
-            </Button>}
+            {!isLoading && <ConfirmationPopup
+                disabled={validation()}
+                type="submit"
+                buttonText="Modificar anuncio" 
+                popupTitle="Modificar anuncio" 
+                popupDescription="¿Seguro que quieres modificar este anuncio?" 
+                handleConfirmation={handleSubmit}
+                /> }
+
+            
+
+
             {error && <Alert />}
 
 

@@ -91,9 +91,14 @@ const handleEditMode= () => {
                 : ''
             }
             <div>
-                {!editMode &&  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!editMode ?  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Editar anuncio
-                </Button>  }
+                </Button> :
+                
+                <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                    Deshacer cambios
+                </Button>
+                }
            
             </div>
          
