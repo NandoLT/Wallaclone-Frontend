@@ -53,9 +53,9 @@ const handleEditMode= () => {
 
 
     return (
-        <div>
+        <div className="register-container">
             {advert ?
-                <div>
+                <div >
                     <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
                     {editMode ? 
                     <div>

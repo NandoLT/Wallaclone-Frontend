@@ -146,7 +146,7 @@ const validation = () => {
 }
 
   return (
-    <div>
+    <div >
       <form onSubmit={handleSubmit} className="register-form">
             
    
@@ -265,7 +265,7 @@ const validation = () => {
               
             {error && <Alert />}
 
-            {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+            {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
                 Modificar anuncio
             </Button>}
             {error && <Alert />}
