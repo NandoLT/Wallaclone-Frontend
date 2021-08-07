@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import EditAdvertForm from '../../components/Advert/EditAdvert';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,7 @@ const handleEditMode= () => {
             {advert ?
                 <div >
                     <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
+                    {editMode && <DeleteForeverIcon onClick={()=> console.log("Boorar anuncio")} color="secondary" fontsize="large"/>}
                     {editMode ? 
                     <div>
                        <EditAdvertForm advert={advert}/>
