@@ -66,20 +66,22 @@ const handleEditMode= () => {
                     :
 
                     <div>
+                        <div>{advert.name}</div> 
+                        <div>{advert.description}</div> 
+                   <div> {advert.price} €</div> 
+                    <div>{statusEnum[advert.status]}</div>
+                    <div>{advert.province}</div>
+                    <ul>
+                        {advert.tags.map(tag => {
+                            return <li key={tag}>{tag}</li>
+                        })}
+                    </ul> 
 
                     </div>
                     
                      }
-                    {editMode ? <div>MODO EDICION</div> : <div>{advert.name}</div> }
-                    {editMode ? <div>MODO EDICIÓN </div> : <div>{advert.description}</div> }
-                    {editMode ? <div>MODO EDICIÓN </div> : <div> {advert.price} €</div> }
-                    {editMode ? <div>MODO EDICIÓN </div> : <div>{statusEnum[advert.status]}</div>}
-                    {editMode ? <div>MODO EDICIÓN </div> : <div>{advert.province}</div>}
-                    {editMode ? <div>MODO EDICIÓN </div> :   <ul>
-                        {advert.tags.map(tag => {
-                            return <li key={tag}>{tag}</li>
-                        })}
-                    </ul> }
+                    
+                   
                    
                   
                 </div>
@@ -87,9 +89,10 @@ const handleEditMode= () => {
                 : ''
             }
             <div>
-            <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {!editMode &&  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Editar anuncio
-                </Button>
+                </Button>  }
+           
             </div>
          
 
