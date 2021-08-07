@@ -23,3 +23,7 @@ export const getAdvertDetail = async (id) => {
 export const createAdvert = async (advertDetails) => {
     return client.post(`${advertsPath}`, advertDetails);    
 }
+
+export const updateAdvert = async (newAdvertDetails) => {
+    return client.put(`${advertsPath}/updateAdvert`, advertDetails);
+}
