@@ -266,14 +266,20 @@ const validation = () => {
               
             {error && <Alert />}
 
-            {!isLoading && <ConfirmationPopup
-                disabled={validation()}
-                type="submit"
-                buttonText="Modificar anuncio" 
-                popupTitle="Modificar anuncio" 
-                popupDescription="¿Seguro que quieres modificar este anuncio?" 
-                handleConfirmation={handleSubmit}
-                /> }
+            {!isLoading && 
+            <Button
+            disabled={validation()}
+            onClick={handleSubmit}
+            type="submit"
+            color="secondary"
+            size= "large"
+            className={classes.margin} 
+            variant="contained"
+            >
+
+              Modificar anuncio
+              
+            </Button>  }
 
             
 
