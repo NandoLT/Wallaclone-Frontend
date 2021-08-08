@@ -26,6 +26,8 @@ import TextField from '@material-ui/core/TextField';
 import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox, Slider } from '@material-ui/core';
 import provinces from '../utils/spainProvinces';
 import WithAuth from '../components/hocs/WithAuth'
+import AdvertCard from '../components/Card';
+
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -231,21 +233,25 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                     adverts
                         ?
                         <Box pl={1} pr={1}>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 {adsFilteredBySearch.map(advert => {
-                                    const { name, price, onSale, _id, photo, description } = advert;
-                                    console.log(price)
-                                    
+                                    const { name, price, status, _id, photo, description, tags } = advert;
+
                                     return (
-                                        <Grid item xs={6} sm={4} md={3} key={_id}>
-                                            <Card className={classes.root}>
+                                        <Grid item xs={6} sm={3} md={3} key={_id}>
+
+
+                                            <AdvertCard name={name} price={price} status={status} photo={photo} description={description} tags={tags} id={_id} />
+
+
+                                            {/* <Card className={classes.root}>
                                                 <Link href={`/adverts/${_id}`} passHref>
                                                     <CardActionArea>
                                                         <CardMedia
                                                             component="img"
                                                             alt="Contemplative Reptile"
                                                             height="200"
-                                                            image= {photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${photo}` : '/img/image-not-available.png'}
+                                                            image={photo ? `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${photo}` : '/img/image-not-available.png'}
                                                             title="no image available"
                                                         />
                                                         <CardContent>
@@ -259,7 +265,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                             </div>
 
                                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                               {description}
+                                                                {description}
                                                             </Typography>
                                                             <Box mt={2} mb={2}>
                                                                 <Divider />
@@ -281,7 +287,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                                         Learn More
                                                     </Button>
                                                 </CardActions>
-                                            </Card>
+                                            </Card> */}
 
                                         </Grid>
 

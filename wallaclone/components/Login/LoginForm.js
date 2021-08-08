@@ -11,18 +11,24 @@ import Loading from '../Loading';
 import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
 import Alert from '../Alert'
 import { authLoginAction } from '../../store/actions';
-import styles from '../../styles/Home.module.css'
+import { purple } from '@material-ui/core/colors';
+import Link from 'next/link';
 
 
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    palette: {
+        primary: {
+            main: purple[500]
+        }
+    }
 }));
 
-const LoginForm = ({isLoading, error  }) => {
+const LoginForm = ({ isLoading, error }) => {
     const classes = useStyles();
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
 
     const [credentials, setCredentials] = React.useState({
         email: '',
@@ -52,7 +58,7 @@ const LoginForm = ({isLoading, error  }) => {
             return true
         };
 
-        if(!credentials.password){
+        if (!credentials.password) {
             return true
         }
 
@@ -60,7 +66,7 @@ const LoginForm = ({isLoading, error  }) => {
     }
 
     const handleSubmit = (event) => {
-        
+
         event.preventDefault();
         dispatch(authLoginAction(remember, credentials))
 
@@ -69,24 +75,24 @@ const LoginForm = ({isLoading, error  }) => {
     return (
         <>
 
-        <form onSubmit={handleSubmit} className="login-form">
+            <form onSubmit={handleSubmit} className="login-form">
                 <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
+                    <Grid container spacing={1} alignItems="flex-end" xs={12}>
+                        <Grid item xs={1}>
                             <AccountCircle />
                         </Grid>
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
+                        <Grid item xs={11}>
+                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} fullWidth />
                         </Grid>
                     </Grid>
                 </div>
                 <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
+                    <Grid container spacing={1} alignItems="flex-end" xs={12}>
+                        <Grid item item xs={1}>
                             <LockIcon />
                         </Grid>
-                        <Grid item>
-                            <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
+                        <Grid item item xs={11}>
+                            <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} fullWidth />
                         </Grid>
                     </Grid>
                 </div>
@@ -100,10 +106,14 @@ const LoginForm = ({isLoading, error  }) => {
                         onChange={handleCheckBoxChange}
                     />
                 </div>
+                <div className="auth-buttons">
+                    <Link href='/register'>Sign up for free</Link>
+                    {!isLoading && <Button disabled={validation()} size="large" variant="contained" color="primary" type="submit">
+                        Login
+                    </Button>}
+                </div>
 
-                {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                    Login
-                </Button>}
+
 
                 {error && <Alert />}
 
@@ -119,7 +129,7 @@ const mapStateToProps = (state) => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
     error: getError(state),
-}); 
+});
 
 export default connect(mapStateToProps)(LoginForm)
 
