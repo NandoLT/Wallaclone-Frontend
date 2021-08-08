@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const EditAdvertForm = ({advert, isLogged, isLoading, error, userId}) => {
+const EditAdvertForm = ({advert, isLogged, isLoading, error, userId, productId}) => {
 
   const dispatch = useDispatch();
 
@@ -115,6 +115,7 @@ const setPhoto = event => {
         formData.append('tags', newAdDetails.tags);
         formData.append('status', newAdDetails.status);
         formData.append('userId', userId);
+        formData.append('productId', productId )
         if (newAdDetails.photo) {
             formData.append('photo', newAdDetails.photo);
         }

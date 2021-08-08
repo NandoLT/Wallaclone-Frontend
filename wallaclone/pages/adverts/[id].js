@@ -66,7 +66,7 @@ const handleEditMode= () => {
                 </Button></div>}
                     {editMode ? 
                     <div>
-                       <EditAdvertForm advert={advert}/>
+                       <EditAdvertForm productId={id} advert={advert}/>
                        
 
                     </div>
