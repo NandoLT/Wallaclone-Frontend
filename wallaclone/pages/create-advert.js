@@ -71,7 +71,6 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
     })
 
     const setPhoto = event => {
-        console.log(event.target.files[0])
         setAdDetails(oldAdDetails => {
             const newAdDetails = {
                 ...oldAdDetails,
@@ -212,7 +211,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
                     id="demo-simple-select"
                     value={adDetails.status}
                     onChange={handleInputChange}
-                    name= "statusEnum"
+                    name= "status"
                     >
                         <MenuItem value={0}>Vendo</MenuItem>
                         <MenuItem value={1}>Compro</MenuItem>
