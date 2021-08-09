@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
-import { getAdvertDetail } from '../../api/adverts';
+import { deleteAdvert, getAdvertDetail } from '../../api/adverts';
 import statusEnum from '../../utils/advertsEnum';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,6 +58,17 @@ const handleEditMode= () => {
     setEditMode(!editMode);
 }
 
+const handleDeleteAdvert = async ()=> {
+    
+    await deleteAdvert(id);
+    router.push('/adverts');
+
+}
+
+const handleChat = () =>{
+    console.log('Iniciando chat')
+}
+
 const adBelongstoUser = () => {
     if (userId === advertUserId){
         return true
@@ -107,12 +118,45 @@ const adBelongstoUser = () => {
                 : ''
             }
             <div>
-                {(adBelongstoUser() && !editMode) && <div> <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
-                    Editar anuncio
-                </Button> 
-                <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
-                Borrar anuncio
-            </Button>  </div>  
+                {(adBelongstoUser() && !editMode) 
+                
+                ?
+                
+                    <div> 
+                        <Button 
+                        onClick={handleEditMode}  
+                        size="large" className={classes.margin} 
+                        variant="contained" 
+                        color="primary" 
+                        type="submit">
+                            Editar anuncio
+                        </Button> 
+
+                        <Button 
+                        onClick={handleDeleteAdvert}  
+                        size="large" 
+                        className={classes.margin} 
+                        variant="contained" 
+                        color="secondary" 
+                        type="submit">
+                            Borrar anuncio
+                        </Button>  </div>  
+
+                        :
+
+                        <div>
+                        <Button 
+                        onClick={handleChat}  
+                        size="large" 
+                        className={classes.margin} 
+                        variant="contained" 
+                        color="secondary" 
+                        type="submit">
+                            Contactar vendedor
+                        </Button>  
+                        </div> 
+
+
                 
                 }
            
