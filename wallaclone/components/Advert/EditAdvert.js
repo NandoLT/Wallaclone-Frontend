@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const EditAdvertForm = ({advert, isLogged, isLoading, error, userId, productId}) => {
 
   const dispatch = useDispatch();
+  
 
   const [newAdDetails, setNewAdDetails] = React.useState({
     name: advert.name,

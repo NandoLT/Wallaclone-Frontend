@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import EditAdvertForm from '../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import styles from '../../styles/Home.module.css'
+import { useSelector } from 'react-redux';
+import { getUserId } from '../../store/selectors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const advert = () => {
 
-   
-
+    
     const classes = useStyles();
 
 
@@ -35,12 +36,17 @@ const advert = () => {
     const { id } = router.query;
     const [advert, setAdvert] = useState(null);
     const [editMode, setEditMode] = useState(false);
+    const [advertUserId, setAdvertUserId] = useState(null);
+    const userId = useSelector(getUserId)
+    
 
     useEffect(() => {
         (async () => {
             if (id) {
                 const advert = await getAdvertDetail(id);
                 setAdvert(advert);
+                setAdvertUserId(advert.userId);
+                
             }
         })()
 
@@ -52,7 +58,11 @@ const handleEditMode= () => {
     setEditMode(!editMode);
 }
 
-   
+const adBelongstoUser = () => {
+    if (userId === advertUserId){
+        return true
+    }
+}
 
 
     return (
@@ -97,9 +107,12 @@ const handleEditMode= () => {
                 : ''
             }
             <div>
-                {!editMode &&  <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
+                {(adBelongstoUser() && !editMode) && <div> <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Editar anuncio
                 </Button> 
+                <Button onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
+                Borrar anuncio
+            </Button>  </div>  
                 
                 }
            
