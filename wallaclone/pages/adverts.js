@@ -230,9 +230,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
                 </div>
 
             }
-            <div>
-                {error && <Alert />}
-            </div>
+            
+           
 
 
             <section className="adverts-section">
@@ -241,7 +240,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={2}>
-                                {adsFilteredBySearch.map(advert => {
+                                {adsFilteredBySearch.slice(0).reverse().map(advert => {
                                     const { name, price, onSale, _id, photo, description } = advert;
                                     console.log(price)
                                     
@@ -313,6 +312,10 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
 
 
             </section>
+            {
+                error &&  <div> {error && <Alert />} </div>
+
+            }
             <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr; </h3>
