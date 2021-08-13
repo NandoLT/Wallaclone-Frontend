@@ -54,7 +54,7 @@ const EditAdvertForm = ({advert, isLogged, isLoading, error, userId, productId})
     description: advert.description,
     price: advert.price,
     province:advert.province,
-    tags:[],
+    tags:advert.tags,
     status: advert.status,
     photo:advert.photo,
     //userId:userId,
