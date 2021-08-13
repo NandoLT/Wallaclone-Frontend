@@ -120,7 +120,7 @@ const adBelongstoUser = () => {
             <div>
                 {(adBelongstoUser() && !editMode) 
                 
-                ?
+                &&
                 
                     <div> 
                         <Button 
@@ -142,9 +142,12 @@ const adBelongstoUser = () => {
                             Borrar anuncio
                         </Button>  </div>  
 
-                        :
+                }
 
-                        <div>
+                { (!adBelongstoUser())
+                    &&
+
+                  <div>
                         <Button 
                         onClick={handleChat}  
                         size="large" 
@@ -154,11 +157,7 @@ const adBelongstoUser = () => {
                         type="submit">
                             Contactar vendedor
                         </Button>  
-                        </div> 
-
-
-                
-                }
+                        </div> }
            
             </div>
          
