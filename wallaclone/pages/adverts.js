@@ -323,4 +323,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps)(WithAuth(Adverts))
+export default connect(mapStateToProps)(Adverts)

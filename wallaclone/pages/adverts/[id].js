@@ -10,7 +10,8 @@ import EditAdvertForm from '../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import styles from '../../styles/Home.module.css'
 import { useSelector } from 'react-redux';
-import { getUserId } from '../../store/selectors';
+import { getIsLogged, getUserId } from '../../store/selectors';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const advert = () => {
+
+    const isLogged = useSelector(getIsLogged)
 
     
     const classes = useStyles();
@@ -66,6 +69,9 @@ const handleDeleteAdvert = async ()=> {
 }
 
 const handleChat = () =>{
+    if(!isLogged){
+        router.push('/');
+    }
     console.log('Iniciando chat')
 }
 
