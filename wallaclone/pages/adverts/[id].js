@@ -70,7 +70,7 @@ const handleDeleteAdvert = async ()=> {
 
 const handleChat = () =>{
     if(!isLogged){
-        router.push('/');
+        router.push('/login');
     }
     console.log('Iniciando chat')
 }
