@@ -116,14 +116,7 @@ const adBelongstoUser = () => {
                     
                      }
                     
-                   
-                   
-                  
-                </div>
-
-                : ''
-            }
-            <div>
+                    <div>
                 {(adBelongstoUser() && !editMode) 
                 
                 &&
@@ -165,7 +158,17 @@ const adBelongstoUser = () => {
                         </Button>  
                         </div> }
            
-            </div>
+                        </div>
+                   
+                  
+                </div>
+
+                
+
+                : 
+                <div></div>
+            }
+            
          
 
         </div>
