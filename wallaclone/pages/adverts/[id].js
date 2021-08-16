@@ -86,7 +86,7 @@ const adBelongstoUser = () => {
         <div className="register-container">
             {advert ?
                 <div >
-                    <img src={advert.photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${advert.photo}` : '/img/image-not-available.png'} />
+                    <img src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                     {editMode && <div className= "pointer" onClick={() => console.log("Borrar Imagen")}> <DeleteForeverIcon onClick={()=> console.log("Borrar imagen")} color="secondary" fontsize="large"/> Borrar Imagen</div> }
                     {editMode && <div><Button  onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
                     Deshacer cambios
