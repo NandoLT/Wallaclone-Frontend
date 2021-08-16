@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import { updateAdvertAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
+import SuccessAlert from '../SuccessAlert';
 
 
 
@@ -60,6 +61,8 @@ const EditAdvertForm = ({advert, isLogged, isLoading, error, userId, productId})
     //userId:userId,
 })
 
+const [photoUploaded, setPhotoUploaded] = React.useState(false);
+
   const classes = useStyles();
 
   const handleInputChange = event => {
@@ -95,6 +98,7 @@ const handleChangeCheck = ev => {
 };
 
 const setPhoto = event => {
+    setPhotoUploaded(true);
   setNewAdDetails(oldAdDetails => {
       const newAdDetails = {
           ...oldAdDetails,
@@ -266,7 +270,7 @@ const validation = () => {
             </label>
             </label>
             </div>
-              
+            {photoUploaded && <SuccessAlert message="Foto adjuntada"/>}  
             {error && <Alert />}
 
             {!isLoading && 

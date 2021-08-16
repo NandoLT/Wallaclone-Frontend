@@ -25,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import { advertCreationAction, authResetState } from '../store/actions';
 import provinces from '../utils/spainProvinces';
 import WithAuth from '../components/hocs/WithAuth';
+import SuccessAlert from '../components/SuccessAlert';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -70,7 +71,10 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         //userId:userId,
     })
 
+   const [photoUploaded, setPhotoUploaded] = React.useState(false);
+
     const setPhoto = event => {
+        setPhotoUploaded(true);
         setAdDetails(oldAdDetails => {
             const newAdDetails = {
                 ...oldAdDetails,
@@ -275,7 +279,9 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
                         </IconButton>
                 </label>
                 </label>
+                
                 </div>
+                {photoUploaded && <SuccessAlert message="Foto adjuntada"/>}
                   
                 {error && <Alert />}
 
