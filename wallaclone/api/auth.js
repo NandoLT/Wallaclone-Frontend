@@ -15,18 +15,25 @@ export const login = (remember, credentials) => {
     });        
 }
 
-export const register = (credentials) => {
-   
-    return client.post(`${authPath}/register`, credentials)
-    //.then RECIBIR EL TOKEN POR PARTE DEL BACK PARA GUARDARLO EN EL STORAGE
+export const register = (credentials) => {   
+    return client.post(`${authPath}/register`, credentials).then(({ token }) => {
+        configureClient(token);
+        storage.set('authToken', token);
+    });
 }
 
 export const recoverPassword = (email) => {
-    return client.post(`${authPath}/recoverpassword`, email);
+    return client.post(`${authPath}/recoverpassword`, email).then(({ token }) => {
+        configureClient(token);
+        storage.set('recoverToken', token);
+    });
 }
 
 export const resetPassword = (passwords) => {
-    return client.post(`${authPath}/resetpassword`, passwords);
+    return client.post(`${authPath}/resetpassword`, passwords).then(() => {
+        resetClient();
+        storage.remove('recoverToken');
+    });
 }
 
 export const logout = () => {

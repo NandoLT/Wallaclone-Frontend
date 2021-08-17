@@ -11,9 +11,13 @@ import parseAuthToken from '../utils/parseAuthToken';
 import { configureClient } from '../api/client';
 
 const accessToken = storage.get('authToken');
-if(accessToken) {
+const recoverToken = storage.get('recoverToken');
+if(accessToken && !recoverToken) {
   configureClient(accessToken.replace(/['"]+/g, ''));
+} else if (!accessToken && recoverToken) {
+  configureClient(recoverToken.replace(/['"]+/g, ''));
 }
+
 const userId = parseAuthToken(accessToken);
 const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });
 

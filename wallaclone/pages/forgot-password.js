@@ -49,7 +49,7 @@ const ForgotPassword = ({isLoading, error, successMessage}) => {
     const handleSubmit = (event) => {
         
         event.preventDefault();
-        dispatch(authrecoverPasswordAction(email));
+        dispatch(authrecoverPasswordAction({ email }));
 
     }
 
