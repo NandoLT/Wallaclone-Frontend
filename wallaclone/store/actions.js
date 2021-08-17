@@ -38,10 +38,9 @@ export const authRegister = () => {
     }
 }
 
-export const authLoginSuccess = (userId) => {
+export const authLoginSuccess = () => {
     return {
-        type: AUTH_LOGIN_SUCCESS,
-        userId : userId
+        type: AUTH_LOGIN_SUCCESS
     }
 }
 
@@ -254,8 +253,8 @@ export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authLoginRequest())
         try {
-            const userId = await api.auth.login(remember, credentials);
-            dispatch(authLoginSuccess(userId));
+            await api.auth.login(remember, credentials);
+            dispatch(authLoginSuccess());
             router.push('/adverts');
         } catch (error) {
             dispatch(authLoginFailure(error.message))

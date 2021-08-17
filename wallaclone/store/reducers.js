@@ -76,7 +76,7 @@ export const adverts = (state = initialState.adverts, action) => {
 export const userId = (state = initialState.userId, action) => {
     switch (action.type){
         case AUTH_LOGIN_SUCCESS:            
-            return action.userId
+            return ""
 
         case AUTH_LOGOUT:
             return ""
