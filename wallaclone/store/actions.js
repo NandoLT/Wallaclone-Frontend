@@ -28,7 +28,10 @@ import {
     ADVERT_ADD_FAVORITE_FAILURE,
     ADVERT_DELETE_FAVORITE_REQUEST,
     ADVERT_DELETE_FAVORITE_SUCCESS,
-    ADVERT_DELETE_FAVORITE_FAILURE
+    ADVERT_DELETE_FAVORITE_FAILURE,
+    ADVERT_UPDATE_REQUEST,
+    ADVERT_UPDATE_SUCCESS,
+    ADVERT_UPDATE_FAILURE
 } from "./types";
 
 
@@ -249,6 +252,27 @@ export const advertDeleteFavoritesFailure = (error) => {
     }
 }
 
+export const advertUpdateRequest = () => {
+    return {
+        type: ADVERT_UPDATE_REQUEST,
+    }
+}
+
+export const advertUpdateSuccess = (newAdvertDetails) =>{
+    return {
+        type: ADVERT_UPDATE_SUCCESS,
+        newAdvertDetails: newAdvertDetails,
+    }
+}
+
+export const advertUpdateFailure = error =>{
+    return{
+        type:ADVERT_UPDATE_FAILURE,
+        payload:error,
+        error:true,
+    }
+}
+
 export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authLoginRequest())
@@ -380,3 +404,17 @@ export const advertDeleteFavoritesAction = (advertId) => {
         }
     }
 }
+
+export const updateAdvertAction = (newAdvertDetails) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(advertUpdateRequest());
+        try {
+            await api.adverts.updateAdvert(newAdvertDetails);
+            dispatch(advertUpdateSuccess(newAdvertDetails));
+            router.push('/adverts');
+        } catch (error) {
+            dispatch(advertUpdateFailure(error.message));
+        }
+    }
+}
+

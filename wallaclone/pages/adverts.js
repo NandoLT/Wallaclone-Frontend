@@ -253,7 +253,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
                                                             component="img"
                                                             alt="Contemplative Reptile"
                                                             height="200"
-                                                            image= {photo ?  `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${photo}` : '/img/image-not-available.png'}
+                                                            image= {photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'}
                                                             title="no image available"
                                                         />
                                                         <CardContent>
@@ -335,4 +335,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps)(WithAuth(Adverts))
+export default connect(mapStateToProps)(Adverts)

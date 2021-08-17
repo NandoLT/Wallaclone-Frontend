@@ -29,7 +29,10 @@ import {
     ADVERT_ADD_FAVORITE_FAILURE,
     ADVERT_DELETE_FAVORITE_REQUEST,
     ADVERT_DELETE_FAVORITE_SUCCESS,
-    ADVERT_DELETE_FAVORITE_FAILURE
+    ADVERT_DELETE_FAVORITE_FAILURE,
+    ADVERT_UPDATE_REQUEST,
+    ADVERT_UPDATE_SUCCESS,
+    ADVERT_UPDATE_FAILURE
 } from "./types";
 import { combineReducers } from 'redux';
 
@@ -127,6 +130,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_LOGIN_REQUEST:
         case AUTH_REGISTER_REQUEST:
         case ADVERT_CREATION_REQUEST:
+        case ADVERT_UPDATE_REQUEST:
         case GET_ADVERTS_REQUEST:
         case AUTH_RECOVER_PASSWORD_REQUEST:
         case AUTH_RESET_PASSWORD_REQUEST:
@@ -138,6 +142,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_REGISTER_SUCCESS:
         case AUTH_LOGIN_SUCCESS:
         case ADVERT_CREATION_SUCCESS:
+        case ADVERT_UPDATE_SUCCESS:
         case GET_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
         case AUTH_RECOVER_PASSWORD_SUCCESS:
@@ -154,6 +159,7 @@ export const ui = (state = initialState.ui, action) => {
         case AUTH_LOGIN_FAILURE:
         case AUTH_REGISTER_FAILURE:
         case ADVERT_CREATION_FAILURE:
+        case ADVERT_UPDATE_FAILURE:
         case GET_ADVERTS_FAILURE:
         case AUTH_RECOVER_PASSWORD_FAILURE:
         case AUTH_RESET_PASSWORD_FAILURE:

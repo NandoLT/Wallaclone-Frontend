@@ -27,4 +27,13 @@ export const addFavorites = async (advertId) => {
 
 export const removeFavorites = async (advertId) => {
     return await client.post(`${advertsPath}/removeFavorite`, advertId);
+
+}
+
+export const updateAdvert = async (newAdvertDetails) => {
+    return client.put(`${advertsPath}/updateAdvert`, newAdvertDetails);
+}
+
+export const deleteAdvert = (advertId) => {
+    return client.post(`${advertsPath}/delete/${advertId}`)
 }

@@ -12,6 +12,7 @@ import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
 import Alert from '../Alert'
 import { authLoginAction } from '../../store/actions';
 import styles from '../../styles/Home.module.css'
+import EmailIcon from '@material-ui/icons/Email';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -73,10 +74,10 @@ const LoginForm = ({isLoading, error  }) => {
                 <div className={classes.margin, "login-input"}>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
-                            <AccountCircle />
+                            <EmailIcon />
                         </Grid>
                         <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} />
+                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Email" value={credentials.email} />
                         </Grid>
                     </Grid>
                 </div>

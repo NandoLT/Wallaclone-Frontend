@@ -55,7 +55,7 @@ export default function NavBar() {
           <Link href='/adverts' passHref>
             <Button color="inherit">Anuncios</Button>
           </Link>
-          <Link href='create-advert' passHref>
+          <Link href='/create-advert' passHref>
             <Button color="inherit">Crear nuevo anuncio</Button>
           </Link>
           
