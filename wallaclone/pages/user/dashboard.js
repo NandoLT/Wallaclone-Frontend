@@ -20,6 +20,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import MyAdverts from '../../components/Dashboard/MyAdverts';
 import MyProfile from '../../components/Dashboard/MyProfile';
 import { Button } from '@material-ui/core';
+import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
+import MyConversations from '../../components/Dashboard/MyConversations';
 
 const drawerWidth = 240;
 
@@ -99,6 +101,47 @@ export default function PersistentDrawerLeft() {
     })
 }
 
+const openMyProfile= () => {
+    setContent({
+      myAdverts:false,
+      myProfile:true,
+      myFavorites:false,
+      myConversations:false,
+    })
+}
+
+const openMyFavoriteAds= () => {
+    setContent({
+      myAdverts:false,
+      myProfile:false,
+      myFavorites:true,
+      myConversations:false,
+    })
+}
+
+const openMyConversations= () => {
+    setContent({
+      myAdverts:false,
+      myProfile:false,
+      myFavorites:false,
+      myConversations:true,
+    })
+}
+
+const resetUi = () => {
+    setContent({
+        myAdverts:false,
+        myProfile:true,
+        myFavorites:false,
+        myConversations:false,
+      })
+}
+
+React.useEffect(() => {
+    resetUi();
+    
+}, [])
+
   const {myAdverts, myProfile, myFavorites, myConversations} = content;
 
   const handleDrawerOpen = () => {
@@ -133,6 +176,7 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" noWrap>
             Mi zona de usuario
           </Typography>
+          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -151,6 +195,15 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
+        
+        <ListItem>
+        <ListItemIcon onClick={openMyProfile}><MailIcon /></ListItemIcon>
+            <Button onClick={openMyProfile}>
+                Mi Perfil
+            </Button>
+           
+        </ListItem>
+
         <ListItem>
         <ListItemIcon onClick={openMyAdverts}><MailIcon /></ListItemIcon>
             <Button onClick={openMyAdverts}>
@@ -160,26 +213,20 @@ export default function PersistentDrawerLeft() {
         </ListItem>
 
         <ListItem>
-        <ListItemIcon onClick={openMyAdverts}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyAdverts}>
+        <ListItemIcon onClick={openMyFavoriteAds}><MailIcon /></ListItemIcon>
+            <Button onClick={openMyFavoriteAds}>
                 Favoritos
             </Button>
            
         </ListItem>
         <ListItem>
-        <ListItemIcon onClick={openMyAdverts}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyAdverts}>
+        <ListItemIcon onClick={openMyConversations}><MailIcon /></ListItemIcon>
+            <Button onClick={openMyConversations}>
                 Conversaciones
             </Button>
            
         </ListItem>
-        <ListItem>
-        <ListItemIcon onClick={openMyAdverts}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyAdverts}>
-                Mi Perfil
-            </Button>
-           
-        </ListItem>
+       
 
         </List>
       </Drawer>
@@ -191,6 +238,8 @@ export default function PersistentDrawerLeft() {
         <div className={classes.drawerHeader} />
         {myAdverts && <MyAdverts/>}
         {myProfile &&  <MyProfile/>}
+        {myFavorites &&  <MyFavoriteAds/>}
+        {myConversations && <MyConversations/>}
         
       </main>
     </div>
