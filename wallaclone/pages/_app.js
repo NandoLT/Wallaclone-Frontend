@@ -12,7 +12,7 @@ import { configureClient } from '../api/client';
 
 const accessToken = storage.get('authToken');
 if(accessToken) {
-  configureClient(accessToken);
+  configureClient(accessToken.replace(/['"]+/g, ''));
 }
 const userId = parseAuthToken(accessToken);
 const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });

@@ -17,7 +17,8 @@ export const createAdvert = async (advertDetails) => {
 }
 
 export const getFavorites = async () => {
-    return await client.post(`${advertsPath}/getFavorites`);
+    const favs = await client.post(`${advertsPath}/getFavorites`);
+    return favs.result;
 }
 
 export const addFavorites = async (advertId) => {

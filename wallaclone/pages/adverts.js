@@ -53,8 +53,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
     const dispatch = useDispatch()
 
     useEffect(async () => {
-        await dispatch(advertsGetAction())
         await dispatch(advertGetFavoritesAction())
+        await dispatch(advertsGetAction())
     }, [])
 
     const tags = ["mobile", "software", "tech"];
@@ -125,10 +125,10 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
     }
 
     const handleFavoriteCheck = ev => {
-        if (favoriteAdverts.includes(ev.target.id)) {
-            dispatch(advertAddFavoritesAction({ advertId: ev.target.id }));
+        if (!favoriteAdverts.includes(ev.target.id)) {
+            dispatch(advertAddFavoritesAction(ev.target.id));
         } else {
-            dispatch(advertDeleteFavoritesAction({ advertId: ev.target.id }));
+            dispatch(advertDeleteFavoritesAction(ev.target.id));
         }
     }
 

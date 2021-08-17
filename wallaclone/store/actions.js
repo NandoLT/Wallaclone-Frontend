@@ -252,9 +252,7 @@ export const advertDeleteFavoritesFailure = (error) => {
 
 export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
-
         dispatch(authLoginRequest())
-
         try {
             const userId = await api.auth.login(remember, credentials);
             dispatch(authLoginSuccess(userId));
@@ -364,7 +362,7 @@ export const advertAddFavoritesAction = (advertId) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(advertAddFavoritesRequest());
         try {
-            await api.adverts.addFavorites(advertId);
+            await api.adverts.addFavorites({ advertId });
             dispatch(advertAddFavoritesSuccess(advertId));
         } catch (error) {
             dispatch(advertAddFavoritesFailure(error));
@@ -376,7 +374,7 @@ export const advertDeleteFavoritesAction = (advertId) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(advertDeleteFavoritesRequest());
         try {
-            await api.adverts.removeFavorites(advertId);
+            await api.adverts.removeFavorites({ advertId });
             dispatch(advertDeleteFavoritesSuccess(advertId));
         } catch (error) {
             dispatch(advertDeleteFavoritesFailure(error));

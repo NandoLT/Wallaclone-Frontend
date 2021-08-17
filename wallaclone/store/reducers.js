@@ -87,13 +87,21 @@ export const userId = (state = initialState.userId, action) => {
     }    
 }
 
-export const userFavoriteAdverts = (state = initialState.favoriteAdverts, action) => {
+export const favoriteAdverts = (state = initialState.favoriteAdverts, action) => {
     switch (action.type) {
         case ADVERT_GET_FAVORITES_SUCCESS:
             return action.payload
 
         case ADVERT_ADD_FAVORITE_SUCCESS:
             return [ ...state, action.payload ]
+
+        case ADVERT_DELETE_FAVORITE_SUCCESS:
+                const index = state.indexOf(action.payload);
+                if (index > -1) {
+                    state.splice(index, 1);
+                }
+
+                return [ ...state ];
 
         default:
             return state;

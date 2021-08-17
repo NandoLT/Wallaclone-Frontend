@@ -1,28 +1,18 @@
 import client from "./client";
 import storage from "../utils/storage";
 import parseAuthToken from "../utils/parseAuthToken";
-import { configureClient } from "./client";
+import { configureClient, resetClient } from "./client";
 
 const authPath = '/api/users'
 
-
-
 export const login = (remember, credentials) => {
-
     return client.post(`${authPath}/login`, credentials).then(({ token }) => {
-        
-        return token;
-    })
-        .then(token => {
-            const userId = parseAuthToken(token);
-            configureClient(token);
-            if (remember) {
-               
-                storage.set('authToken', token)
-            }
-            return userId;
-        })
-        
+        configureClient(token);
+
+        if (remember) {
+            storage.set('authToken', token);
+        }        
+    });        
 }
 
 export const register = (credentials) => {
@@ -40,5 +30,8 @@ export const resetPassword = (passwords) => {
 }
 
 export const logout = () => {
-    return Promise.resolve().then(storage.clear);
+    return Promise.resolve().then(() => {
+        resetClient();
+        storage.remove('authToken');
+    });
   };
