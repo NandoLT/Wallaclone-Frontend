@@ -22,6 +22,9 @@ import MyProfile from '../../components/Dashboard/MyProfile';
 import { Button } from '@material-ui/core';
 import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
 import MyConversations from '../../components/Dashboard/MyConversations';
+import PersonIcon from '@material-ui/icons/Person';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import LaunchIcon from '@material-ui/icons/Launch';
 
 const drawerWidth = 240;
 
@@ -92,40 +95,15 @@ export default function PersistentDrawerLeft() {
       myFavorites:false,
       myConversations:false,
   })
-  const openMyAdverts= () => {
-    setContent({
-      myAdverts:true,
-      myProfile:false,
-      myFavorites:false,
-      myConversations:false,
-    })
-}
+  
 
-const openMyProfile= () => {
+const openTab = (tab) =>{
     setContent({
-      myAdverts:false,
-      myProfile:true,
-      myFavorites:false,
-      myConversations:false,
-    })
-}
-
-const openMyFavoriteAds= () => {
-    setContent({
-      myAdverts:false,
-      myProfile:false,
-      myFavorites:true,
-      myConversations:false,
-    })
-}
-
-const openMyConversations= () => {
-    setContent({
-      myAdverts:false,
-      myProfile:false,
-      myFavorites:false,
-      myConversations:true,
-    })
+        myAdverts:"myAdverts" === tab,
+        myProfile:"myProfile" === tab,
+        myFavorites:"myFavorites" === tab,
+        myConversations:"myConversations" === tab,
+      })
 }
 
 const resetUi = () => {
@@ -196,32 +174,32 @@ React.useEffect(() => {
         <Divider />
         <List>
         
-        <ListItem>
-        <ListItemIcon onClick={openMyProfile}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyProfile}>
+        <ListItem onClick={()=> openTab("myProfile")}>
+        <ListItemIcon ><PersonIcon /></ListItemIcon>
+            <Button >
                 Mi Perfil
             </Button>
            
         </ListItem>
 
-        <ListItem>
-        <ListItemIcon onClick={openMyAdverts}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyAdverts}>
+        <ListItem onClick={()=> openTab("myAdverts")}>
+        <ListItemIcon ><LaunchIcon /></ListItemIcon>
+            <Button >
                 Mis anuncios
             </Button>
            
         </ListItem>
 
-        <ListItem>
-        <ListItemIcon onClick={openMyFavoriteAds}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyFavoriteAds}>
+        <ListItem onClick={()=> openTab("myFavorites")}>
+        <ListItemIcon ><FavoriteBorderIcon /></ListItemIcon>
+            <Button >
                 Favoritos
             </Button>
            
         </ListItem>
-        <ListItem>
-        <ListItemIcon onClick={openMyConversations}><MailIcon /></ListItemIcon>
-            <Button onClick={openMyConversations}>
+        <ListItem onClick={()=> openTab("myConversations")}>
+        <ListItemIcon ><MailIcon /></ListItemIcon>
+            <Button >
                 Conversaciones
             </Button>
            
