@@ -53,7 +53,10 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
     const dispatch = useDispatch()
 
     useEffect(async () => {
-        await dispatch(advertGetFavoritesAction())
+        if (isLogged) {
+            await dispatch(advertGetFavoritesAction())
+        }
+        
         await dispatch(advertsGetAction())
     }, [])
 
@@ -287,9 +290,12 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
                                                     <Button size="small" color="primary">
                                                         Learn More
                                                     </Button>
-                                                    <Button size="small" onClick={handleFavoriteCheck}>
-                                                        { favoriteAdverts && favoriteAdverts.includes(_id) ? <StarIcon id={_id}/> : <StarBorderIcon id={_id}/>}
-                                                    </Button>
+                                                    { 
+                                                        isLogged &&
+                                                        <Button size="small" onClick={handleFavoriteCheck}>
+                                                            { favoriteAdverts && favoriteAdverts.includes(_id) ? <StarIcon id={_id}/> : <StarBorderIcon id={_id}/>}
+                                                        </Button>
+                                                    }
                                                 </CardActions>
                                             </Card>
 
