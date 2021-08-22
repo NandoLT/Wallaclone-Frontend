@@ -31,3 +31,7 @@ export const updateAdvert = async (newAdvertDetails) => {
 export const deleteAdvert = (advertId) => {
     return client.post(`${advertsPath}/delete/${advertId}`)
 }
+
+export const getMyAdverts = () => {
+    return client.post(`${advertsPath}/getMyAdverts`)
+}
