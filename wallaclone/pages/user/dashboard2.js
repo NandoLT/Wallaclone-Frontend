@@ -5,6 +5,9 @@ import { Link, ListItem, ListItemIcon } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { Divider } from '@material-ui/core';
+import MyAdverts from '../../components/Dashboard/MyAdverts';
+import MyConversations from '../../components/Dashboard/MyConversations';
+import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
 
 import React from 'react';
 
@@ -18,6 +21,34 @@ const useStyles = makeStyles((theme) => ({
 
  const dashboard2 = () =>{
      const classes = useStyles();
+     const [content, setContent] = React.useState({
+        myAdverts:true,
+        myFavorites:false,
+        myConversations:false,
+    });
+
+    const openTab = (tab) =>{
+        setContent({
+            myAdverts:"myAdverts" === tab,
+            myFavorites:"myFavorites" === tab,
+            myConversations:"myConversations" === tab,
+          })
+    };
+
+    const resetUi = () => {
+        setContent({
+            myAdverts:true,
+            myFavorites:false,
+            myConversations:false,
+          })
+    }
+    
+    React.useEffect(() => {
+        resetUi();
+        
+    }, []);
+
+    const {myAdverts, myFavorites, myConversations} = content;
 
      const [menuExpanded, setMenuExpanded] = React.useState(false);
      const handleOpenMenu= () => {
@@ -43,17 +74,17 @@ const useStyles = makeStyles((theme) => ({
 
             <div id="menu-items">
                 <div className = "item">
-                    <div className="href">
+                    <div onClick={()=> openTab("myAdverts")} className="href">
                         <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
                         <div className = "title">Mis anuncios</div>
                     </div>
                     <div className = "item separator"> </div>
-                    <div className="href">
+                    <div onClick={()=> openTab("myFavorites")} className="href">
                         <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="20" height="20" /></div>
                         <div className = "title">Mis favoritos</div>
                     </div>
                     <div className = "item separator"> </div>
-                    <div className="href">
+                    <div onClick={()=> openTab("myConversations")} className="href">
                         <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="20" height="20" /></div>
                         <div className = "title">Mis conversaciones</div>
                     </div>
@@ -61,7 +92,12 @@ const useStyles = makeStyles((theme) => ({
             </div>
 
         </div>
-        <div id="main-container">
+        
+        <div className={menuExpanded ? "main-container-expanded" : "main-container" }>
+            
+        {myAdverts && <MyAdverts/>}
+        {myFavorites &&  <MyFavoriteAds/>}
+        {myConversations && <MyConversations/>}
             
         </div>
         </>
