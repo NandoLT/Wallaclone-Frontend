@@ -68,7 +68,12 @@ const useStyles = makeStyles((theme) => ({
                 
             </div>
             <div id="profile">
-                <div id="photo"><Image src="/profilePhoto.jpg" alt="me" width="64" height="64" /></div>
+            <label for="avatar"><div id="photo"><Image src="/profilePhoto.jpg" alt="me" width="64" height="64" /></div></label>
+
+        <input hidden type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg"/>
+                
                 <div id="name"><span>Jaime Pérez</span></div>
             </div>
 
