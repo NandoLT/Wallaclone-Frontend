@@ -3,8 +3,8 @@
     --width:300px;
     --padding: 10px;
     --bgcolor: #3F51B5;
-    --hovercolor: rgb(23,23,23);
-    --width-collapsed: 50px;
+    --hovercolor: #0f1d6a;
+    --width-collapsed: 55px;
 
 }
 
@@ -17,8 +17,12 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     padding: 0;
-    margin: 0;
-    margin-left:var(--width-collapsed);
+    margin-top: 25px;
+    margin-left:85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .main-container-expanded{
@@ -57,6 +61,7 @@ HEADER
     box-sizing: border-box;
     overflow: hidden;
     padding-left: 20px;
+    font-size: 22px;
 }
 
 #sidemenu #header #title, #sidemenu #header #menu-btn{
@@ -137,6 +142,8 @@ HEADER
 
 #sidemenu #menu-items .item .href{
     display:block;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 #sidemenu #menu-items .item .href:hover{
@@ -157,8 +164,7 @@ HEADER
 #sidemenu #menu-items .item.separator{
     height: 1px;
     border-bottom:solid 1px var(--hovercolor);
-    padding-top:10px;
-    padding-bottom:10px;
+    
 }
 
 .menu-expanded{
