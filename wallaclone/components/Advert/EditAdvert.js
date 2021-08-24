@@ -117,7 +117,9 @@ const setPhoto = event => {
         formData.append('description', newAdDetails.description);
         formData.append('price', newAdDetails.price);
         formData.append('province', newAdDetails.province);
-        formData.append('tags', newAdDetails.tags);
+        newAdDetails.tags.forEach(tag => {
+            formData.append('tags', tag)
+        })
         formData.append('status', newAdDetails.status);
         formData.append('userId', userId);
         formData.append('productId', productId )

@@ -116,8 +116,9 @@ HEADER
 
 #sidemenu #profile #photo, #sidemenu #profile #name{
     font-size: 24px;
-    padding: var(--padding) 0;
+    padding: var(--padding) 7px;;
     overflow:hidden;
+    
 }
 
 /* ITEMS */
