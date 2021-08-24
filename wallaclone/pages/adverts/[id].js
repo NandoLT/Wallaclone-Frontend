@@ -87,7 +87,7 @@ const adBelongstoUser = () => {
             
             {advert ?
 
-                
+    <main>  
 
 <div className="container">
 <div className="card">
@@ -95,7 +95,7 @@ const adBelongstoUser = () => {
   <img  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
   </div>
   <div className="card-body">
-  
+  <div className="price-header">{advert.price} €</div>
                         {advert.tags.map(tag => {
                             return <span className="tag tag-teal" key={tag}>{tag}</span>
                         })}
@@ -112,11 +112,60 @@ const adBelongstoUser = () => {
         <h5>{advert.province}</h5>
         
       </div>
+      <div>
+                {(adBelongstoUser() && !editMode) 
+                
+                &&
+                
+                    <div> 
+                        <Button 
+                        onClick={handleEditMode}  
+                        size="large" className={classes.margin} 
+                        variant="contained" 
+                        color="primary" 
+                        type="submit">
+                            Editar anuncio
+                        </Button> 
+
+                        <Button 
+                        onClick={handleDeleteAdvert}  
+                        size="large" 
+                        className={classes.margin} 
+                        variant="contained" 
+                        color="secondary" 
+                        type="submit">
+                            Borrar anuncio
+                        </Button>  </div>  
+
+                }
+
+                { (!adBelongstoUser())
+                    &&
+
+                  <div>
+                       
+
+                        <button
+                        onClick={handleChat}
+                        className="contact-button"
+                        >
+                            Contactar vendedor
+                        </button> 
+                        </div> }
+           
+                        </div>
+
     </div>
   </div>
 </div>
 
-    </div>
+
+</div>
+
+
+</main> 
+
+   
 
                 
 
@@ -169,6 +218,13 @@ const adBelongstoUser = () => {
                         min-height: 250px;
                         }
 
+                        .price-header {
+                            padding-bottom: 15px;
+                            color: #f50057 ;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+
                         .tag {
                         background: #cccccc;
                         border-radius: 50px;
@@ -209,6 +265,27 @@ const adBelongstoUser = () => {
                         }
                         .user-info small {
                         color: #545d7a;
+                        }
+
+                        .contact-button {
+                            background-color:#f50057;
+                            border-radius:4px;
+                            border: 0;
+                            display:inline-block;
+                            cursor:pointer;
+                            color:#ffffff;
+                            font-family:Arial;
+                            font-size:16px;
+                            font-weight:bold;
+                            padding:8px 24px;
+                            text-decoration:none;
+                        }
+                        .contact-button:hover {
+                            background-color:#eb675e;
+                        }
+                        .contact-button:active {
+                            position:relative;
+                            top:1px;
                         }
 
                     `}</style>
