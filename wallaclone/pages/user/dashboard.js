@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
     const {myAdverts, myFavorites, myConversations} = content;
 
-     const [menuExpanded, setMenuExpanded] = React.useState(false);
+     const [menuExpanded, setMenuExpanded] = React.useState(true);
      const handleOpenMenu= () => {
          setMenuExpanded(!menuExpanded);
      }
