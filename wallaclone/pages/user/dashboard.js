@@ -1,226 +1,112 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import MyAdverts from '../../components/Dashboard/MyAdverts';
-import MyProfile from '../../components/Dashboard/MyProfile';
+import styles from '../../styles/Home.module.css'
+import { makeStyles } from '@material-ui/core/styles';
+import Image from 'next/image';
+import { Link, ListItem, ListItemIcon } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
-import MyConversations from '../../components/Dashboard/MyConversations';
 import PersonIcon from '@material-ui/icons/Person';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import LaunchIcon from '@material-ui/icons/Launch';
+import { Divider } from '@material-ui/core';
+import MyAdverts from '../../components/Dashboard/MyAdverts';
+import MyConversations from '../../components/Dashboard/MyConversations';
+import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
 
-const drawerWidth = 240;
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+    item: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+    },
+
 }));
 
-export default function PersistentDrawerLeft() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [content, setContent] = React.useState({
-      myAdverts:false,
-      myProfile:true,
-      myFavorites:false,
-      myConversations:false,
-  })
-  
-
-const openTab = (tab) =>{
-    setContent({
-        myAdverts:"myAdverts" === tab,
-        myProfile:"myProfile" === tab,
-        myFavorites:"myFavorites" === tab,
-        myConversations:"myConversations" === tab,
-      })
-}
-
-const resetUi = () => {
-    setContent({
-        myAdverts:false,
-        myProfile:true,
+ const dashboard = () =>{
+     const classes = useStyles();
+     const [content, setContent] = React.useState({
+        myAdverts:true,
         myFavorites:false,
         myConversations:false,
-      })
-}
+    });
 
-React.useEffect(() => {
-    resetUi();
+    const openTab = (tab) =>{
+        setContent({
+            myAdverts:"myAdverts" === tab,
+            myFavorites:"myFavorites" === tab,
+            myConversations:"myConversations" === tab,
+          })
+    };
+
+    const resetUi = () => {
+        setContent({
+            myAdverts:true,
+            myFavorites:false,
+            myConversations:false,
+          })
+    }
     
-}, [])
+    React.useEffect(() => {
+        resetUi();
+        
+    }, []);
 
-  const {myAdverts, myProfile, myFavorites, myConversations} = content;
+    const {myAdverts, myFavorites, myConversations} = content;
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+     const [menuExpanded, setMenuExpanded] = React.useState(false);
+     const handleOpenMenu= () => {
+         setMenuExpanded(!menuExpanded);
+     }
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    return (
+        <>
+        <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
+            <div id="header">
+                <div id="title"> <span>Mi Perfil</span></div>
+                    <div id="menu-btn" onClick={handleOpenMenu}>
+                        <div className="btn-hamburger"></div>
+                        <div className="btn-hamburger"></div>
+                        <div className="btn-hamburger"></div>
+                    </div>
+                
+            </div>
+            <div id="profile">
+            <label for="avatar"><div id="photo"><Image src="/profilePhoto.jpg" alt="me" width="64" height="64" /></div></label>
 
-  
+        <input hidden type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg"/>
+                
+                <div id="name"><span>Jaime Pérez</span></div>
+            </div>
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Mi zona de usuario
-          </Typography>
-          
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+            <div id="menu-items">
+                <div className = "item">
+                    <div onClick={()=> openTab("myAdverts")} className="href">
+                        <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
+                        <div className = "title">Mis anuncios</div>
+                    </div>
+                    <div className = "item separator"> </div>
+                    <div onClick={()=> openTab("myFavorites")} className="href">
+                        <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="20" height="20" /></div>
+                        <div className = "title">Mis favoritos</div>
+                    </div>
+                    <div className = "item separator"> </div>
+                    <div onClick={()=> openTab("myConversations")} className="href">
+                        <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="20" height="20" /></div>
+                        <div className = "title">Mis conversaciones</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <Divider />
-        <List>
         
-        <ListItem onClick={()=> openTab("myProfile")}>
-        <ListItemIcon ><PersonIcon /></ListItemIcon>
-            <Button >
-                Mi Perfil
-            </Button>
-           
-        </ListItem>
-
-        <ListItem onClick={()=> openTab("myAdverts")}>
-        <ListItemIcon ><LaunchIcon /></ListItemIcon>
-            <Button >
-                Mis anuncios
-            </Button>
-           
-        </ListItem>
-
-        <ListItem onClick={()=> openTab("myFavorites")}>
-        <ListItemIcon ><FavoriteBorderIcon /></ListItemIcon>
-            <Button >
-                Favoritos
-            </Button>
-           
-        </ListItem>
-        <ListItem onClick={()=> openTab("myConversations")}>
-        <ListItemIcon ><MailIcon /></ListItemIcon>
-            <Button >
-                Conversaciones
-            </Button>
-           
-        </ListItem>
-       
-
-        </List>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        
+        <div className={menuExpanded ? "main-container-expanded" : "main-container" }>
+            
         {myAdverts && <MyAdverts/>}
-        {myProfile &&  <MyProfile/>}
         {myFavorites &&  <MyFavoriteAds/>}
         {myConversations && <MyConversations/>}
-        
-      </main>
-    </div>
-  );
+            
+        </div>
+        </>
+    )
 }
+
+export default dashboard;

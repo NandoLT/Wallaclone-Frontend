@@ -32,6 +32,12 @@ export default function Home() {
         </h1>
 
         <div className={styles.grid}>
+          <Link className={styles.card} href='/user/dashboard' passHref>
+            <div className={styles.card} >
+              <h3>  Dashboard &rarr;  </h3>
+            </div>
+          </Link>
+
           <Link className={styles.card} href='/login' passHref>
             <div className={styles.card} >
               <h3>  Login Page &rarr;  </h3>

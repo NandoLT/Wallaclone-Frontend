@@ -91,7 +91,11 @@ const adBelongstoUser = () => {
     <main>  
          {editMode ?
                 <div>
+                       <div><Button  onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
+                    Deshacer cambios
+                </Button></div>
                        <EditAdvertForm productId={id} advert={advert}/>
+                       
 
                     </div>
                     :

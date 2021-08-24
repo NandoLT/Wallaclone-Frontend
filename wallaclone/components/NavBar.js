@@ -63,12 +63,23 @@ export default function NavBar() {
             {isLogged ? 
 
                 // <Button onClick={onLogout} variant="contained" color="secondary">Logout</Button>
-                <ConfirmationPopup
+                <div className="isLogged-buttons">
+
+              <ConfirmationPopup
+                className="isLogged-button"
                 buttonText="Logout" 
                 popupTitle="Logout" 
                 popupDescription="¿Quieres confirmar el cierre de sesión?" 
                 handleConfirmation={logoutConfirmation}
                 />
+
+              <Link href='/user/dashboard' passHref>
+                    <Button variant="contained" color="secondary">Dashboard</Button>
+                </Link>
+
+
+                </div>
+               
                 :
                 <Link href='/login' passHref>
                     <Button variant="contained" color="secondary">Login</Button>
@@ -80,6 +91,20 @@ export default function NavBar() {
 
         </Toolbar>
       </AppBar>
+      <style jsx>{`
+                    
+                    
+                    .isLogged-buttons{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+
+                    .isLogged-button{
+                        margin-right:15px;
+                    }
+
+                    `}</style>
     </div>
   );
 }
