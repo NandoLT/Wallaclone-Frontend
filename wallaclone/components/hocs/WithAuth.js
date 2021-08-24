@@ -12,11 +12,11 @@ const withAuth = (WrappedComponent) => {
   return (props) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
-      const { params } = Router.query;
+      
 
       const isLogged = useSelector(getIsLogged);
 
-      console.log(params);
+      
 
       
       if (!isLogged) {
@@ -24,10 +24,7 @@ const withAuth = (WrappedComponent) => {
         return null;
       }
 
-      if (isLogged && params ==="login") {
-        Router.replace("/adverts");
-        return null
-      }
+      
 
       return <WrappedComponent {...props} />;
     }
