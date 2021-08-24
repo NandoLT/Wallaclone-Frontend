@@ -112,7 +112,10 @@ const adBelongstoUser = () => {
         <h5>{advert.province}</h5>
         
       </div>
-      <div>
+      
+
+    </div>
+    <div>
                 {(adBelongstoUser() && !editMode) 
                 
                 &&
@@ -154,8 +157,6 @@ const adBelongstoUser = () => {
                         </div> }
            
                         </div>
-
-    </div>
   </div>
 </div>
 
@@ -271,7 +272,7 @@ const adBelongstoUser = () => {
                             background-color:#f50057;
                             border-radius:4px;
                             border: 0;
-                            display:inline-block;
+                            align-self: center;
                             cursor:pointer;
                             color:#ffffff;
                             font-family:Arial;
@@ -279,6 +280,7 @@ const adBelongstoUser = () => {
                             font-weight:bold;
                             padding:8px 24px;
                             text-decoration:none;
+                            
                         }
                         .contact-button:hover {
                             background-color:#eb675e;
