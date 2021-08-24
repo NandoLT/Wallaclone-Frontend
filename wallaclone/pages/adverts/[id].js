@@ -86,92 +86,100 @@ const adBelongstoUser = () => {
         <div className="register-container">
             
             {advert ?
+   
 
     <main>  
+         {editMode ?
+                <div>
+                       <EditAdvertForm productId={id} advert={advert}/>
 
-<div className="container">
-<div className="card">
-  <div className="card-header">
-  <img  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
-  </div>
-  <div className="card-body">
-  <div className="price-header">{advert.price} €</div>
-                        {advert.tags.map(tag => {
-                            return <span className="tag tag-teal" key={tag}>{tag}</span>
-                        })}
+                    </div>
+                    :
+                    <div className="container">
+                    <div className="card">
+                      <div className="card-header">
+                      <img  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                      </div>
+                      <div className="card-body">
+                      <div className="price-header">{advert.price} €</div>
+                                            {advert.tags.map(tag => {
+                                                return <span className="tag tag-teal" key={tag}>{tag}</span>
+                                            })}
+                                        
+                        <h2>
+                          {advert.name}
+                        </h2>
+                        <p>
+                          {advert.description}
+                        </p>
+                        <div className="user">
+                          <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
+                          <div className="user-info">
+                            <h5>{advert.province}</h5>
+                            
+                          </div>
+                          
                     
-    <h2>
-      {advert.name}
-    </h2>
-    <p>
-      {advert.description}
-    </p>
-    <div className="user">
-      <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
-      <div className="user-info">
-        <h5>{advert.province}</h5>
-        
-      </div>
-      
-
-    </div>
-    <div>
-                {(adBelongstoUser() && !editMode) 
-                
-                &&
-                
-                    <div> 
-                        <Button 
-                        onClick={handleEditMode}  
-                        size="large" className={classes.margin} 
-                        variant="contained" 
-                        color="primary" 
-                        type="submit">
-                            Editar anuncio
-                        </Button> 
-
-                        <Button 
-                        onClick={handleDeleteAdvert}  
-                        size="large" 
-                        className={classes.margin} 
-                        variant="contained" 
-                        color="secondary" 
-                        type="submit">
-                            Borrar anuncio
-                        </Button>  </div>  
-
-                }
-
-                { (!adBelongstoUser())
-                    &&
-
-                  <div>
-                       
-
-                        <button
-                        onClick={handleChat}
-                        className="contact-button"
-                        >
-                            Contactar vendedor
-                        </button> 
-                        </div> }
-           
                         </div>
-  </div>
-</div>
+                        <div>
+                                    {(adBelongstoUser() && !editMode) 
+                                    
+                                    &&
+                                    
+                                        <div> 
+                                            <Button 
+                                            onClick={handleEditMode}  
+                                            size="large" className={classes.margin} 
+                                            variant="contained" 
+                                            color="primary" 
+                                            type="submit">
+                                                Editar anuncio
+                                            </Button> 
+                    
+                                            <Button 
+                                            onClick={handleDeleteAdvert}  
+                                            size="large" 
+                                            className={classes.margin} 
+                                            variant="contained" 
+                                            color="secondary" 
+                                            type="submit">
+                                                Borrar anuncio
+                                            </Button>  </div>  
+                    
+                                    }
+                    
+                                    { (!adBelongstoUser())
+                                        &&
+                    
+                                      <div>
+                                           
+                    
+                                            <button
+                                            onClick={handleChat}
+                                            className="contact-button"
+                                            >
+                                                Contactar vendedor
+                                            </button> 
+                                            </div> }
+                               
+                                            </div>
+                      </div>
+                    </div>
+                    
+                    
+                    </div>
+
+            
+            }
 
 
-</div>
 
 
 </main> 
-
-   
-
-                
+ 
 
                 : 
-                <div>ADIOS</div>
+                <div></div>
             }
             
             <style jsx>{`
