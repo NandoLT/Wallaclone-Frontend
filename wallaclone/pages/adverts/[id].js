@@ -84,104 +84,132 @@ const adBelongstoUser = () => {
 
     return (
         <div className="register-container">
-            <h1>HOLA</h1>
+            
             {advert ?
 
                 
 
-                // EMPIEZA AQUÍ ABAJO EL CÓDIGO ORIGINAL
-
-                
-                <div >
-                    <img className="advert-photo" src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
-                    {editMode && <div className= "pointer" onClick={() => console.log("Borrar Imagen")}> <DeleteForeverIcon onClick={()=> console.log("Borrar imagen")} color="secondary" fontsize="large"/> Borrar Imagen</div> }
-                    {editMode && <div><Button  onClick={handleEditMode} disabled={false} size="large" className={classes.margin} variant="contained" color="secondary" type="submit">
-                    Deshacer cambios
-                </Button></div>}
-                    {editMode ? 
-                    <div>
-                       <EditAdvertForm productId={id} advert={advert}/>
-                       
-
-                    </div>
-
-                    :
-
-                    <div>
-                        <div>{advert.name}</div> 
-                        <div>{advert.description}</div> 
-                   <div> {advert.price} €</div> 
-                    <div>{statusEnum[advert.status]}</div>
-                    <div>{advert.province}</div>
-                    <ul>
+<div className="container">
+<div className="card">
+  <div className="card-header">
+  <img  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+  </div>
+  <div className="card-body">
+  
                         {advert.tags.map(tag => {
-                            return <li key={tag}>{tag}</li>
+                            return <span className="tag tag-teal" key={tag}>{tag}</span>
                         })}
-                    </ul> 
-
-                    </div>
                     
-                     }
-                    
-                    <div>
-                {(adBelongstoUser() && !editMode) 
-                
-                &&
-                
-                    <div> 
-                        <Button 
-                        onClick={handleEditMode}  
-                        size="large" className={classes.margin} 
-                        variant="contained" 
-                        color="primary" 
-                        type="submit">
-                            Editar anuncio
-                        </Button> 
+    <h2>
+      {advert.name}
+    </h2>
+    <p>
+      {advert.description}
+    </p>
+    <div className="user">
+      <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
+      <div className="user-info">
+        <h5>{advert.province}</h5>
+        
+      </div>
+    </div>
+  </div>
+</div>
 
-                        <Button 
-                        onClick={handleDeleteAdvert}  
-                        size="large" 
-                        className={classes.margin} 
-                        variant="contained" 
-                        color="secondary" 
-                        type="submit">
-                            Borrar anuncio
-                        </Button>  </div>  
-
-                }
-
-                { (!adBelongstoUser())
-                    &&
-
-                  <div>
-                        <Button 
-                        onClick={handleChat}  
-                        size="large" 
-                        className={classes.margin} 
-                        variant="contained" 
-                        color="secondary" 
-                        type="submit">
-                            Contactar vendedor
-                        </Button>  
-                        </div> }
-           
-                        </div>
-                   
-                  
-                </div>
+    </div>
 
                 
 
                 : 
-                <div></div>
+                <div>ADIOS</div>
             }
             
             <style jsx>{`
                     
-                    .advert-photo{
+                    
+                    @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+                        * {
+                        box-sizing: border-box;
+                        }
+                        body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 0;
+                        background-color: #f7f8fc;
+                        font-family: "Roboto", sans-serif;
+                        color: #10182f;
+                        }
+                        .container {
+                        display: flex;
+                        width: 1040px;
+                        justify-content: space-evenly;
+                        flex-wrap: wrap;
+                        }
+                        .card {
+                        margin: 10px;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+                        overflow: hidden;
                         width: 500px;
+                        
+                        }
+                        .card-header img {
+                        width: 100%;
                         height: 300px;
-                    }
+                        object-fit: cover;
+                        }
+                        .card-body {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        padding: 20px;
+                        min-height: 250px;
+                        }
+
+                        .tag {
+                        background: #cccccc;
+                        border-radius: 50px;
+                        font-size: 12px;
+                        margin: 0;
+                        color: #fff;
+                        padding: 2px 10px;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        }
+                        .tag-teal {
+                        background-color: #47bcd4;
+                        }
+                        .tag-purple {
+                        background-color: #5e76bf;
+                        }
+                        .tag-pink {
+                        background-color: #cd5b9f;
+                        }
+
+                        .card-body p {
+                        font-size: 13px;
+                        margin: 0 0 40px;
+                        }
+                        .user {
+                        display: flex;
+                        margin-top: auto;
+                        }
+
+                        .user img {
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        margin-right: 10px;
+                        }
+                        .user-info h5 {
+                        margin: 0;
+                        }
+                        .user-info small {
+                        color: #545d7a;
+                        }
 
                     `}</style>
 
