@@ -112,7 +112,10 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
             formData.append('description', adDetails.description);
             formData.append('price', adDetails.price);
             formData.append('province', adDetails.province);
-            formData.append('tags', adDetails.tags);
+            adDetails.tags.forEach(tag => {
+                formData.append('tags', tag)
+            })
+            //formData.append('tags', adDetails.tags);
             formData.append('status', adDetails.status);
             formData.append('userId', adDetails.userId);
             if (adDetails.photo) {
