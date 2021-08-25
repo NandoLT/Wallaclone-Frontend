@@ -8,6 +8,7 @@ import { Divider } from '@material-ui/core';
 import MyAdverts from '../../components/Dashboard/MyAdverts';
 import MyConversations from '../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
+import MyProfile from '../../components/Dashboard/MyProfile'
 
 import React from 'react';
 
@@ -22,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
  const dashboard = () =>{
      const classes = useStyles();
      const [content, setContent] = React.useState({
-        myAdverts:true,
+        myAdverts:false,
         myFavorites:false,
         myConversations:false,
+        myProfile: true,
     });
 
     const openTab = (tab) =>{
@@ -32,14 +34,16 @@ const useStyles = makeStyles((theme) => ({
             myAdverts:"myAdverts" === tab,
             myFavorites:"myFavorites" === tab,
             myConversations:"myConversations" === tab,
-          })
+            myProfile: "myProfile" ===tab,          
+        })
     };
 
     const resetUi = () => {
         setContent({
-            myAdverts:true,
+            myAdverts:false,
             myFavorites:false,
             myConversations:false,
+            myProfile:true,
           })
     }
     
@@ -48,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         
     }, []);
 
-    const {myAdverts, myFavorites, myConversations} = content;
+    const {myAdverts, myFavorites, myConversations, myProfile} = content;
 
      const [menuExpanded, setMenuExpanded] = React.useState(true);
      const handleOpenMenu= () => {
@@ -78,7 +82,13 @@ const useStyles = makeStyles((theme) => ({
             </div>
 
             <div id="menu-items">
+                
                 <div className = "item">
+                <div onClick={()=> openTab("myProfile")} className="href">
+                        <div className="icon" ><Image className="icon" src="/user.png" alt="me" width="20" height="20" /></div>
+                        <div className = "title">Mi Perfil</div>
+                    </div>
+                    <div className = "item separator"> </div>
                     <div onClick={()=> openTab("myAdverts")} className="href">
                         <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
                         <div className = "title">Mis anuncios</div>
@@ -103,6 +113,7 @@ const useStyles = makeStyles((theme) => ({
         {myAdverts && <MyAdverts/>}
         {myFavorites &&  <MyFavoriteAds/>}
         {myConversations && <MyConversations/>}
+        {myProfile && <MyProfile/> }
             
         </div>
         </>
