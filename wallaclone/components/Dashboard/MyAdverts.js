@@ -18,11 +18,35 @@ const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
    }, [])
 
     return (
+
         <div>
 
-            <h1>MIS ANUNCIOS</h1>
-            
+            <h1> Mis anuncios</h1>
+
+            <div className="ads-container">
+
+                <h3>HOLA</h3>
+                <h3>HOLA</h3>
+                <h3>HOLA</h3>
+
+            </div>
+
+            <style jsx>{`
+                    
+                    
+                    .ads-container{
+                      display:flex;
+                      justify-content: center;
+                      flex-direction: row;
+                    }
+
+                    `}</style>
+
         </div>
+
+        
+  
+        
     )
 }
 
@@ -36,3 +60,5 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps)(MyAdverts);
+
+
