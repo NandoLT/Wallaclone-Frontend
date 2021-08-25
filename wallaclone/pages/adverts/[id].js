@@ -105,7 +105,13 @@ const adBelongstoUser = () => {
                       <img  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                       </div>
                       <div className="card-body">
-                      <div className="price-header">{advert.price} €</div>
+                          
+                     
+                      <div className="price-container">{advert.status === 0 && <div className="price-status"> En venta:  <span className="price-header">{advert.price} €</span> </div> }</div>
+
+                      <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div> }</div>
+
+                      
                                             {advert.tags.map(tag => {
                                                 return <span className="tag tag-teal" key={tag}>{tag}</span>
                                             })}
@@ -234,8 +240,18 @@ const adBelongstoUser = () => {
                         .price-header {
                             padding-bottom: 15px;
                             color: #f50057 ;
-                            font-size: 20px;
+                            font-size: 25px;
                             font-weight: bold;
+                        }
+
+                        .price-container {
+                            padding-bottom: 10px;
+                        }
+
+                        .price-status {
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #303F9F;
                         }
 
                         .tag {
