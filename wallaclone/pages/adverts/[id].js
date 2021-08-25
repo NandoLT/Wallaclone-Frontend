@@ -112,9 +112,9 @@ const adBelongstoUser = () => {
                       <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div> }</div>
 
                       
-                                            {advert.tags.map(tag => {
+                                            <div className="tags-container">{advert.tags.map(tag => {
                                                 return <span className="tag tag-teal" key={tag}>{tag}</span>
-                                            })}
+                                            })} </div>
                                         
                         <h2>
                           {advert.name}
@@ -258,11 +258,12 @@ const adBelongstoUser = () => {
                         background: #cccccc;
                         border-radius: 50px;
                         font-size: 12px;
-                        margin: 0;
+                        margin-left: 3px;
+                        margin-right: 3px;
                         color: #fff;
                         padding: 2px 10px;
                         text-transform: uppercase;
-                        cursor: pointer;
+                        
                         }
                         .tag-teal {
                         background-color: #47bcd4;
