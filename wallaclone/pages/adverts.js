@@ -53,9 +53,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
     const dispatch = useDispatch()
 
     useEffect(async () => {
-        if (isLogged) {
-            await dispatch(advertGetFavoritesAction())
-        }
+        // if (isLogged) {
+        //     await dispatch(advertGetFavoritesAction())
+        // }
         
         await dispatch(advertsGetAction())
     }, [])

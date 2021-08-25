@@ -11,6 +11,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import styles from '../../styles/Home.module.css'
 import { useSelector } from 'react-redux';
 import { getIsLogged, getUserId } from '../../store/selectors';
+import ConfirmationPopup from '../../components/ConfirmationPopup';
 
 
 
@@ -136,17 +137,17 @@ const adBelongstoUser = () => {
                                     
                                     &&
                                     
-                                        <div> 
+                                        <div className="edit-delete-buttons"> 
                                             <Button 
                                             onClick={handleEditMode}  
-                                            size="large" className={classes.margin} 
+                                            className={classes.margin} 
                                             variant="contained" 
                                             color="primary" 
                                             type="submit">
                                                 Editar anuncio
                                             </Button> 
                     
-                                            <Button 
+                                            {/* <Button 
                                             onClick={handleDeleteAdvert}  
                                             size="large" 
                                             className={classes.margin} 
@@ -154,7 +155,17 @@ const adBelongstoUser = () => {
                                             color="secondary" 
                                             type="submit">
                                                 Borrar anuncio
-                                            </Button>  </div>  
+                                            </Button>   */}
+
+                                            <ConfirmationPopup
+                                                className="delete-button"
+                                                buttonText="Borrar anuncio" 
+                                                popupTitle="Logout" 
+                                                popupDescription="¿Quieres confirmar el cierre de sesión?" 
+                                                handleConfirmation={handleDeleteAdvert}
+                                            />
+                                            
+                                            </div>  
                     
                                     }
                     
@@ -170,6 +181,7 @@ const adBelongstoUser = () => {
                                             >
                                                 Contactar vendedor
                                             </button> 
+                                           
                                             </div> }
                                
                                             </div>
@@ -317,6 +329,12 @@ const adBelongstoUser = () => {
                         .contact-button:active {
                             position:relative;
                             top:1px;
+                        }
+
+                        .edit-delete-buttons{
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
                         }
 
                     `}</style>
