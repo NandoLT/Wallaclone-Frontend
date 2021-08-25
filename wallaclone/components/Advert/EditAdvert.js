@@ -250,9 +250,11 @@ const validation = () => {
                         label="Deporte"
                     />
                 </FormGroup>
-               
+                
         </FormControl >
+        <img  className="edit-photo"  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                 <div  className={classes.root}>
+                    
                 <input
                 className={classes.upload}
                 onChange={setPhoto}
@@ -261,9 +263,12 @@ const validation = () => {
                 multiple
                 type="file"
             />
+
+            
+
             <label  htmlFor="contained-button-file">
                     <Button variant="contained" color="primary" component="span">
-                    Subir foto
+                    Cambiar foto
                     </Button>
                     <label htmlFor="contained-button-file">
                     <IconButton color="primary" aria-label="upload picture" component="span">
@@ -297,6 +302,17 @@ const validation = () => {
 
 
         </form>
+
+        <style jsx>{`
+                    
+                   .edit-photo{
+                       width: 160px;
+                       height: 110px;
+                       border-radius: 5px;
+                       
+                   }
+
+                    `}</style>
       
     </div>
   )
