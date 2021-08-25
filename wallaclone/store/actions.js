@@ -31,7 +31,10 @@ import {
     ADVERT_DELETE_FAVORITE_FAILURE,
     ADVERT_UPDATE_REQUEST,
     ADVERT_UPDATE_SUCCESS,
-    ADVERT_UPDATE_FAILURE
+    ADVERT_UPDATE_FAILURE,
+    FETCH_MY_ADVERTS_SUCCESS,
+    FETCH_MY_ADVERTS_REQUEST,
+    FETCH_MY_ADVERTS_FAILURE
 } from "./types";
 
 
@@ -167,6 +170,29 @@ export const getAdvertsFailure = error =>{
         error:true,
     }
 }
+
+
+export const fetchMyAdvertsSuccess = (myAdverts) => {
+    return {
+        type: FETCH_MY_ADVERTS_SUCCESS,
+        payload: myAdverts
+    }
+}
+
+export const fetchMyAdvertsRequest = () => {
+    return {
+        type: FETCH_MY_ADVERTS_REQUEST
+    }
+}
+
+export const fetchMyAdvertsFailure = error =>{
+    return{
+        type: FETCH_MY_ADVERTS_FAILURE,
+        payload:error,
+        error:true,
+    }
+}
+
 
 export const advertCreationRequest = () => {
     return {
@@ -351,6 +377,18 @@ export const advertsGetAction = () => {
             dispatch(getAdvertsSuccess(adverts));
         } catch (error) {
             dispatch(getAdvertsFailure(error.message));
+        }
+    }
+}
+
+export const fetchMyAdvertsAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(fetchMyAdvertsRequest());
+        try {
+            const myAdverts = await api.adverts.getMyAdverts();
+            dispatch(fetchMyAdvertsSuccess(myAdverts));
+        } catch (error) {
+            dispatch(fetchMyAdvertsFailure(error.message));
         }
     }
 }

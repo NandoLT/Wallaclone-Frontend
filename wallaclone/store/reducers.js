@@ -32,7 +32,10 @@ import {
     ADVERT_DELETE_FAVORITE_FAILURE,
     ADVERT_UPDATE_REQUEST,
     ADVERT_UPDATE_SUCCESS,
-    ADVERT_UPDATE_FAILURE
+    ADVERT_UPDATE_FAILURE,
+    FETCH_MY_ADVERTS_SUCCESS,
+    FETCH_MY_ADVERTS_REQUEST,
+    FETCH_MY_ADVERTS_FAILURE
 } from "./types";
 import { combineReducers } from 'redux';
 
@@ -41,6 +44,7 @@ const initialState = {
     auth: false,
     userId: "",
     favoriteAdverts: [],
+    myAdverts: [],
     ui: {
         loading: false,
         error: null,
@@ -70,6 +74,15 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
     switch (action.type) {
         case GET_ADVERTS_SUCCESS:
+            return action.payload
+        default:
+            return state;
+    }
+}
+
+export const myAdverts = (state = initialState.myAdverts, action) => {
+    switch (action.type) {
+        case FETCH_MY_ADVERTS_SUCCESS:
             return action.payload
         default:
             return state;
@@ -132,6 +145,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_REQUEST:
         case ADVERT_UPDATE_REQUEST:
         case GET_ADVERTS_REQUEST:
+        case FETCH_MY_ADVERTS_REQUEST:
         case AUTH_RECOVER_PASSWORD_REQUEST:
         case AUTH_RESET_PASSWORD_REQUEST:
             return {
@@ -144,6 +158,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_SUCCESS:
         case ADVERT_UPDATE_SUCCESS:
         case GET_ADVERTS_SUCCESS:
+        case FETCH_MY_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
         case AUTH_RECOVER_PASSWORD_SUCCESS:
             return {
@@ -161,6 +176,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_FAILURE:
         case ADVERT_UPDATE_FAILURE:
         case GET_ADVERTS_FAILURE:
+        case FETCH_MY_ADVERTS_FAILURE:
         case AUTH_RECOVER_PASSWORD_FAILURE:
         case AUTH_RESET_PASSWORD_FAILURE:
             return {
@@ -180,7 +196,9 @@ const reducer = combineReducers({
     auth,
     userId,
     ui,
-    adverts
+    adverts,
+    favoriteAdverts,
+    myAdverts
 })
 
 export default reducer;

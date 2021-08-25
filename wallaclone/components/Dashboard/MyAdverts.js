@@ -5,30 +5,17 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { getIsLogged, getAdverts, getIsLoading, getError } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction } from '../../store/actions';
-import { getMyAdverts } from '../../api/adverts';
+import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
+import { getMyAdverts } from '../../store/selectors';
 
-const MyAdverts = () => {
+const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
 
-    const [myAdverts, setMyAdverts] = useState(null);
+    const dispatch = useDispatch();
 
-    const fetchMyAdverts = async () => {
-        try {
-            const myAdvertsFetched = getMyAdverts()
-            return myAdvertsFetched
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-    useEffect(() => {
-
-        const myOwnAdverts= fetchMyAdverts()
-        setMyAdverts(myOwnAdverts);
-        
-    }, [])
+   useEffect( () => {
+       dispatch(fetchMyAdvertsAction());
+       
+   }, [])
 
     return (
         <div>
@@ -39,4 +26,13 @@ const MyAdverts = () => {
     )
 }
 
-export default MyAdverts
+const mapStateToProps = state => ({
+    isLogged: getIsLogged(state),
+    isLoading: getIsLoading(state),
+    error: getError(state),
+    myAdverts: getMyAdverts(state),
+})
+
+
+
+export default connect(mapStateToProps)(MyAdverts);

@@ -7,6 +7,11 @@ export const getAdverts = async () => {
     return adverts;
 }
 
+export const getMyAdverts = async () => {
+    const myAdverts = await client.post(`${advertsPath}/getMyAdverts`)
+    return myAdverts;
+}
+
 export const getAdvertDetail = async (id) => {
     const advert = await client.get(advertsPath + `/${id}`)
     return advert.result
@@ -38,6 +43,3 @@ export const deleteAdvert = (advertId) => {
     return client.post(`${advertsPath}/delete/${advertId}`)
 }
 
-export const getMyAdverts = () => {
-    return client.post(`${advertsPath}/getMyAdverts`)
-}
