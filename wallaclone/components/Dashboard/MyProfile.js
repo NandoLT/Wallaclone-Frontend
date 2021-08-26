@@ -36,7 +36,16 @@ const MyProfile = () => {
             <div className="card">
                 
 
-                <label for ="avatar"> <div className="image-container" ><Image  src="/photo-upload.png" alt="me" width="100%" height="100%" /> </div>  </label>
+                <label for ="avatar"> <div className="image-container" >
+                    {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                    : 
+                    <div>
+                        <Image  src="/photo-upload.png" alt="me" width="100%" height="100%" />
+                        <div> Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil</div>
+
+                    </div>
+                      }
+                    </div>  </label>
                     <input 
                     hidden type="file"
                     id="avatar" 
