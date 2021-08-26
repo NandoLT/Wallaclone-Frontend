@@ -17,6 +17,12 @@ const MyProfile = () => {
         description:null,
         province: null,
     })
+
+    const [editMode, setEditMode] = useState(false);
+
+    const handleEditMode = () => {
+        setEditMode(!editMode);
+    }
     
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
@@ -33,27 +39,31 @@ const MyProfile = () => {
 
     return (
         <div>
-            
-            <div className="card">
+
+            {editMode ? 
+
+                <div>
+                    <p><button onClick={handleEditMode}>Deshacer cambios</button></p>
+                    <h1>MODO EDICION ACTIVADO</h1>
+                </div>
+
                 
 
-                <label for ="avatar"> <div className="image-container" >
+                :
+
+                <div className="card">
+                
+
+                 <div className="image-container" >
                     {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
                     : 
                     <div>
-                        <Image  src="/photo-upload.png" alt="me" width="100%" height="100%" />
+                        <Image  src="/photo-upload.png" alt="me" width="80%" height="80%" />
                         <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"}/>
 
                     </div>
                       }
-                    </div>  </label>
-                    <input 
-                    hidden type="file"
-                    id="avatar" 
-                    name="avatar"
-                    accept="image/png, image/jpeg"
-                    onChange={setPhoto}
-                    />
+                    </div>  
 
 
 
@@ -64,30 +74,13 @@ const MyProfile = () => {
 
                 {profileDetails.province ? <h5>{profileDetails.province}</h5> : <MissingField title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/>}
                
-                {/* <div className="icons-container">
-                    <div className="icon-container">
-                        <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="30" height="30" />
-                        <div className="icon-title">Mis anuncios</div>
-                    </div>
-                </div>
-
-                <div className="icon-container">
-                    <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="30" height="30" />
-                    <div className="icon-title">Mis favoritos</div>
-                    </div>
-                </div>
-                
-                <div className="icon-container">
-                    <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="30" height="30" />
-                    <div className="icon-title">Mis conversaciones</div>
-                    </div>
-
-                    </div>
             
-                 </div> */}
-                <p><button>Editar perfil</button></p>
+                <p><button onClick={handleEditMode}>Editar perfil</button></p>
                 
              </div>
+            }
+            
+            
 
              <style jsx>{`
                     
@@ -100,6 +93,7 @@ const MyProfile = () => {
 
                     .image-container {
                         cursor: pointer;
+                        padding: 25px 0;
                     }
 
                     .icon-container {
@@ -130,7 +124,7 @@ const MyProfile = () => {
                         display: inline-block;
                         padding: 8px;
                         color: white;
-                        background-color: #000;
+                        background-color: #3F51B5;
                         text-align: center;
                         cursor: pointer;
                         width: 100%;
