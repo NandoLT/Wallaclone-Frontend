@@ -16,7 +16,12 @@ import { getMyProfile } from '../../api/users';
 const MyProfile = ({myProfileDetails}) => {
     const dispatch = useDispatch();
 
-    const[profileDetails, setProfileDetails] = useState(null);
+    const[profileDetails, setProfileDetails] = useState({
+        photo: null,
+        nickname: "Fulanito",
+        description: null,
+        province: null
+    });
 
     const [editMode, setEditMode] = useState(false);
 
@@ -26,21 +31,16 @@ const MyProfile = ({myProfileDetails}) => {
     
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-    useEffect( () => {
-        setProfileDetails({
-            photo: "/profilePhoto.jpg",
-            nickname: "Jaime",
-            description: "dfsgsdfgsdfg sdgdsfgsdgsd sdgsdgsdfgsdgsdg",
-            province: "Madrid"
-        })
+    useEffect( async () => {
+       
 
-        // try {
-        //     const profileDetails= await getMyProfile()
-        //     setProfileDetails(profileDetails);
+        try {
+            const profileDetails= await getMyProfile()
+            setProfileDetails(profileDetails);
             
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
         
        
         
@@ -63,7 +63,7 @@ const MyProfile = ({myProfileDetails}) => {
 
                 <div className="card">
 
-                    {profileDetails && 
+                     
                             <div>
                                 <div onClick={handleEditMode} className="image-container" >
                                 {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
@@ -79,8 +79,8 @@ const MyProfile = ({myProfileDetails}) => {
 
 
 
-
-                                <h1>{profileDetails.nickname}</h1>
+                                {profileDetails.nickname ? <h1>{profileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno"/> </div> }
+                                
                                 {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> </div>  }
 
                                 {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container"  onClick={handleEditMode}> <MissingField  title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/> </div> }
@@ -91,7 +91,7 @@ const MyProfile = ({myProfileDetails}) => {
                             </div>
 
                     
-                    }
+                    
                 
 
                  

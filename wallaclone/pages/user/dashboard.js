@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
         })
     };
 
+
     const resetUi = () => {
         setContent({
             myAdverts:false,
@@ -72,11 +73,9 @@ const useStyles = makeStyles((theme) => ({
                 
             </div>
             <div id="profile">
-            <label for="avatar"><div id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div></label>
+            <div onClick={()=> openTab("myProfile")} id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div>
 
-        <input hidden type="file"
-       id="avatar" name="avatar"
-       accept="image/png, image/jpeg"/>
+       
                 
                 <div id="name"><span>Jaime Pérez</span></div>
             </div>
