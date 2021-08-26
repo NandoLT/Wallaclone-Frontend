@@ -8,6 +8,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import Image from 'next/image';
+import MissingField from './MissingField';
 
 const MyProfile = () => {
 
@@ -41,7 +42,7 @@ const MyProfile = () => {
                     : 
                     <div>
                         <Image  src="/photo-upload.png" alt="me" width="100%" height="100%" />
-                        <div> Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil</div>
+                        <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"}/>
 
                     </div>
                       }
@@ -59,11 +60,11 @@ const MyProfile = () => {
                 
             
                 <h1>John Doe</h1>
-                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <h4> Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí</h4> }
+                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> }
 
-                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <h5>Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil </h5>}
+                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <MissingField title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/>}
                
-                <div className="icons-container">
+                {/* <div className="icons-container">
                     <div className="icon-container">
                         <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="30" height="30" />
                         <div className="icon-title">Mis anuncios</div>
@@ -83,7 +84,7 @@ const MyProfile = () => {
 
                     </div>
             
-                 </div>
+                 </div> */}
                 <p><button>Editar perfil</button></p>
                 
              </div>
