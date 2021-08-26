@@ -14,7 +14,15 @@ const MyProfile = () => {
         <div>
             
             <div className="card">
-            <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                
+
+                <label for ="avatar"> <div className="image-container" ><Image  src="/photo-upload.png" alt="me" width="100%" height="100%" /> </div>  </label>
+                    <input hidden type="file"
+            id="avatar" name="avatar"
+            accept="image/png, image/jpeg"/>
+
+                
+            
                 <h1>John Doe</h1>
                 <p class="title">CEO & Founder, Example</p>
                 <p>Barcelona</p>
@@ -35,7 +43,9 @@ const MyProfile = () => {
                         text-align: center;
                     }
 
-                    
+                    .image-container {
+                        cursor: pointer;
+                    }
                     
                     .title {
                         color: grey;

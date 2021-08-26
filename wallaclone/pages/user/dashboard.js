@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
                 
             </div>
             <div id="profile">
-            <label for="avatar"><div id="photo"><Image src="/profilePhoto.jpg" alt="me" width="64" height="64" /></div></label>
+            <label for="avatar"><div id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div></label>
 
         <input hidden type="file"
        id="avatar" name="avatar"
