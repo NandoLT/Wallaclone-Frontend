@@ -201,7 +201,7 @@ const setPhoto = event => {
             
 
             <label  htmlFor="contained-button-file">
-                    <Button variant="contained" color="primary" component="span">
+                    <Button size ="small" variant="contained" color="primary" component="span">
                     Cambiar foto
                     </Button>
                     <label htmlFor="contained-button-file">
