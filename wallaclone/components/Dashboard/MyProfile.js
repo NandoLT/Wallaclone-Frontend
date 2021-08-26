@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import MissingField from './MissingField';
+import EditUserProfile from './EditUserProfile';
 
 const MyProfile = () => {
 
@@ -26,16 +27,7 @@ const MyProfile = () => {
     
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-    const setPhoto = event => {
-        setPhotoUploaded(true);
-      setProfileDetails(oldProfileDetails => {
-          const newProfileDetails = {
-              ...oldProfileDetails,
-              'photo': event.target.files[0]
-          }
-          return newProfileDetails;
-      });
-    }
+  
 
     return (
         <div>
@@ -44,7 +36,8 @@ const MyProfile = () => {
 
                 <div>
                     <p><button onClick={handleEditMode}>Deshacer cambios</button></p>
-                    <h1>MODO EDICION ACTIVADO</h1>
+                    <h3>Edición de mi perfil</h3>
+                    <EditUserProfile/>
                 </div>
 
                 
@@ -54,7 +47,7 @@ const MyProfile = () => {
                 <div className="card">
                 
 
-                 <div className="image-container" >
+                 <div onClick={handleEditMode} className="image-container" >
                     {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
                     : 
                     <div>
@@ -70,9 +63,9 @@ const MyProfile = () => {
                 
             
                 <h1>John Doe</h1>
-                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> }
+                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> </div>  }
 
-                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <MissingField title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/>}
+                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container"  onClick={handleEditMode}> <MissingField  title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/> </div> }
                
             
                 <p><button onClick={handleEditMode}>Editar perfil</button></p>
@@ -139,6 +132,10 @@ const MyProfile = () => {
                     
                     button:hover, a:hover {
                         opacity: 0.7;
+                    }
+
+                    .missing-container{
+                        cursor:pointer;
                     }
 
                     `}</style>
