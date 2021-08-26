@@ -35,7 +35,10 @@ import {
     ADVERT_UPDATE_FAILURE,
     FETCH_MY_ADVERTS_SUCCESS,
     FETCH_MY_ADVERTS_REQUEST,
-    FETCH_MY_ADVERTS_FAILURE
+    FETCH_MY_ADVERTS_FAILURE,
+    GET_MY_PROFILE_DETAILS_SUCCESS,
+    GET_MY_PROFILE_DETAILS_REQUEST,
+    GET_MY_PROFILE_DETAILS_FAILURE
 } from "./types";
 import { combineReducers } from 'redux';
 
@@ -43,6 +46,7 @@ import { combineReducers } from 'redux';
 const initialState = {
     auth: false,
     userId: "",
+    myProfileDetails:null,
     favoriteAdverts: [],
     myAdverts: [],
     ui: {
@@ -83,6 +87,15 @@ export const adverts = (state = initialState.adverts, action) => {
 export const myAdverts = (state = initialState.myAdverts, action) => {
     switch (action.type) {
         case FETCH_MY_ADVERTS_SUCCESS:
+            return action.payload
+        default:
+            return state;
+    }
+}
+
+export const myProfileDetails = (state = initialState.myProfileDetails, action) => {
+    switch (action.type) {
+        case GET_MY_PROFILE_DETAILS_SUCCESS:
             return action.payload
         default:
             return state;
@@ -146,6 +159,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_UPDATE_REQUEST:
         case GET_ADVERTS_REQUEST:
         case FETCH_MY_ADVERTS_REQUEST:
+        case GET_MY_PROFILE_DETAILS_REQUEST:
         case AUTH_RECOVER_PASSWORD_REQUEST:
         case AUTH_RESET_PASSWORD_REQUEST:
             return {
@@ -158,6 +172,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_SUCCESS:
         case ADVERT_UPDATE_SUCCESS:
         case GET_ADVERTS_SUCCESS:
+        case GET_MY_PROFILE_DETAILS_SUCCESS:
         case FETCH_MY_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
         case AUTH_RECOVER_PASSWORD_SUCCESS:
@@ -177,6 +192,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_UPDATE_FAILURE:
         case GET_ADVERTS_FAILURE:
         case FETCH_MY_ADVERTS_FAILURE:
+        case GET_MY_PROFILE_DETAILS_FAILURE:
         case AUTH_RECOVER_PASSWORD_FAILURE:
         case AUTH_RESET_PASSWORD_FAILURE:
             return {
@@ -198,7 +214,8 @@ const reducer = combineReducers({
     ui,
     adverts,
     favoriteAdverts,
-    myAdverts
+    myAdverts,
+    myProfileDetails
 })
 
 export default reducer;

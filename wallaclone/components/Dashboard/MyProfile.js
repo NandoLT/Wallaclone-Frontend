@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError } from '../../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError, getUserId, getMyProfileDetails } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
+import { advertsGetAction, fetchMyAdvertsAction, getMyProfileAction } from '../../store/actions';
 import { getMyAdverts } from '../../store/selectors';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,14 +10,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import MissingField from './MissingField';
 import EditUserProfile from './EditUserProfile';
+import WithAuth from '../hocs/WithAuth';
+import { getMyProfile } from '../../api/users';
 
-const MyProfile = () => {
+const MyProfile = ({myProfileDetails}) => {
+    const dispatch = useDispatch();
 
-    const[profileDetails, setProfileDetails] = useState({
-        photo:null,
-        description:null,
-        province: null,
-    })
+    const[profileDetails, setProfileDetails] = useState(null);
 
     const [editMode, setEditMode] = useState(false);
 
@@ -27,7 +26,25 @@ const MyProfile = () => {
     
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-  
+    useEffect( () => {
+        setProfileDetails({
+            photo: "/profilePhoto.jpg",
+            nickname: "Jaime",
+            description: "dfsgsdfgsdfg sdgdsfgsdgsd sdgsdgsdfgsdgsdg",
+            province: "Madrid"
+        })
+
+        // try {
+        //     const profileDetails= await getMyProfile()
+        //     setProfileDetails(profileDetails);
+            
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        
+       
+        
+    }, [])
 
     return (
         <div>
@@ -45,30 +62,39 @@ const MyProfile = () => {
                 :
 
                 <div className="card">
+
+                    {profileDetails && 
+                            <div>
+                                <div onClick={handleEditMode} className="image-container" >
+                                {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                                : 
+                                <div>
+                                    <Image  src="/photo-upload.png" alt="me" width="80%" height="80%" />
+                                    <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"}/>
+
+                                </div>
+                                }
+                                </div>  
+
+
+
+
+
+                                <h1>{profileDetails.nickname}</h1>
+                                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> </div>  }
+
+                                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container"  onClick={handleEditMode}> <MissingField  title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/> </div> }
+
+
+                                <p><button onClick={handleEditMode}>Editar perfil</button></p>
+
+                            </div>
+
+                    
+                    }
                 
 
-                 <div onClick={handleEditMode} className="image-container" >
-                    {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
-                    : 
-                    <div>
-                        <Image  src="/photo-upload.png" alt="me" width="80%" height="80%" />
-                        <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"}/>
-
-                    </div>
-                      }
-                    </div>  
-
-
-
-                
-            
-                <h1>John Doe</h1>
-                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> </div>  }
-
-                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container"  onClick={handleEditMode}> <MissingField  title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/> </div> }
-               
-            
-                <p><button onClick={handleEditMode}>Editar perfil</button></p>
+                 
                 
              </div>
             }
@@ -144,5 +170,14 @@ const MyProfile = () => {
     )
 }
 
-export default MyProfile
 
+
+const mapStateToProps = (state) => ({
+    isLogged: getIsLogged(state),
+    isLoading: getIsLoading(state),
+    error: getError(state),
+    userId: getUserId(state),
+    myProfileDetails: getMyProfileDetails(state),
+  }); 
+  
+  export default connect(mapStateToProps)(WithAuth(MyProfile))

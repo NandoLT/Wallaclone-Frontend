@@ -34,7 +34,10 @@ import {
     ADVERT_UPDATE_FAILURE,
     FETCH_MY_ADVERTS_SUCCESS,
     FETCH_MY_ADVERTS_REQUEST,
-    FETCH_MY_ADVERTS_FAILURE
+    FETCH_MY_ADVERTS_FAILURE,
+    GET_MY_PROFILE_DETAILS_REQUEST,
+    GET_MY_PROFILE_DETAILS_SUCCESS,
+    GET_MY_PROFILE_DETAILS_FAILURE
 } from "./types";
 
 
@@ -236,6 +239,29 @@ export const advertGetFavoritesFailure = (error) => {
     }
 }
 
+
+export const getMyProfileRequest = () => {
+    return {
+        type: GET_MY_PROFILE_DETAILS_REQUEST,
+    }
+}
+
+export const getMyProfileSuccess = (myProfileDetails) => {
+    return {
+        type: GET_MY_PROFILE_DETAILS_SUCCESS,
+        payload: myProfileDetails,
+    }
+}
+
+export const getMyProfileFailure = (error) => {
+    return {
+        type: GET_MY_PROFILE_DETAILS_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+
 export const advertAddFavoritesRequest = () => {
     return {
         type: ADVERT_ADD_FAVORITE_REQUEST
@@ -389,6 +415,18 @@ export const fetchMyAdvertsAction = () => {
             dispatch(fetchMyAdvertsSuccess(myAdverts));
         } catch (error) {
             dispatch(fetchMyAdvertsFailure(error.message));
+        }
+    }
+}
+
+export const getMyProfileAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(getMyProfileRequest());
+        try {
+            const myProfileDetails = await api.users.getMyProfile();
+            dispatch(getMyProfileSuccess(myProfileDetails));
+        } catch (error) {
+            dispatch(getMyProfileFailure(error.message));
         }
     }
 }
