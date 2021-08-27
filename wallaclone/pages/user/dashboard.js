@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     }
     
     React.useEffect(async () => {
-        resetUi();
+        // resetUi();
         try {
         const userImageFetched = await getUserImage();
         console.log(userImageFetched);
