@@ -1,25 +1,25 @@
-import { 
-    AUTH_LOGIN_SUCCESS, 
-    AUTH_LOGOUT, 
-    AUTH_REGISTER_SUCCESS, 
-    AUTH_LOGIN_REQUEST, 
-    AUTH_LOGIN_FAILURE, 
-    AUTH_REGISTER_REQUEST, 
-    AUTH_REGISTER_FAILURE, 
-    AUTH_RESET_STATE, 
-    ADVERTS_SUCCESS, 
-    ADVERTS_REQUEST, 
-    ADVERT_CREATION_REQUEST, 
-    ADVERT_CREATION_SUCCESS, 
-    ADVERT_CREATION_FAILURE, 
-    GET_ADVERTS_REQUEST, 
-    GET_ADVERTS_SUCCESS, 
-    GET_ADVERTS_FAILURE, 
-    AUTH_RECOVER_PASSWORD_REQUEST, 
-    AUTH_RECOVER_PASSWORD_FAILURE, 
-    AUTH_RESET_PASSWORD_REQUEST, 
-    AUTH_RECOVER_PASSWORD_SUCCESS, 
-    AUTH_RESET_PASSWORD_SUCCESS, 
+import {
+    AUTH_LOGIN_SUCCESS,
+    AUTH_LOGOUT,
+    AUTH_REGISTER_SUCCESS,
+    AUTH_LOGIN_REQUEST,
+    AUTH_LOGIN_FAILURE,
+    AUTH_REGISTER_REQUEST,
+    AUTH_REGISTER_FAILURE,
+    AUTH_RESET_STATE,
+    ADVERTS_SUCCESS,
+    ADVERTS_REQUEST,
+    ADVERT_CREATION_REQUEST,
+    ADVERT_CREATION_SUCCESS,
+    ADVERT_CREATION_FAILURE,
+    GET_ADVERTS_REQUEST,
+    GET_ADVERTS_SUCCESS,
+    GET_ADVERTS_FAILURE,
+    AUTH_RECOVER_PASSWORD_REQUEST,
+    AUTH_RECOVER_PASSWORD_FAILURE,
+    AUTH_RESET_PASSWORD_REQUEST,
+    AUTH_RECOVER_PASSWORD_SUCCESS,
+    AUTH_RESET_PASSWORD_SUCCESS,
     AUTH_RESET_PASSWORD_FAILURE,
     ADVERT_GET_FAVORITES_REQUEST,
     ADVERT_GET_FAVORITES_SUCCESS,
@@ -116,8 +116,12 @@ export const myProfileDetails = (state = initialState.myProfileDetails, action) 
 }
 
 export const userId = (state = initialState.userId, action) => {
-    switch (action.type){
-        case AUTH_LOGIN_SUCCESS:            
+    /* switch (action.type) {
+        case AUTH_LOGIN_SUCCESS:
+        case AUTH_REGISTER_SUCCESS:
+            return action.userId */
+    switch (action.type) {
+        case AUTH_LOGIN_SUCCESS:
             return ""
 
         case AUTH_LOGOUT:
@@ -126,7 +130,7 @@ export const userId = (state = initialState.userId, action) => {
         default:
             return state;
 
-    }    
+    }
 }
 
 export const favoriteAdverts = (state = initialState.favoriteAdverts, action) => {
@@ -135,15 +139,15 @@ export const favoriteAdverts = (state = initialState.favoriteAdverts, action) =>
             return action.payload
 
         case ADVERT_ADD_FAVORITE_SUCCESS:
-            return [ ...state, action.payload ]
+            return [...state, action.payload]
 
         case ADVERT_DELETE_FAVORITE_SUCCESS:
-                const index = state.indexOf(action.payload);
-                if (index > -1) {
-                    state.splice(index, 1);
-                }
+            const index = state.indexOf(action.payload);
+            if (index > -1) {
+                state.splice(index, 1);
+            }
 
-                return [ ...state ];
+            return [...state];
 
         default:
             return state;
@@ -152,11 +156,11 @@ export const favoriteAdverts = (state = initialState.favoriteAdverts, action) =>
 
 export const ui = (state = initialState.ui, action) => {
     if (action.error) {
-        return {...state, loading:false, error:action.payload }
+        return { ...state, loading: false, error: action.payload }
     }
-    if (action.successMessage){
+    if (action.successMessage) {
         console.log(action.successMessage)
-        return {...state, loading: false, error: null, successMessage: action.payload }
+        return { ...state, loading: false, error: null, successMessage: action.payload }
     }
     switch (action.type) {
         case AUTH_RESET_STATE:
@@ -199,8 +203,8 @@ export const ui = (state = initialState.ui, action) => {
             return {
                 loading: false,
                 error: null,
-                successMessage:action.payload
-                };
+                successMessage: action.payload
+            };
         case AUTH_LOGIN_FAILURE:
         case AUTH_REGISTER_FAILURE:
         case ADVERT_CREATION_FAILURE:
@@ -215,7 +219,7 @@ export const ui = (state = initialState.ui, action) => {
                 loading: false,
                 error: true,
             };
-    
+
         default:
             return state;
 

@@ -1,334 +1,216 @@
-import React, { useEffect, useMemo } from 'react'
-import Link from 'next/link';
-import statusEnum from '../utils/advertsEnum';
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction, advertGetFavoritesAction, advertAddFavoritesAction, advertDeleteFavoritesAction } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
-import Chip from '@material-ui/core/Chip';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Loading from '../components/Loading';
-import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { FormControl, Select, MenuItem, InputLabel, FormLabel, FormGroup, FormControlLabel, Checkbox, Slider } from '@material-ui/core';
-import provinces from '../utils/spainProvinces';
-import WithAuth from '../components/hocs/WithAuth'
+import AdvertCard from '../components/Card';
+import Loading from '../components/Loading';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { useRouter } from 'next/router'
+import Slider from '@material-ui/core/Slider';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Provinces from '../utils/spainProvinces';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-    item: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
+    formControl: {
+        minWidth: 120,
     },
-
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    filter: {
+        color: '#fff',
+        marginTop: 10
+    }
 }));
 
 
-const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
-    const classes = useStyles();
-
-    const [searchValue, setSearchValue] = React.useState("");
-    const adsFilteredBySearch = useMemo(() => {
-        if (!searchValue) {
-            return adverts
-        }
-        return adverts.filter(ad => {
-            return ad.name.toLowerCase().includes(searchValue.toLowerCase())
-        })
-    }, [searchValue, adverts])
-
+const Adverts = ({ isLogged, adverts, isLoading, error }) => {
+    const router = useRouter()
+    const queryParams = router.query
     const dispatch = useDispatch()
 
-    useEffect(async () => {
-        if (isLogged) {
-            await dispatch(advertGetFavoritesAction())
-        }
-        
-        await dispatch(advertsGetAction())
-    }, [])
+    console.log(adverts)
 
-    const tags = ["mobile", "software", "tech"];
+    const classes = useStyles();
 
-    const [filters, setFilters] = React.useState({
-        //search: adsFilteredBySearch(),
-        priceRange: [0, 1000],
+    const maxPrice = 200;
+
+    const [filters, setFilters] = useState({
+        status: [],
+        price: [0, maxPrice],
         tags: [],
-        province: "",
-        statusEnum: "",
-    })
+        province: ''
 
-    const [filteredAdverts, setFilteredAdverts] = React.useState([]);
+    });
 
-    // React.useEffect(() => {
-
-    //     setFilteredAdverts(adverts.filter(advert => advert.province.toLowerCase().includes(filters.province.toLowerCase()) && advert.statusEnum.includes(filters.statusEnum) && advert.priceRange[0] >= filters.priceRange[0] && advert.price <= filters.priceRange[1]  && (filters.tags.length > 0 ? advert.tags.some(function (e) {
-    //         return filters.tags.includes(e);
-    //     }) : true)))
-
-    // }, [filters]);
-
-    const handleFilterChange = (event) => {
-        setFilters(oldFilters => {
-            const newFilters = {
-                ...oldFilters,
-                [event.target.name]: event.target.value,
-            }
-            return newFilters
-        })
-    }
-
-    const handleChangePrice = (event, newValue) => {
-
-        setFilters(oldFilters => {
-            const newFilters = {
-                ...oldFilters,
-                ["priceRange"]: newValue,
-            }
-            return newFilters
-        })
-
-
-    };
+    const [hiddenMenu, setHiddenMenu] = useState(true);
 
     const handleChangeCheck = ev => {
-        const clickedTag = ev.target.name
-        setFilters(oldAdDetails => {
-            const newTags = oldAdDetails.tags;
-
-            if (newTags.includes(clickedTag)) {
-                newTags.splice(newTags.indexOf(clickedTag), 1);
+        setFilters(oldFilters => {
+            const newArray = oldFilters[ev.target.name];
+            if (newArray.includes(ev.target.value)) {
+                newArray.splice(newArray.indexOf(ev.target.value), 1);
             } else {
-                newTags.push(clickedTag);
+                newArray.push(ev.target.value);
             }
-
-            const newAdDetails = {
-                ...oldAdDetails,
-                'tags': newTags
+            const newFilters = {
+                ...oldFilters,
+                [ev.target.name]: newArray
             }
-            return newAdDetails;
-        }
-        );
+            return newFilters;
+        });
     };
 
-    function valuetext(value) {
-        return `${value}€`;
+
+    const handleChangePrice = (event, newValue) => {
+        setFilters(oldFilters => {
+            const newFilters = {
+                ...oldFilters,
+                price: newValue
+            }
+            return newFilters
+        });
+    };
+
+    const handleChange = ev => {
+        setFilters(oldFilters => {
+
+            const newFilters = {
+                ...oldFilters,
+                [ev.target.name]: ev.target.value,
+            }
+            return newFilters
+        });
+
     }
 
-    const handleFavoriteCheck = ev => {
-        if (!favoriteAdverts.includes(ev.target.id)) {
-            dispatch(advertAddFavoritesAction(ev.target.id));
-        } else {
-            dispatch(advertDeleteFavoritesAction(ev.target.id));
-        }
+    const toogleMenu = () => {
+        setHiddenMenu(!hiddenMenu);
     }
+
+    const filter = () => {
+        var params = '?';
+        if (queryParams.name) {
+            params += `name=${queryParams.name}&`
+        } if (filters.status) {
+            filters.status.forEach(status => {
+                params += `status=${status}&`
+            })
+        } if (filters.tags) {
+            filters.tags.forEach(tag => {
+                params += `tags=${tag}&`
+            })
+        }
+        if (filters.province) {
+            params += `province=${filters.province}&`
+        }
+        params += `minPrice=${filters.price[0]}&`
+        params += `maxPrice=${filters.price[1]}&`
+        const handleFavoriteCheck = ev => {
+            if (!favoriteAdverts.includes(ev.target.id)) {
+                dispatch(advertAddFavoritesAction(ev.target.id));
+            } else {
+                dispatch(advertDeleteFavoritesAction(ev.target.id));
+            }
+        }
+
+    }
+
+    useEffect(() => {
+        if (queryParams) {
+            dispatch(advertsGetAction(queryParams))
+        }
+    }, [queryParams])
+
 
     return (
         <div className="adverts-container">
-            <h1>Página de Anuncios</h1>
-            {adsFilteredBySearch &&
-
-
-
-                <div style={{ width: 300 }}>
-
-                    {/* <div className={classes.root}>
-                        <Typography id="range-slider" gutterBottom>
-                            Rango de precios
-                        </Typography>
-                        <Slider
-                            value={filters.priceRange}
-                            onChange={handleChangePrice}
-                            min={0}
-                            max={1000}
-                            step={50}
-                            valueLabelDisplay="on"
-                            aria-labelledby="range-slider"
-                            getAriaValueText={valuetext}
-                            name="priceRange"
-                        />
-                    </div>
-
-                    <FormControl style={{ margin: 8 }} className={classes.margin}>
-                        <Select style={{ margin: 8 }} required
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={filters.statusEnum}
-                            onChange={handleFilterChange}
-                            name="statusEnum"
-                        >
-                            <MenuItem value={0}>Vendo</MenuItem>
-                            <MenuItem value={1}>Compro</MenuItem>
-
-                        </Select>
-                    </FormControl>
-                    <InputLabel id="demo-simple-select-label">¿Venta o compra?</InputLabel>
-
-                    <FormControl style={{ margin: 8 }} className={classes.margin}>
-                        <Select style={{ margin: 8 }} required
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={filters.province}
-                            onChange={handleFilterChange}
-                            name="province"
-                        >
-                            {provinces.map(province => <MenuItem value={province.nombre}>{province.nombre}</MenuItem>)}
-
-
-                        </Select>
-                    </FormControl>
-                    <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
-
-                    <FormControl component="fieldset" className={classes.formControl}>
-                        <FormLabel style={{ margin: 8 }} component="legend">Tags</FormLabel>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={filters.tags.includes("software")}
-                                    onChange={handleChangeCheck}
-                                    name="software" />}
-                                label="software"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox checked={filters.tags.includes("mobile")} onChange={handleChangeCheck} name="mobile" />}
-                                label="mobile"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox checked={filters.tags.includes("tech")} onChange={handleChangeCheck} name="tech" />}
-                                label="tech"
-                            />
-                        </FormGroup>
-
-                    </FormControl > */}
-
-                    <Autocomplete
-                        freeSolo
-                        id="free-solo-2-demo"
-                        disableClearable
-                        options={adverts.map((option) => option.name)}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Search input"
-                                margin="normal"
-                                variant="outlined"
-                                InputProps={{ ...params.InputProps, type: 'search' }}
-                                onChange={e => setSearchValue(e.target.value)}
-                                value={searchValue}
-                            />
-                        )}
-                    />
+            <div className={hiddenMenu ? "filters-container hidden" : "filters-container"}>
+                <div className="filters-button" onClick={() => { toogleMenu() }}>
+                    <FilterListIcon />
+                    Filters
                 </div>
-
-            }
-            
-           
+                <div className={hiddenMenu ? "filters hidden" : "filters"}>
+                    <div>
+                        <p>Status:</p>
+                        <div>
+                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onClick={handleChangeCheck} /> <label for="statusSale">On Sale</label>
+                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onClick={handleChangeCheck} /> <label for="statusWanted">Wanted</label>
+                        </div>
+                        <p>Price:</p>
+                        <Slider
+                            onChange={handleChangePrice}
+                            value={filters.price}
+                            valueLabelDisplay="auto"
+                            max={maxPrice}
+                        />
+                        <p>Tags:</p>
+                        <div>
+                            <input type="checkbox" /> <label>Tecnología</label>
+                            <input type="checkbox" /> <label>Móvil</label>
+                        </div>
+                        <p>Province:</p>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-label">Province</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                value={filters.province}
+                                name="province"
+                                onChange={handleChange}
+                            >
+                                {Provinces.map(Province => <MenuItem value={Province.nombre}>{Province.nombre}</MenuItem>)}
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <Button variant="contained" color="primary" className={classes.filter} onClick={() => filter()}>Filter</Button>
+                </div>
+            </div>
+            <div>
+                {error && <Alert />}
+            </div>
 
 
             <section className="adverts-section">
+                {queryParams.name ? <h2> Resultados para: {queryParams.name}</h2> : ''}
                 {isLoading ? <Loading align="center" /> :
+
                     adverts
                         ?
                         <Box pl={1} pr={1}>
-                            <Grid container spacing={2}>
-                                {adsFilteredBySearch.slice(0).reverse().map(advert => {
-                                    const { name, price, onSale, _id, photo, description } = advert;
-                                    console.log(price)
-                                    
+                            <Grid container spacing={1} className="adverts">
+                                {adverts.map(advert => {
+                                    const { name, price, status, _id, photo, description, tags, userId } = advert;
+
                                     return (
-                                        <Grid item xs={6} sm={4} md={3} key={_id}>
-                                            <Card className={classes.root}>
-                                                <Link href={`/adverts/${_id}`} passHref>
-                                                    <CardActionArea>
-                                                        <CardMedia
-                                                            component="img"
-                                                            alt="Contemplative Reptile"
-                                                            height="200"
-                                                            image= {photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'}
-                                                            title="no image available"
-                                                        />
-                                                        <CardContent>
-                                                            <Typography gutterBottom variant="h5" component="h2">
-                                                                {name}
-                                                            </Typography>
-                                                            <div className="tags">
-                                                                {advert.tags.map(tag => {
-                                                                    return <Chip variant="outlined" size="small" label={tag} key={tag} />
-                                                                })}
-                                                            </div>
-                                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                               {description}
-                                                            </Typography>
-                                                            <Box mt={2} mb={2}>
-                                                                <Divider />
-                                                            </Box>
-                                                            <Typography variant="body3" color="textSecondary" component="p" align="right">
-                                                                {statusEnum[advert.status]}
-                                                            </Typography>
-                                                            <Typography variant="body3" color="Secondary" component="p" align="right">
-                                                                {price}€
-                                                            </Typography>
-                                                        </CardContent>
-                                                    </CardActionArea>
-                                                </Link>
-                                                <CardActions>
-                                                    <Button size="small" color="primary">
-                                                        Share
-                                                    </Button>
-                                                    <Button size="small" color="primary">
-                                                        Learn More
-                                                    </Button>
-                                                    { 
-                                                        isLogged &&
-                                                        <Button size="small" onClick={handleFavoriteCheck}>
-                                                            { favoriteAdverts && favoriteAdverts.includes(_id) ? <StarIcon id={_id}/> : <StarBorderIcon id={_id}/>}
-                                                        </Button>
-                                                    }
-                                                </CardActions>
-                                            </Card>
+                                        <Grid container item xs={12} sm={6} md={4} lg={3} key={_id}>
+
+                                            <AdvertCard name={name} price={price} status={status} photo={photo} description={description} tags={tags} id={_id} userId={userId} />
 
                                         </Grid>
-
-
 
                                     )
                                 })}
                             </Grid>
                         </Box>
 
-
-
-
                         :
-                        <h2> No hay anuncios que mostrar</h2>
-                }
+                        <h2> No hay anuncios que mostrar</h2>}
+
 
 
 
             </section>
-            {
-                error &&  <div> {error && <Alert />} </div>
 
-            }
-            <Link className={styles.card} href='/' passHref>
-                <div className={styles.card} >
-                    <h3>  Go Back Home &rarr; </h3>
-                </div>
-            </Link>
-
-        </div>
+        </div >
     )
 }
 const mapStateToProps = state => ({

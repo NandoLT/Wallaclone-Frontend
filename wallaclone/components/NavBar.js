@@ -1,110 +1,196 @@
+import React, { useEffect, useState } from 'react';
 
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogoutAction } from '../store/actions';
-import ConfirmationPopup from '../components/ConfirmationPopup'
+import { Grid, Menu } from '@material-ui/core';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import { useRouter } from 'next/router';
+import { makeStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu';
+import client from "../api/client";
+import { PictureAsPdf } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
+  logo: {
+    fontSize: 50,
+    cursor: 'pointer',
+    fontWeight: 300,
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  navbar: {
+    borderBottom: `1px solid ${theme.palette.text.disabled}`,
+  },
+  profile: {
+    width: 'fit-content',
+    '&:hover': {
+      color: theme.palette.primary.main,
+      borderBottom: `1px solid ${theme.palette.primary.main}`,
+    }
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+
     marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
   },
-  title: {
-    flexGrow: 1,
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+    margin: {
+      marginRight: 10
+    }
+  },
+
 }));
 
-export default function NavBar() {
-  const isLogged = useSelector(getIsLogged);
+
+const NavBar = ({ isLogged }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const router = useRouter();
+  const [pic, setPic] = useState('');
+  const [search, setSearch] = useState('')
 
- 
+  const onChange = ev => {
+    setSearch(ev.target.value)
+  }
 
-  const logoutConfirmation = () =>{
+  const submitSearch = (e) => {
+    e.preventDefault()
+    router.push(`/adverts?name=${search}`)
+  }
+
+  const logoutConfirmation = () => {
     dispatch(authLogoutAction());
+  }
 
-}
+  useEffect(() => {
+    async function fetchUserImg() {
+      const url = await client.get(process.env.REACT_APP_API_BASE_URL_DEPLOYED + `/getUserImage`);
+      console.log(url)
+      setPic(url);
+    }
+
+    fetchUserImg();
+  }, [])
+
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            {/* <MenuIcon /> */}
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-           <Link href="/" passHref> Wallaclone </Link> 
-          </Typography>
-          
-         
-          <Link href='/register' passHref>
-            <Button color="inherit">Registro</Button>
-          </Link>
-          <Link href='/adverts' passHref>
-            <Button color="inherit">Anuncios</Button>
-          </Link>
-          <Link href='/create-advert' passHref>
-            <Button color="inherit">Crear nuevo anuncio</Button>
-          </Link>
-          
+    <div className={"navbar"} style={{ paddingLeft: 20, paddingRight: 20 }}>
+      <Grid container className={classes.root, classes.navbar} direction="row"
+        justify="space-between"
+        alignItems="center">
+        <Link href='/adverts' passHref>
+          <Typography className={classes.logo}>Wallaclone</Typography>
+        </Link>
 
-            {isLogged ? 
-
-                // <Button onClick={onLogout} variant="contained" color="secondary">Logout</Button>
-                <div className="isLogged-buttons">
-
-              <ConfirmationPopup
-                className="isLogged-button"
-                buttonText="Logout" 
-                popupTitle="Logout" 
-                popupDescription="¿Quieres confirmar el cierre de sesión?" 
-                handleConfirmation={logoutConfirmation}
-                />
-
-              <Link href='/user/dashboard' passHref>
-                    <Button variant="contained" color="secondary">Dashboard</Button>
-                </Link>
-
-
+        <Hidden smDown>
+          <Grid container item md={7} lg={5} direction="row" justify="space-between" alignItems="center">
+            <form onSubmit={submitSearch}>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
                 </div>
-               
-                :
-                <Link href='/login' passHref>
-                    <Button variant="contained" color="secondary">Login</Button>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={onChange}
+                  value={search}
+                />
+              </div>
+            </form>
+            {
+              isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
+                <Link href="#" className={classes.margin}>
+                  <a className={classes.profile}>
+                    <img src={pic} />
+                    Mi perfil
+                  </a>
                 </Link>
-            
+
+
+                <Link href="/create-advert">
+                  <Button variant="contained" color="primary" className={"whiteText"}>
+                    Subir producto
+                  </Button>
+                </Link>
+              </Grid> :
+
+                <Link href="/login">
+                  <Button variant="contained" color="primary" className={"whiteText"}>
+                    Login
+                  </Button>
+                </Link>
             }
-         
-          
 
-        </Toolbar>
-      </AppBar>
-      <style jsx>{`
-                    
-                    
-                    .isLogged-buttons{
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: center;
-                    }
 
-                    .isLogged-button{
-                        margin-right:15px;
-                    }
+          </Grid>
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
 
-                    `}</style>
-    </div>
+      </Grid>
+
+
+
+
+    </div >
+
+
+
   );
 }
+
+
+const mapStateToProps = state => ({
+  isLogged: getIsLogged(state),
+})
+
+
+
+export default connect(mapStateToProps)(NavBar)

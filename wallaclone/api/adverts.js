@@ -1,10 +1,20 @@
-import client  from "./client";
+import client from "./client";
 
 const advertsPath = '/api/adverts'
 
-export const getAdverts = async () => {
-    const adverts = await client.get(advertsPath)
-    return adverts;
+export const getAdverts = async (query) => {
+
+    var url = advertsPath;
+    if (query) {
+        url += query
+    }
+
+    try {
+        const adverts = await client.get(url)
+        return adverts;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export const getMyAdverts = async () => {
@@ -18,7 +28,7 @@ export const getAdvertDetail = async (id) => {
 }
 
 export const createAdvert = async (advertDetails) => {
-    return client.post(`${advertsPath}`, advertDetails);    
+    return client.post(`${advertsPath}`, advertDetails);
 }
 
 export const getFavorites = async () => {

@@ -7,20 +7,21 @@ const authPath = '/api/users'
 
 export const login = (remember, credentials) => {
     return client.post(`${authPath}/login`, credentials).then(({ token }) => {
-        configureClient(token);
 
-        if (remember) {
-            storage.set('authToken', token);
-        }        
-    });        
+        return token;
+    })
+        .then(token => {
+            const userId = parseAuthToken(token);
+            configureClient(token);
+            if (remember) {
+
+                storage.set('authToken', token)
+            }
+            return userId;
+        })
+
 }
 
-export const register = (credentials) => {   
-    return client.post(`${authPath}/register`, credentials).then(({ token }) => {
-        configureClient(token);
-        storage.set('authToken', token);
-    });
-}
 
 export const recoverPassword = (email) => {
     return client.post(`${authPath}/recoverpassword`, email).then(({ token }) => {
@@ -28,6 +29,24 @@ export const recoverPassword = (email) => {
         storage.set('recoverToken', token);
     });
 }
+
+export const register = (remember, credentials) => {
+
+    return client.post(`${authPath}/register`, credentials).then(({ token }) => {
+
+        return token;
+    })
+        .then(token => {
+            const userId = parseAuthToken(token);
+            configureClient(token);
+            if (remember) {
+
+                storage.set('authToken', token)
+            }
+            return userId;
+        })
+}
+
 
 export const resetPassword = (passwords) => {
     return client.post(`${authPath}/resetpassword`, passwords).then(() => {
@@ -41,4 +60,4 @@ export const logout = () => {
         resetClient();
         storage.remove('authToken');
     });
-  };
+};

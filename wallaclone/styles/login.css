@@ -1,27 +1,73 @@
-.login-container{
+.auth-container{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
-.login-container h1{
-    color: #3f51b5;
+.auth-container > section{
+    width: 50%;
+    height: 100vh;
 }
 
-.login-form{
+.auth-info{
+    background: rgb(15,191,230);
+    background: linear-gradient(210deg, rgba(15,191,230,1) 60%, rgba(14,108,129,1) 100%);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding-bottom: 5%;
+    position: relative;
 }
 
-.login-input{
-    margin-top: 10px;
+.auth-info .over-title{
+    font-size: 20px;
+    font-weight: 800;
 }
 
-.login-container button{
-    margin-top: 30px;
+.auth-info .title{
+    font-size: 50px;
 }
 
-.remember-check{
-    margin-top: 30px;
+.auth-info .subtitle{
+    font-size: 12px;
+}
+
+.auth-info .team{
+    position: absolute;
+    bottom: 50px;
+    font-weight: 100;
+}
+
+.auth-info .team span{
+    color: rgba(255, 255, 255,.7);
+}
+
+.auth-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+}
+
+.auth-content > h1{
+    width: 100%;
+    font-size: 40px;
+    font-weight: 100;
+    color:rgba(15,191,230,1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (max-width: 767.98px) {
+    .auth-info{
+        display: none;
+    }
+
+    .auth-container > section{
+        height: 70vh;
+    }
 }

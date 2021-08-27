@@ -14,6 +14,8 @@ import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
 import Alert from '../components/Alert';
 import styles from '../styles/Home.module.css'
+import RegisterForm from '../components/Auth/RegisterForm'
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -23,130 +25,40 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Register = ({ isLogged, isLoading, error }) => {
+const Register = () => {
 
     const dispatch = useDispatch();
-    const classes = useStyles();
 
     useEffect(() => {
         dispatch(authResetState());
     }, []);
 
 
-    const [credentials, setCredentials] = React.useState({
-        name: '',
-        surname: '',
-        email: '',
-        password: ''
-    })
-
-    const handleSubmit = (event) => {
-        console.log(credentials)
-        event.preventDefault();
-        dispatch(authRegisterAction(credentials))
-
-    }
-
-
-    const handleInputChange = event => {
-        setCredentials(oldCredentials => {
-
-            const newCredentials = {
-                ...oldCredentials,
-                [event.target.name]: event.target.value,
-            }
-            return newCredentials
-        });
-
-    }
-
-    const validation = () => {
-        if(!credentials.name){
-            return true;
-        }
-
-        if(!credentials.surname){
-            return true
-        }
-
-        if(!credentials.email) {
-            return true
-        }
-
-        if(!credentials.password){
-            return true
-        }
-
-        return false
-    }
-
 
     return (
-        <div className="register-container">
-            <h1>Register</h1>
+        <div className="auth-container">
+            <section className="auth-content">
 
-            <form onSubmit={handleSubmit} className="register-form">
-                <div>
-                    <div className={classes.margin, "register-input"}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                                <AccountCircle />
-                            </Grid>
-                            <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Name" value={credentials.name} />
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <div className={classes.margin, "register-input"}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                                <AccountCircle />
-                            </Grid>
-                            <Grid item>
-                                <TextField onChange={handleInputChange} name="surname" id="input-with-icon-grid" label="Surname" value={credentials.surname} />
-                            </Grid>
-                        </Grid>
-                    </div>
-                </div>
-                <div>
-                    <div className={classes.margin, "register-input"}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                                <EmailIcon />
-                            </Grid>
-                            <Grid item>
-                                <TextField onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Email" value={credentials.email} />
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <div className={classes.margin, "register-input"}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                                <LockIcon />
-                            </Grid>
-                            <Grid item>
-                                <TextField onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} />
-                            </Grid>
-                        </Grid>
-                    </div>
-                </div>
+                <Typography color="primary" variant="h1">
 
-
-                {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
                     Register
-                </Button>}
-                {error && <Alert />}
+
+                </Typography>
+                <RegisterForm />
+            </section>
+            <section className="auth-info">
+                <article>
+                    <p className="over-title">Welcome to</p>
+                    <h1 className="title">WALLACLONE</h1>
+                    <p className="subtitle">The best website for<br></br>second hand buying and selling</p>
+                </article>
+                <article className="team">
+                    <p><span>BY</span> JS BANDITS</p>
+                </article>
+            </section>
 
 
-            </form>
-            {isLoading && <Loading />}
-            <Link className={styles.card} href='/' passHref>
-                <div className={styles.card} >
-                    <h3>  Go Back Home &rarr;  </h3>
-                </div>
-            </Link>
-
-        </div>
+        </div >
     )
 }
 

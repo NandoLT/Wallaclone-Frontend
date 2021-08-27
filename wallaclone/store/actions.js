@@ -1,24 +1,24 @@
-import { 
-    AUTH_LOGIN, 
-    AUTH_LOGOUT, 
-    AUTH_REGISTER, 
-    AUTH_LOGIN_REQUEST, 
-    AUTH_LOGIN_SUCCESS, 
-    AUTH_LOGIN_FAILURE, 
-    AUTH_REGISTER_SUCCESS, 
-    AUTH_RESET_STATE, 
-    GET_ADVERTS_REQUEST, 
-    GET_ADVERTS_SUCCESS, 
-    GET_ADVERTS_FAILURE, 
-    ADVERT_CREATION_FAILURE, 
-    ADVERT_CREATION_REQUEST, 
-    ADVERT_CREATION_SUCCESS, 
-    AUTH_RECOVER_PASSWORD_REQUEST, 
-    AUTH_RECOVER_PASSWORD_SUCCESS, 
-    AUTH_RECOVER_PASSWORD_FAILURE, 
-    AUTH_RESET_PASSWORD_REQUEST, 
-    AUTH_RESET_PASSWORD_SUCCESS, 
-    AUTH_RESET_PASSWORD_FAILURE, 
+import {
+    AUTH_LOGIN,
+    AUTH_LOGOUT,
+    AUTH_REGISTER,
+    AUTH_LOGIN_REQUEST,
+    AUTH_LOGIN_SUCCESS,
+    AUTH_LOGIN_FAILURE,
+    AUTH_REGISTER_SUCCESS,
+    AUTH_RESET_STATE,
+    GET_ADVERTS_REQUEST,
+    GET_ADVERTS_SUCCESS,
+    GET_ADVERTS_FAILURE,
+    ADVERT_CREATION_FAILURE,
+    ADVERT_CREATION_REQUEST,
+    ADVERT_CREATION_SUCCESS,
+    AUTH_RECOVER_PASSWORD_REQUEST,
+    AUTH_RECOVER_PASSWORD_SUCCESS,
+    AUTH_RECOVER_PASSWORD_FAILURE,
+    AUTH_RESET_PASSWORD_REQUEST,
+    AUTH_RESET_PASSWORD_SUCCESS,
+    AUTH_RESET_PASSWORD_FAILURE,
     CONFIRM_PASSWORD_FAILURE,
     ADVERT_GET_FAVORITES_REQUEST,
     ADVERT_GET_FAVORITES_SUCCESS,
@@ -52,7 +52,8 @@ export const authRegister = () => {
 
 export const authLoginSuccess = () => {
     return {
-        type: AUTH_LOGIN_SUCCESS
+        type: AUTH_LOGIN_SUCCESS,
+        userId: userId
     }
 }
 
@@ -65,8 +66,8 @@ export const authLoginRequest = () => {
 export const authLoginFailure = (error) => {
     return {
         type: AUTH_LOGIN_FAILURE,
-        payload:error,
-        error:true
+        payload: error,
+        error: true
     }
 }
 
@@ -80,15 +81,15 @@ export const authRecoverPasswordSuccess = (successMessage) => {
     return {
         type: AUTH_RECOVER_PASSWORD_SUCCESS,
         payload: successMessage,
-        successMessage:true,
+        successMessage: true,
     }
 }
 
 export const authRecoverPasswordFailure = (error) => {
     return {
         type: AUTH_RECOVER_PASSWORD_FAILURE,
-        payload:error,
-        error:true
+        payload: error,
+        error: true
     }
 }
 
@@ -101,24 +102,24 @@ export const authResetPasswordRequest = () => {
 export const authResetPasswordSuccess = (successMessage) => {
     return {
         type: AUTH_RESET_PASSWORD_SUCCESS,
-        payload:successMessage,
-        successMessage:true,
+        payload: successMessage,
+        successMessage: true,
     }
 }
 
 export const authResetPasswordFailure = (error) => {
     return {
         type: AUTH_RESET_PASSWORD_FAILURE,
-        payload:error,
-        error:true
+        payload: error,
+        error: true
     }
 }
 
 export const confirmPasswordFailureAction = error => {
     return {
         type: CONFIRM_PASSWORD_FAILURE,
-        payload:error,
-        error:true,
+        payload: error,
+        error: true,
 
     }
 }
@@ -129,18 +130,19 @@ export const authRegisterRequest = () => {
     }
 }
 
-export const authRegisterSuccess = () => {
+export const authRegisterSuccess = (userId) => {
     return {
         type: AUTH_REGISTER_SUCCESS,
-        
+        userId: userId
+
     }
 }
 
 export const authRegisterFailure = (error) => {
     return {
         type: AUTH_LOGIN_FAILURE,
-        payload:error,
-        error:true
+        payload: error,
+        error: true
     }
 }
 
@@ -169,11 +171,11 @@ export const getAdvertsRequest = () => {
     }
 }
 
-export const getAdvertsFailure = error =>{
-    return{
+export const getAdvertsFailure = error => {
+    return {
         type: GET_ADVERTS_FAILURE,
-        payload:error,
-        error:true,
+        payload: error,
+        error: true,
     }
 }
 
@@ -206,18 +208,18 @@ export const advertCreationRequest = () => {
     }
 }
 
-export const advertCreationSuccess = (advertDetails) =>{
+export const advertCreationSuccess = (advertDetails) => {
     return {
         type: ADVERT_CREATION_SUCCESS,
         advertDetails: advertDetails,
     }
 }
 
-export const advertCreationFailure = error =>{
-    return{
-        type:ADVERT_CREATION_FAILURE,
-        payload:error,
-        error:true,
+export const advertCreationFailure = error => {
+    return {
+        type: ADVERT_CREATION_FAILURE,
+        payload: error,
+        error: true,
     }
 }
 
@@ -334,18 +336,18 @@ export const advertUpdateRequest = () => {
     }
 }
 
-export const advertUpdateSuccess = (newAdvertDetails) =>{
+export const advertUpdateSuccess = (newAdvertDetails) => {
     return {
         type: ADVERT_UPDATE_SUCCESS,
         newAdvertDetails: newAdvertDetails,
     }
 }
 
-export const advertUpdateFailure = error =>{
-    return{
-        type:ADVERT_UPDATE_FAILURE,
-        payload:error,
-        error:true,
+export const advertUpdateFailure = error => {
+    return {
+        type: ADVERT_UPDATE_FAILURE,
+        payload: error,
+        error: true,
     }
 }
 
@@ -370,8 +372,8 @@ export const authrecoverPasswordAction = (email) => {
         try {
             await api.auth.recoverPassword(email);
             dispatch(authRecoverPasswordSuccess("Te acabamos de enviar un email para reestablecer tu contraseña"));
-           
-           
+
+
         } catch (error) {
             dispatch(authRecoverPasswordFailure(error.message))
         }
@@ -398,19 +400,19 @@ export const authresetPasswordAction = (passwords) => {
 export const authLogoutAction = () => {
     return async function (dispatch, getState, { api, router }) {
 
-            await api.auth.logout();
-            dispatch(authLogout());
-            router.push('/login');
-            
+        await api.auth.logout();
+        dispatch(authLogout());
+        router.push('/login');
+
     }
 }
 
-export const authRegisterAction = (credentials) => {
+export const authRegisterAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authRegisterRequest());
         try {
-            await api.auth.register(credentials)
-            dispatch(authRegisterSuccess());
+            const userId = await api.auth.register(remember, credentials)
+            dispatch(authRegisterSuccess(userId));
             router.push('/adverts')
         } catch (error) {
             dispatch(authLoginFailure(error.message))
@@ -419,14 +421,46 @@ export const authRegisterAction = (credentials) => {
     }
 }
 
-export const advertsGetAction = () => {
+export const advertsGetAction = (filters) => {
+    var query = ''
+
+    if (filters) {
+        query = '?'
+        if (filters.name) {
+            query += `name=${filters.name}&`
+        }
+        if (filters.status) {
+            query += `status=${filters.status}&`
+        };
+        if (filters.minPrice) {
+            query += `minPrice=${filters.minPrice}&`
+        }
+        if (filters.maxPrice) {
+            query += `maxPrice=${filters.maxPrice}&`
+        }
+        if (filters.tags) {
+            if (filters.tags.isArray) {
+                filters.tags.forEach(tag => {
+                    query += `tags=${tag}&`
+                })
+            } else {
+                query += `tags=${filters.tags}&`
+            }
+
+        }
+        if (filters.province) {
+            query += `province=${filters.province}&`
+        }
+    }
+
+
     return async function (dispatch, getState, { api, router }) {
         dispatch(getAdvertsRequest());
         try {
-            const adverts = await api.adverts.getAdverts();
-            dispatch(getAdvertsSuccess(adverts));
-        } catch (error) {
-            dispatch(getAdvertsFailure(error.message));
+            const adverts = await api.adverts.getAdverts(query);
+            dispatch(advertsGet(adverts));
+        } catch (err) {
+            console.log(err)
         }
     }
 }
