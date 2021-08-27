@@ -7,7 +7,9 @@ import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
 
-const Login = () => {
+const Login = ({ isLogged }) => {
+
+
 
     const dispatch = useDispatch();
 
@@ -15,7 +17,10 @@ const Login = () => {
         dispatch(authResetState());
     }, [])
 
-
+    if (isLogged) {
+        router.push('/adverts');
+        return null;
+    }
 
     return (
         <div className="auth-container">
@@ -46,5 +51,14 @@ const Login = () => {
 }
 
 
-export default Login
+
+
+const mapStateToProps = state => ({
+    isLogged: getIsLogged(state),
+
+})
+
+
+
+export default connect(mapStateToProps)(Login)
 

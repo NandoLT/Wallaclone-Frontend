@@ -4,6 +4,7 @@ import '../styles/login-form.css'
 import '../styles/register-form.css'
 import '../styles/register.css'
 import '../styles/adverts.css'
+import '../styles/dashboard2.css'
 import '@fontsource/roboto';
 import configureStore from '../store';
 import { Provider } from 'react-redux';
@@ -20,9 +21,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme.js'
 
 const accessToken = storage.get('authToken');
-if (accessToken) {
-  configureClient(accessToken);
+const recoverToken = storage.get('recoverToken');
+if (accessToken && !recoverToken) {
+  configureClient(accessToken.replace(/['"]+/g, ''));
+} else if (!accessToken && recoverToken) {
+  configureClient(recoverToken.replace(/['"]+/g, ''));
 }
+
 const userId = parseAuthToken(accessToken);
 const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });
 
