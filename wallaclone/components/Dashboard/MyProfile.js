@@ -18,7 +18,7 @@ const MyProfile = ({myProfileDetails}) => {
 
     const[profileDetails, setProfileDetails] = useState({
         photo: null,
-        nickname: "Fulanito",
+        nickname: "Kevin",
         description: null,
         province: null
     });
@@ -32,17 +32,9 @@ const MyProfile = ({myProfileDetails}) => {
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
     useEffect( async () => {
-       
-
-        try {
-            const profileDetails= await getMyProfile()
-            setProfileDetails(profileDetails);
             
-        } catch (error) {
-            console.log(error);
-        }
-        
-       
+           dispatch(getMyProfileAction());
+
         
     }, [])
 
