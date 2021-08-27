@@ -56,9 +56,9 @@ const MyfavoriteAds = ({isLogged, isLoading, error, myFavoriteAdverts}) => {
                     myFavoriteAdverts.map(advert => {
                         
                         return (
-                            // <SimplifiedAdvertCard advert={advert}/>
+                            <SimplifiedAdvertCard advert={advert}/>
 
-                            <h2> Ha encontrado favoritos</h2>
+                            
 
                         )
                     } )
