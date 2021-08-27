@@ -1,46 +1,47 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
-const SimplifiedAdvertCard = ({advert}) => {
+const SimplifiedAdvertCard = ({ advert }) => {
 
-    const {photo, tags, name, description, price, province, status, _id} = advert;
+    const { photo, tags, name, description, price, province, status, _id } = advert;
     return (
         <div className="container">
-                                <div className="card">
-                                    <div className="card-header">
-                      
-                                        <img  src={photo.length >0 ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${photo[0]}` : '/img/image-not-available.png'} />
-                      
-                                    </div>
-                                    <div className="card-body">
-                        
-                                        {status === 0 && <div className="price-container"> <div className="price-status"> En venta:  <span className="price-header">{price} €</span> </div> </div>}
+            <div className="card">
+                <div className="card-header">
 
-                                        {status === 1 && <div className="price-container"> <div className="price-status"> Ofrezco hasta:  <span className="price-header">{price} €</span> </div>  </div>}
-                    
+                    <Image src={photo.length > 0 ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${photo[0]}` : '/img/image-not-available.png'} />
 
-                                    <div className="tags-container"> </div>
-                                        
-                                        <h2> {name} </h2>
-                                        <p> {description} </p>
-                        
+                </div>
+                <div className="card-body">
 
-                                    <div className="button-container">
-                                        <Link href={`/adverts/${_id}`} passHref>
-                    
-                                           <button
-                                           //onClick={handleChat}
-                                           className="edit-button"
-                                           >
-                                               Ver anuncio
-                                           </button> 
-                                           </Link>
-                                           
-                                           </div> 
-                                    </div>
-                            </div>
-                            <style jsx>{`
+                    {status === 0 && <div className="price-container"> <div className="price-status"> En venta:  <span className="price-header">{price} €</span> </div> </div>}
+
+                    {status === 1 && <div className="price-container"> <div className="price-status"> Ofrezco hasta:  <span className="price-header">{price} €</span> </div>  </div>}
+
+
+                    <div className="tags-container"> </div>
+
+                    <h2> {name} </h2>
+                    <p> {description} </p>
+
+
+                    <div className="button-container">
+                        <Link href={`/adverts/${_id}`} passHref>
+
+                            <button
+                                //onClick={handleChat}
+                                className="edit-button"
+                            >
+                                Ver anuncio
+                            </button>
+                        </Link>
+
+                    </div>
+                </div>
+            </div>
+            <style jsx>{`
                     
                     
                     
@@ -170,8 +171,8 @@ const SimplifiedAdvertCard = ({advert}) => {
         
 
                     `}</style>
-                    
-                    </div>  
+
+        </div>
     )
 }
 

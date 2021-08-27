@@ -17,60 +17,61 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing(3),
-      },
-      upload: {
+    },
+    upload: {
         display: 'none',
-      },
-  }));
+    },
+}));
 
-const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
-    const classes= useStyles();
+const MyAdverts = ({ isLogged, isLoading, error, myAdverts }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
-    
 
-   useEffect( async () => {
-       await dispatch(fetchMyAdvertsAction());
-       
-       
-   }, [])
+
+    useEffect(() => {
+        async function fetch() {
+            await dispatch(fetchMyAdvertsAction());
+        }
+        fetch();
+    }, [])
 
     return (
 
         <div>
 
-            {!myAdverts.length >0 ? 
+            {!myAdverts.length > 0 ?
 
-            <h1>Todavía no has publicado anuncios, vago</h1>
-            :
+                <h1>Todavía no has publicado anuncios, vago</h1>
+                :
 
-            <>
+                <>
 
-            <h1>Mis anuncios</h1> 
+                    <h1>Mis anuncios</h1>
 
-            <div className="ads-container">
+                    <div className="ads-container">
 
-                {
-                    myAdverts.map(advert => {
-                        
-                        return (
-                            <SimplifiedAdvertCard advert={advert}/>
+                        {
+                            myAdverts.map(advert => {
 
-                        )
-                    } )
-                }
+                                return (
+                                    <SimplifiedAdvertCard advert={advert} key={advert._id} />
 
-            
-                
+                                )
+                            })
+                        }
 
-            </div>
-            </>
-        }
 
-            
+
+
+                    </div>
+                </>
+            }
+
+
             <style jsx>{`
                     
                     
@@ -87,13 +88,13 @@ const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
                     }        
 
                     `}</style>
-            
+
 
         </div>
 
-        
-  
-        
+
+
+
     )
 }
 

@@ -4,28 +4,17 @@ import { useSelector } from "react-redux";
 import { getIsLogged } from "../../store/selectors";
 import { Router } from "next/router";
 
-const withAuth = (WrappedComponent) => {
+const WithAuth = (WrappedComponent) => {
 
-    
-    
+  const Router = useRouter();
+  const isLogged = useSelector(getIsLogged);
 
-  return (props) => {
+  return function render(props) {
     if (typeof window !== "undefined") {
-      const Router = useRouter();
-      
-
-      const isLogged = useSelector(getIsLogged);
-
-      
-
-      
       if (!isLogged) {
         Router.replace("/login");
         return null;
       }
-
-      
-
       return <WrappedComponent {...props} />;
     }
 
@@ -34,4 +23,4 @@ const withAuth = (WrappedComponent) => {
   };
 };
 
-export default withAuth;
+export default WithAuth;

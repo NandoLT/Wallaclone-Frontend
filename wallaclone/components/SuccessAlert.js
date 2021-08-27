@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-import {connect, useDispatch} from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { getError } from '../store/selectors';
 import { authResetState } from '../store/actions';
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SuccessAlert({message}) {
+function SuccessAlert({ message }) {
 
   const classes = useStyles();
   const resetError = () => {
@@ -23,8 +23,8 @@ function SuccessAlert({message}) {
 
   return (
     <div onClick={resetError} className={classes.root}>
-      <Alert  severity="success">{message}</Alert>
-     
+      <Alert severity="success">{message}</Alert>
+
     </div>
   );
 }

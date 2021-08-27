@@ -21,21 +21,21 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
- const dashboard = () =>{
-     const classes = useStyles();
-     const [content, setContent] = React.useState({
-        myAdverts:false,
-        myFavorites:false,
-        myConversations:false,
+const Dashboard = () => {
+    const classes = useStyles();
+    const [content, setContent] = React.useState({
+        myAdverts: false,
+        myFavorites: false,
+        myConversations: false,
         myProfile: true,
     });
 
-    const openTab = (tab) =>{
+    const openTab = (tab) => {
         setContent({
-            myAdverts:"myAdverts" === tab,
-            myFavorites:"myFavorites" === tab,
-            myConversations:"myConversations" === tab,
-            myProfile: "myProfile" ===tab,          
+            myAdverts: "myAdverts" === tab,
+            myFavorites: "myFavorites" === tab,
+            myConversations: "myConversations" === tab,
+            myProfile: "myProfile" === tab,
         })
     };
 
@@ -44,92 +44,94 @@ const useStyles = makeStyles((theme) => ({
 
     const resetUi = () => {
         setContent({
-            myAdverts:false,
-            myFavorites:false,
-            myConversations:false,
-            myProfile:true,
-          })
+            myAdverts: false,
+            myFavorites: false,
+            myConversations: false,
+            myProfile: true,
+        })
     }
-    
-    React.useEffect(async () => {
+
+    React.useEffect(() => {
         // resetUi();
-        try {
-        const userImageFetched = await getUserImage();
-        console.log(userImageFetched);
-        setUserImage(userImageFetched);
-            
-        } catch (error) {
-            console.log(error);
+        async function fetch() {
+            try {
+                const userImageFetched = await getUserImage();
+                console.log(userImageFetched);
+                setUserImage(userImageFetched);
+
+            } catch (error) {
+                console.log(error);
+            }
         }
-        
-        
-        
+        fetch();
+
+
     }, []);
 
-    const {myAdverts, myFavorites, myConversations, myProfile} = content;
+    const { myAdverts, myFavorites, myConversations, myProfile } = content;
 
-     const [menuExpanded, setMenuExpanded] = React.useState(true);
-     const handleOpenMenu= () => {
-         setMenuExpanded(!menuExpanded);
-     }
+    const [menuExpanded, setMenuExpanded] = React.useState(true);
+    const handleOpenMenu = () => {
+        setMenuExpanded(!menuExpanded);
+    }
 
     return (
         <>
-        <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
-            <div id="header">
-                <div id="title"> <span>Mi Perfil</span></div>
+            <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
+                <div id="header">
+                    <div id="title"> <span>Mi Perfil</span></div>
                     <div id="menu-btn" onClick={handleOpenMenu}>
                         <div className="btn-hamburger"></div>
                         <div className="btn-hamburger"></div>
                         <div className="btn-hamburger"></div>
                     </div>
-                
-            </div>
-            <div id="profile">
-            <div onClick={()=> openTab("myProfile")} id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div>
 
-       
-                
-                <div id="name"><span>Jaime Pérez</span></div>
-            </div>
+                </div>
+                <div id="profile">
+                    <div onClick={() => openTab("myProfile")} id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div>
 
-            <div id="menu-items">
-                
-                <div className = "item">
-                <div onClick={()=> openTab("myProfile")} className="href">
-                        <div className="icon" ><Image className="icon" src="/user.png" alt="me" width="20" height="20" /></div>
-                        <div className = "title">Mi Perfil</div>
-                    </div>
-                    <div className = "item separator"> </div>
-                    <div onClick={()=> openTab("myAdverts")} className="href">
-                        <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
-                        <div className = "title">Mis anuncios</div>
-                    </div>
-                    <div className = "item separator"> </div>
-                    <div onClick={()=> openTab("myFavorites")} className="href">
-                        <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="20" height="20" /></div>
-                        <div className = "title">Mis favoritos</div>
-                    </div>
-                    <div className = "item separator"> </div>
-                    <div onClick={()=> openTab("myConversations")} className="href">
-                        <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="20" height="20" /></div>
-                        <div className = "title">Mis conversaciones</div>
+
+
+                    <div id="name"><span>Jaime Pérez</span></div>
+                </div>
+
+                <div id="menu-items">
+
+                    <div className="item">
+                        <div onClick={() => openTab("myProfile")} className="href">
+                            <div className="icon" ><Image className="icon" src="/user.png" alt="me" width="20" height="20" /></div>
+                            <div className="title">Mi Perfil</div>
+                        </div>
+                        <div className="item separator"> </div>
+                        <div onClick={() => openTab("myAdverts")} className="href">
+                            <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
+                            <div className="title">Mis anuncios</div>
+                        </div>
+                        <div className="item separator"> </div>
+                        <div onClick={() => openTab("myFavorites")} className="href">
+                            <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="20" height="20" /></div>
+                            <div className="title">Mis favoritos</div>
+                        </div>
+                        <div className="item separator"> </div>
+                        <div onClick={() => openTab("myConversations")} className="href">
+                            <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="20" height="20" /></div>
+                            <div className="title">Mis conversaciones</div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-        
-        <div className={menuExpanded ? "main-container-expanded" : "main-container" }>
-            
-        {myAdverts && <MyAdverts/>}
-        {myFavorites &&  <MyFavoriteAds/>}
-        {myConversations && <MyConversations/>}
-        {myProfile && <MyProfile/> }
-            
-        </div>
+            <div className={menuExpanded ? "main-container-expanded" : "main-container"}>
+
+                {myAdverts && <MyAdverts />}
+                {myFavorites && <MyFavoriteAds />}
+                {myConversations && <MyConversations />}
+                {myProfile && <MyProfile />}
+
+            </div>
         </>
     )
 }
 
-export default dashboard;
+export default Dashboard;

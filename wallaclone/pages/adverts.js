@@ -143,8 +143,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                     <div>
                         <p>Status:</p>
                         <div>
-                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onClick={handleChangeCheck} /> <label for="statusSale">On Sale</label>
-                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onClick={handleChangeCheck} /> <label for="statusWanted">Wanted</label>
+                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onClick={handleChangeCheck} /> <label htmlFor="statusSale">On Sale</label>
+                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onClick={handleChangeCheck} /> <label htmlFor="statusWanted">Wanted</label>
                         </div>
                         <p>Price:</p>
                         <Slider
@@ -167,7 +167,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                 name="province"
                                 onChange={handleChange}
                             >
-                                {Provinces.map(Province => <MenuItem value={Province.nombre}>{Province.nombre}</MenuItem>)}
+                                {Provinces.map(Province => <MenuItem value={Province.nombre} key={province.nombre}>{Province.nombre}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </div>
@@ -193,7 +193,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                     return (
                                         <Grid container item xs={12} sm={6} md={4} lg={3} key={_id}>
 
-                                            <AdvertCard name={name} price={price} status={status} photo={photo} description={description} tags={tags} id={_id} userId={userId} />
+                                            <AdvertCard name={name} price={price} status={status} photo={photo} description={description} tags={tags} id={_id} userId={userId} key={_id} />
 
                                         </Grid>
 

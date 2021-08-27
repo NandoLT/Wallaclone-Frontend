@@ -16,62 +16,63 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing(3),
-      },
-      upload: {
+    },
+    upload: {
         display: 'none',
-      },
-  }));
+    },
+}));
 
-const MyfavoriteAds = ({isLogged, isLoading, error, myFavoriteAdverts}) => {
-    const classes= useStyles();
+const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
-    
 
-   useEffect( async () => {
-       await dispatch(getMyFavoriteAdvertsAction());
-       
-       
-   }, [])
+
+    useEffect(() => {
+        async function fetch() {
+            await dispatch(getMyFavoriteAdvertsAction());
+        }
+        fetch();
+    }, [])
 
     return (
 
         <div>
 
-            {!myFavoriteAdverts.length >0 ? 
+            {!myFavoriteAdverts.length > 0 ?
 
-            <h1>Todavía no has seleccionado anuncios favoritos, vago</h1>
-            :
+                <h1>Todavía no has seleccionado anuncios favoritos, vago</h1>
+                :
 
-            <>
+                <>
 
-            <h1>Mis favoritos</h1> 
+                    <h1>Mis favoritos</h1>
 
-            <div className="ads-container">
+                    <div className="ads-container">
 
-                {
-                    myFavoriteAdverts.map(advert => {
-                        
-                        return (
-                            <SimplifiedAdvertCard advert={advert}/>
+                        {
+                            myFavoriteAdverts.map(advert => {
 
-                            
+                                return (
+                                    <SimplifiedAdvertCard advert={advert} key={advert._id} />
 
-                        )
-                    } )
-                }
 
-            
-                
 
-            </div>
-            </>
-        }
+                                )
+                            })
+                        }
 
-            
+
+
+
+                    </div>
+                </>
+            }
+
+
             <style jsx>{`
                     
                     
@@ -88,13 +89,13 @@ const MyfavoriteAds = ({isLogged, isLoading, error, myFavoriteAdverts}) => {
                     }        
 
                     `}</style>
-            
+
 
         </div>
 
-        
-  
-        
+
+
+
     )
 }
 

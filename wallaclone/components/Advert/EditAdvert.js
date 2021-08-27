@@ -24,94 +24,95 @@ import { updateAdvertAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
+import Image from 'next/image';
 
 
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
-      margin: theme.spacing(1),
-  },
-  selectEmpty: {
-      marginTop: theme.spacing(2),
+    margin: {
+        margin: theme.spacing(1),
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
     },
     formControl: {
-      margin: theme.spacing(3),
+        margin: theme.spacing(3),
     },
-    tagError:{
-        color:red,
+    tagError: {
+        color: red,
     },
     upload: {
-      display: 'none',
+        display: 'none',
     },
 }));
 
-const EditAdvertForm = ({advert, isLogged, isLoading, error, userId, productId}) => {
+const EditAdvertForm = ({ advert, isLogged, isLoading, error, userId, productId }) => {
 
-  const dispatch = useDispatch();
-  
+    const dispatch = useDispatch();
 
-  const [newAdDetails, setNewAdDetails] = React.useState({
-    name: advert.name,
-    description: advert.description,
-    price: advert.price,
-    province:advert.province,
-    tags:advert.tags,
-    status: advert.status,
-    photo:advert.photo,
-    //userId:userId,
-})
 
-const [photoUploaded, setPhotoUploaded] = React.useState(false);
+    const [newAdDetails, setNewAdDetails] = React.useState({
+        name: advert.name,
+        description: advert.description,
+        price: advert.price,
+        province: advert.province,
+        tags: advert.tags,
+        status: advert.status,
+        photo: advert.photo,
+        //userId:userId,
+    })
 
-  const classes = useStyles();
+    const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-  const handleInputChange = event => {
-    setNewAdDetails(oldAdDetails => {
+    const classes = useStyles();
 
-        const newAdDetails = {
-            ...oldAdDetails,
-            [event.target.name]: event.target.value,
+    const handleInputChange = event => {
+        setNewAdDetails(oldAdDetails => {
+
+            const newAdDetails = {
+                ...oldAdDetails,
+                [event.target.name]: event.target.value,
+            }
+            return newAdDetails
+        });
+
+    }
+
+    const handleChangeCheck = ev => {
+        const clickedTag = ev.target.name
+        setNewAdDetails(oldAdDetails => {
+            const newTags = oldAdDetails.tags;
+
+            if (newTags.includes(clickedTag)) {
+                newTags.splice(newTags.indexOf(clickedTag), 1);
+            } else {
+                newTags.push(clickedTag);
+            }
+
+            const newAdDetails = {
+                ...oldAdDetails,
+                'tags': newTags
+            }
+            return newAdDetails;
         }
-        return newAdDetails
-    });
+        );
+    };
 
-}
+    const setPhoto = event => {
+        setPhotoUploaded(true);
+        setNewAdDetails(oldAdDetails => {
+            const newAdDetails = {
+                ...oldAdDetails,
+                'photo': event.target.files[0]
+            }
+            return newAdDetails;
+        });
+    }
 
-const handleChangeCheck = ev => {
-  const clickedTag = ev.target.name
-  setNewAdDetails(oldAdDetails => {
-      const newTags = oldAdDetails.tags;
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-      if (newTags.includes(clickedTag)) {
-          newTags.splice(newTags.indexOf(clickedTag), 1);
-      } else {
-          newTags.push(clickedTag);
-      }
-
-      const newAdDetails = {
-          ...oldAdDetails,
-          'tags': newTags
-      }
-      return newAdDetails;
-  }
-  );
-};
-
-const setPhoto = event => {
-    setPhotoUploaded(true);
-  setNewAdDetails(oldAdDetails => {
-      const newAdDetails = {
-          ...oldAdDetails,
-          'photo': event.target.files[0]
-      }
-      return newAdDetails;
-  });
-}
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    const formData = new FormData();
+        const formData = new FormData();
 
         formData.append('name', newAdDetails.name);
         formData.append('description', newAdDetails.description);
@@ -122,188 +123,188 @@ const setPhoto = event => {
         })
         formData.append('status', newAdDetails.status);
         formData.append('userId', userId);
-        formData.append('productId', productId )
+        formData.append('productId', productId)
         if (newAdDetails.photo) {
             formData.append('photo', newAdDetails.photo);
         }
 
-        
-    dispatch(updateAdvertAction(formData));
 
-}
+        dispatch(updateAdvertAction(formData));
 
-const validation = () => {
-  if(!newAdDetails.name){
-      return true
-  };
-  if(!newAdDetails.description){
-      return true
-  };
-  if(!newAdDetails.price || newAdDetails.price <=0 || newAdDetails.price >100000 || isNaN(newAdDetails.price) ){
-      return true
-  };
+    }
 
-  if(!newAdDetails.province){
-      return true
-  };
+    const validation = () => {
+        if (!newAdDetails.name) {
+            return true
+        };
+        if (!newAdDetails.description) {
+            return true
+        };
+        if (!newAdDetails.price || newAdDetails.price <= 0 || newAdDetails.price > 100000 || isNaN(newAdDetails.price)) {
+            return true
+        };
 
-  if(newAdDetails.tags.length < 1){
-      return true
-  }
+        if (!newAdDetails.province) {
+            return true
+        };
+
+        if (newAdDetails.tags.length < 1) {
+            return true
+        }
 
 
-  return false
-}
+        return false
+    }
 
-  return (
-    <div >
-      <form onSubmit={handleSubmit} className="register-form">
-            
-   
-            <div>
-                <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={newAdDetails.name} />
+    return (
+        <div >
+            <form onSubmit={handleSubmit} className="register-form">
+
+
+                <div>
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                        <Grid container spacing={1} alignItems="flex-end">
+
+                            <Grid item>
+                                <TextField required onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={newAdDetails.name} />
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
+
                 </div>
-            
-            </div>
 
-            <div>
+                <div>
 
-            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        
-                        <Grid item>
-                            <TextField  required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={newAdDetails.description} />
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                        <Grid container spacing={1} alignItems="flex-end">
+
+                            <Grid item>
+                                <TextField required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={newAdDetails.description} />
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
                 </div>
-                </div>
-    
-           
-            <div>
-            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                       
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={newAdDetails.price} />
+
+
+                <div>
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                        <Grid container spacing={1} alignItems="flex-end">
+
+                            <Grid item>
+                                <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={newAdDetails.price} />
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
                 </div>
-            </div>
-            
-            <div>
-                
-            </div>
 
-          
-            <FormControl style={{ margin: 8 }}  className={classes.margin}>
-            <Select style={{ margin: 8 }} required
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={newAdDetails.status}
-                onChange={handleInputChange}
-                name= "statusEnum"
-                >
-                    <MenuItem value={0}>Vendo</MenuItem>
-                    <MenuItem value={1}>Compro</MenuItem>
-                    
-                </Select>
-            </FormControl>
-            <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
+                <div>
 
-            <FormControl style={{ margin: 8 }}  className={classes.margin}>
-            <Select style={{ margin: 8 }} required
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={newAdDetails.province}
-                onChange={handleInputChange}
-                name= "province"
-                >
-                    {provinces.map(province => <MenuItem value={province.nombre}>{province.nombre}</MenuItem> )}
-                    
-                    
-                </Select>
-            </FormControl>
-            <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+                </div>
 
-            <FormControl  component="fieldset" className={classes.formControl}>
-                <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
-                <FormGroup>
-                    <FormControlLabel
-                        control={<Checkbox 
-                        checked={newAdDetails.tags.includes("tecnologia")} 
-                        onChange={handleChangeCheck} 
-                        name="tecnologia" />}
-                        label="Tecnologia"
+
+                <FormControl style={{ margin: 8 }} className={classes.margin}>
+                    <Select style={{ margin: 8 }} required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={newAdDetails.status}
+                        onChange={handleInputChange}
+                        name="statusEnum"
+                    >
+                        <MenuItem value={0}>Vendo</MenuItem>
+                        <MenuItem value={1}>Compro</MenuItem>
+
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
+
+                <FormControl style={{ margin: 8 }} className={classes.margin}>
+                    <Select style={{ margin: 8 }} required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={newAdDetails.province}
+                        onChange={handleInputChange}
+                        name="province"
+                    >
+                        {provinces.map(province => <MenuItem value={province.nombre} key={province.nombre}>{province.nombre}</MenuItem>)}
+
+
+                    </Select>
+                </FormControl>
+                <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+
+                <FormControl component="fieldset" className={classes.formControl}>
+                    <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox
+                                checked={newAdDetails.tags.includes("tecnologia")}
+                                onChange={handleChangeCheck}
+                                name="tecnologia" />}
+                            label="Tecnologia"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={newAdDetails.tags.includes("movil")} onChange={handleChangeCheck} name="movil" />}
+                            label="Movil"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={newAdDetails.tags.includes("deporte")} onChange={handleChangeCheck} name="deporte" />}
+                            label="Deporte"
+                        />
+                    </FormGroup>
+
+                </FormControl >
+                <Image className="edit-photo" src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                <div className={classes.root}>
+
+                    <input
+                        className={classes.upload}
+                        onChange={setPhoto}
+                        accept="image/*"
+                        id="contained-button-file"
+                        multiple
+                        type="file"
                     />
-                    <FormControlLabel
-                        control={<Checkbox checked={newAdDetails.tags.includes("movil")}  onChange={handleChangeCheck} name="movil" />}
-                        label="Movil"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox checked={newAdDetails.tags.includes("deporte")} onChange={handleChangeCheck} name="deporte" />}
-                        label="Deporte"
-                    />
-                </FormGroup>
-                
-        </FormControl >
-        <img  className="edit-photo"  src={advert.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
-                <div  className={classes.root}>
-                    
-                <input
-                className={classes.upload}
-                onChange={setPhoto}
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-            />
 
-            
 
-            <label  htmlFor="contained-button-file">
-                    <Button variant="contained" color="primary" component="span">
-                    Cambiar foto
-                    </Button>
+
                     <label htmlFor="contained-button-file">
-                    <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                    </IconButton>
-            </label>
-            </label>
-            </div>
-            {photoUploaded && <SuccessAlert message="Foto adjuntada"/>}  
-            {error && <Alert />}
+                        <Button variant="contained" color="primary" component="span">
+                            Cambiar foto
+                        </Button>
+                        <label htmlFor="contained-button-file">
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                                <PhotoCamera />
+                            </IconButton>
+                        </label>
+                    </label>
+                </div>
+                {photoUploaded && <SuccessAlert message="Foto adjuntada" />}
+                {error && <Alert />}
 
-            {!isLoading && 
-            <Button
-            disabled={validation()}
-            onClick={handleSubmit}
-            type="submit"
-            color="secondary"
-            size= "large"
-            className={classes.margin} 
-            variant="contained"
-            >
+                {!isLoading &&
+                    <Button
+                        disabled={validation()}
+                        onClick={handleSubmit}
+                        type="submit"
+                        color="secondary"
+                        size="large"
+                        className={classes.margin}
+                        variant="contained"
+                    >
 
-              Modificar anuncio
-              
-            </Button>  }
+                        Modificar anuncio
 
-            
+                    </Button>}
 
 
-            {error && <Alert />}
 
 
-        </form>
+                {error && <Alert />}
 
-        <style jsx>{`
+
+            </form>
+
+            <style jsx>{`
                     
                    .edit-photo{
                        width: 160px;
@@ -313,17 +314,17 @@ const validation = () => {
                    }
 
                     `}</style>
-      
-    </div>
-  )
+
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => ({
-  isLogged: getIsLogged(state),
-  isLoading: getIsLoading(state),
-  error: getError(state),
-  userId: getUserId(state),
-}); 
+    isLogged: getIsLogged(state),
+    isLoading: getIsLoading(state),
+    error: getError(state),
+    userId: getUserId(state),
+});
 
 export default connect(mapStateToProps)(WithAuth(EditAdvertForm))
 

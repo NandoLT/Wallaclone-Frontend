@@ -12,6 +12,7 @@ import styles from '../../styles/Home.module.css'
 import { useSelector } from 'react-redux';
 import { getIsLogged, getUserId } from '../../store/selectors';
 import ConfirmationPopup from '../../components/ConfirmationPopup';
+import Image from 'next/image'
 
 
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const advert = () => {
+const Advert = () => {
 
     const isLogged = useSelector(getIsLogged)
 
@@ -103,7 +104,7 @@ const advert = () => {
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    <img src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                                    <Image src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                                 </div>
                                 <div className="card-body">
 
@@ -124,7 +125,7 @@ const advert = () => {
                                         {advert.description}
                                     </p>
                                     <div className="user">
-                                        <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
+                                        <Image src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
                                         <div className="user-info">
                                             <h5>{advert.province}</h5>
 
@@ -334,4 +335,4 @@ const advert = () => {
     );
 }
 
-export default advert
+export default Advert

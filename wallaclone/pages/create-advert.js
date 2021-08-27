@@ -33,45 +33,45 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing(3),
-      },
-      tagError:{
-          color:red,
-      },
-      upload: {
+    },
+    tagError: {
+        color: red,
+    },
+    upload: {
         display: 'none',
-      },
+    },
 }));
 
 
 
 const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
-    
+
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(authResetState())
-        
+
     }, [])
-    
+
     const classes = useStyles();
 
     const [adDetails, setAdDetails] = React.useState({
         name: '',
         description: '',
         price: 0,
-        province:'',
-        tags:[],
+        province: '',
+        tags: [],
         status: 0,
-        photo:null,
+        photo: null,
         //userId:userId,
     })
 
-   const [photoUploaded, setPhotoUploaded] = React.useState(false);
+    const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
     const setPhoto = event => {
         setPhotoUploaded(true);
@@ -108,25 +108,25 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         event.preventDefault();
         const formData = new FormData();
 
-            formData.append('name', adDetails.name);
-            formData.append('description', adDetails.description);
-            formData.append('price', adDetails.price);
-            formData.append('province', adDetails.province);
-            adDetails.tags.forEach(tag => {
-                formData.append('tags', tag)
-            })
-            //formData.append('tags', adDetails.tags);
-            formData.append('status', adDetails.status);
-            formData.append('userId', adDetails.userId);
-            if (adDetails.photo) {
-                formData.append('photo', adDetails.photo);
-            }
+        formData.append('name', adDetails.name);
+        formData.append('description', adDetails.description);
+        formData.append('price', adDetails.price);
+        formData.append('province', adDetails.province);
+        adDetails.tags.forEach(tag => {
+            formData.append('tags', tag)
+        })
+        //formData.append('tags', adDetails.tags);
+        formData.append('status', adDetails.status);
+        formData.append('userId', adDetails.userId);
+        if (adDetails.photo) {
+            formData.append('photo', adDetails.photo);
+        }
 
-            
+
         dispatch(advertCreationAction(formData));
 
     }
-    
+
 
     const handleInputChange = event => {
         setAdDetails(oldAdDetails => {
@@ -141,21 +141,21 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
     }
 
     const validation = () => {
-        if(!adDetails.name){
+        if (!adDetails.name) {
             return true
         };
-        if(!adDetails.description){
+        if (!adDetails.description) {
             return true
         };
-        if(!adDetails.price || adDetails.price <=0 || adDetails.price >100000 || isNaN(adDetails.price) ){
-            return true
-        };
-
-        if(!adDetails.province){
+        if (!adDetails.price || adDetails.price <= 0 || adDetails.price > 100000 || isNaN(adDetails.price)) {
             return true
         };
 
-        if(adDetails.tags.length < 1){
+        if (!adDetails.province) {
+            return true
+        };
+
+        if (adDetails.tags.length < 1) {
             return true
         }
 
@@ -169,91 +169,91 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
             <h1>Publica un nuevo anuncio</h1>
 
             <form onSubmit={handleSubmit} className="register-form">
-            
-   
+
+
                 <div>
                     <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
-                            
+
                             <Grid item>
                                 <TextField required onChange={event => handleInputChange(event)} name="name" id="input-with-icon-grid" label="Nombre del producto" value={adDetails.name} />
                             </Grid>
                         </Grid>
                     </div>
-                
+
                 </div>
 
                 <div>
 
-                <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
-                            
+
                             <Grid item>
-                                <TextField  required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
+                                <TextField required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción del producto" value={adDetails.description} />
                             </Grid>
                         </Grid>
                     </div>
-                    </div>
-        
-               
+                </div>
+
+
                 <div>
-                <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
                         <Grid container spacing={1} alignItems="flex-end">
-                           
+
                             <Grid item>
                                 <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={adDetails.price} />
                             </Grid>
                         </Grid>
                     </div>
                 </div>
-                
+
                 <div>
-                    
+
                 </div>
 
-              
-                <FormControl style={{ margin: 8 }}  className={classes.margin}>
-                <Select style={{ margin: 8 }} required
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={adDetails.status}
-                    onChange={handleInputChange}
-                    name= "status"
+
+                <FormControl style={{ margin: 8 }} className={classes.margin}>
+                    <Select style={{ margin: 8 }} required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={adDetails.status}
+                        onChange={handleInputChange}
+                        name="status"
                     >
                         <MenuItem value={0}>Vendo</MenuItem>
                         <MenuItem value={1}>Compro</MenuItem>
-                        
+
                     </Select>
                 </FormControl>
                 <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
 
-                <FormControl style={{ margin: 8 }}  className={classes.margin}>
-                <Select style={{ margin: 8 }} required
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={adDetails.province}
-                    onChange={handleInputChange}
-                    name= "province"
+                <FormControl style={{ margin: 8 }} className={classes.margin}>
+                    <Select style={{ margin: 8 }} required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={adDetails.province}
+                        onChange={handleInputChange}
+                        name="province"
                     >
-                        {provinces.map(province => <MenuItem value={province.nombre}>{province.nombre}</MenuItem> )}
-                        
-                        
+                        {provinces.map(province => <MenuItem value={province.nombre} key={province.nombre}>{province.nombre}</MenuItem>)}
+
+
                     </Select>
                 </FormControl>
                 <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
-                <FormControl  component="fieldset" className={classes.formControl}>
+                <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox 
-                            checked={adDetails.tags.includes("tecnologia")} 
-                            onChange={handleChangeCheck} 
-                            name="tecnologia" />}
+                            control={<Checkbox
+                                checked={adDetails.tags.includes("tecnologia")}
+                                onChange={handleChangeCheck}
+                                name="tecnologia" />}
                             label="Tecnologia"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={adDetails.tags.includes("movil")}  onChange={handleChangeCheck} name="movil" />}
+                            control={<Checkbox checked={adDetails.tags.includes("movil")} onChange={handleChangeCheck} name="movil" />}
                             label="Movil"
                         />
                         <FormControlLabel
@@ -261,31 +261,31 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
                             label="Deporte"
                         />
                     </FormGroup>
-                   
-            </FormControl >
-                    <div  className={classes.root}>
+
+                </FormControl >
+                <div className={classes.root}>
                     <input
-                    className={classes.upload}
-                    onChange={setPhoto}
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                />
-                <label  htmlFor="contained-button-file">
+                        className={classes.upload}
+                        onChange={setPhoto}
+                        accept="image/*"
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                    />
+                    <label htmlFor="contained-button-file">
                         <Button variant="contained" color="primary" component="span">
-                        Subir foto
+                            Subir foto
                         </Button>
                         <label htmlFor="contained-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
-                        <PhotoCamera />
-                        </IconButton>
-                </label>
-                </label>
-                
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                                <PhotoCamera />
+                            </IconButton>
+                        </label>
+                    </label>
+
                 </div>
-                {photoUploaded && <SuccessAlert message="Foto adjuntada"/>}
-                  
+                {photoUploaded && <SuccessAlert message="Foto adjuntada" />}
+
                 {error && <Alert />}
 
                 {!isLoading && <Button disabled={validation()} size="large" className={classes.margin} variant="contained" color="primary" type="submit">
@@ -296,7 +296,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
             </form>
             {isLoading && <Loading />}
-            {error && <Alert/>}
+            {error && <Alert />}
             <Link className={styles.card} href='/' passHref>
                 <div className={styles.card} >
                     <h3>  Go Back Home &rarr;  </h3>
@@ -314,6 +314,6 @@ const mapStateToProps = (state) => ({
     isLoading: getIsLoading(state),
     error: getError(state),
     userId: getUserId(state),
-}); 
+});
 
 export default connect(mapStateToProps)(WithAuth(CreateNewAd))

@@ -100,20 +100,20 @@ const RegisterForm = ({ isLoading, error }) => {
                 </div>
                 <div className={classes.margin, "register-input"}>
                     <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item item xs={1}>
+                        <Grid item xs={1}>
                             <MailIcon />
                         </Grid>
-                        <Grid item item xs={11}>
+                        <Grid item xs={11}>
                             <TextField required onChange={handleInputChange} name="email" id="input-with-icon-grid" label="Email" type="email" value={credentials.email} fullWidth />
                         </Grid>
                     </Grid>
                 </div>
                 <div className={classes.margin, "register-input"}>
                     <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item item xs={1}>
+                        <Grid item xs={1}>
                             <LockIcon />
                         </Grid>
-                        <Grid item item xs={11}>
+                        <Grid item xs={11}>
                             <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} fullWidth />
                         </Grid>
                     </Grid>

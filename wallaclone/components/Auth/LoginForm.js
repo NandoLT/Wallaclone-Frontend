@@ -88,10 +88,10 @@ const LoginForm = ({ isLoading, error }) => {
                 </div>
                 <div className={classes.margin, "login-input"}>
                     <Grid container spacing={4} alignItems="flex-end">
-                        <Grid item item xs={1}>
+                        <Grid item xs={1}>
                             <LockIcon />
                         </Grid>
-                        <Grid item item xs={10}>
+                        <Grid item xs={10}>
                             <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} fullWidth />
                         </Grid>
                     </Grid>

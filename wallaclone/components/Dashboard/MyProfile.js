@@ -13,10 +13,10 @@ import EditUserProfile from './EditUserProfile';
 import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
 
-const MyProfile = ({myProfileDetails}) => {
+const MyProfile = ({ myProfileDetails }) => {
     const dispatch = useDispatch();
 
-    const[profileDetails, setProfileDetails] = useState({
+    const [profileDetails, setProfileDetails] = useState({
         photo: null,
         nickname: "Kevin",
         description: null,
@@ -28,72 +28,72 @@ const MyProfile = ({myProfileDetails}) => {
     const handleEditMode = () => {
         setEditMode(!editMode);
     }
-    
+
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-    useEffect( async () => {
-            
-           dispatch(getMyProfileAction());
-
-        
+    useEffect(() => {
+        async function fetch() {
+            await dispatch(getMyProfileAction());
+        }
+        fetch();
     }, [])
 
     return (
         <div>
 
-            {editMode ? 
+            {editMode ?
 
                 <div>
                     <p><button onClick={handleEditMode}>Deshacer cambios</button></p>
                     <h3>Edición de mi perfil</h3>
-                    <EditUserProfile/>
+                    <EditUserProfile />
                 </div>
 
-                
+
 
                 :
 
                 <div className="card">
 
-                     
-                            <div>
-                                <div onClick={handleEditMode} className="image-container" >
-                                {profileDetails.photo ? <Image  src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
-                                : 
+
+                    <div>
+                        <div onClick={handleEditMode} className="image-container" >
+                            {profileDetails.photo ? <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                                :
                                 <div>
-                                    <Image  src="/photo-upload.png" alt="me" width="80%" height="80%" />
-                                    <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"}/>
+                                    <Image src="/photo-upload.png" alt="me" width="80%" height="80%" />
+                                    <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"} />
 
                                 </div>
-                                }
-                                </div>  
+                            }
+                        </div>
 
 
 
 
-                                {profileDetails.nickname ? <h1>{profileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno"/> </div> }
-                                
-                                {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField  title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí"/> </div>  }
+                        {profileDetails.nickname ? <h1>{profileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno" /> </div>}
 
-                                {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container"  onClick={handleEditMode}> <MissingField  title= "Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente."/> </div> }
+                        {profileDetails.description ? <h4 className="title">{profileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" /> </div>}
+
+                        {profileDetails.province ? <h5>{profileDetails.province}</h5> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
 
 
-                                <p><button onClick={handleEditMode}>Editar perfil</button></p>
+                        <p><button onClick={handleEditMode}>Editar perfil</button></p>
 
-                            </div>
+                    </div>
 
-                    
-                    
-                
 
-                 
-                
-             </div>
+
+
+
+
+
+                </div>
             }
-            
-            
 
-             <style jsx>{`
+
+
+            <style jsx>{`
                     
                     .card {
                         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -170,6 +170,6 @@ const mapStateToProps = (state) => ({
     error: getError(state),
     userId: getUserId(state),
     myProfileDetails: getMyProfileDetails(state),
-  }); 
-  
-  export default connect(mapStateToProps)(WithAuth(MyProfile))
+});
+
+export default connect(mapStateToProps)(WithAuth(MyProfile))

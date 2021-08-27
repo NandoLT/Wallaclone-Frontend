@@ -17,6 +17,7 @@ import client from "../api/client";
 import { PictureAsPdf } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
+import Image from 'next/image';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -145,7 +146,7 @@ const NavBar = ({ isLogged }) => {
               isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
                 <Link href="#" className={classes.margin}>
                   <a className={classes.profile}>
-                    <img src={pic} />
+                    <Image src={pic} />
                     Mi perfil
                   </a>
                 </Link>
