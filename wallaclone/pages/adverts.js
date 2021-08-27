@@ -1,38 +1,16 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
-=======
-import React, { useEffect, useMemo } from 'react'
->>>>>>> master
-import Link from 'next/link';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-import { getIsLogged, getAdverts, getIsLoading, getError } from '../store/selectors';
-import { useDispatch } from 'react-redux';
-import { advertsGetAction } from '../store/actions';
-=======
 import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction, advertGetFavoritesAction, advertAddFavoritesAction, advertDeleteFavoritesAction } from '../store/actions';
->>>>>>> master
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-<<<<<<< HEAD
-=======
-import Chip from '@material-ui/core/Chip';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Loading from '../components/Loading';
->>>>>>> master
-import styles from '../styles/Home.module.css'
 import Alert from '../components/Alert';
-import WithAuth from '../components/hocs/WithAuth'
 import AdvertCard from '../components/Card';
 import Loading from '../components/Loading';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { useRouter } from 'next/router'
-import statusEnum from '../utils/advertsEnum'
 import Slider from '@material-ui/core/Slider';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -55,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-<<<<<<< HEAD
 const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const router = useRouter()
     const queryParams = router.query
@@ -64,30 +41,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     console.log(adverts)
 
     const classes = useStyles();
-=======
-const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
-    const classes = useStyles();
-
-    const [searchValue, setSearchValue] = React.useState("");
-    const adsFilteredBySearch = useMemo(() => {
-        if (!searchValue) {
-            return adverts
-        }
-        return adverts.filter(ad => {
-            return ad.name.toLowerCase().includes(searchValue.toLowerCase())
-        })
-    }, [searchValue, adverts])
-
-    const dispatch = useDispatch()
-
-    useEffect(async () => {
-        if (isLogged) {
-            await dispatch(advertGetFavoritesAction())
-        }
-
-        await dispatch(advertsGetAction())
-    }, [])
->>>>>>> master
 
     const maxPrice = 200;
 
@@ -144,7 +97,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
         setHiddenMenu(!hiddenMenu);
     }
 
-<<<<<<< HEAD
     const filter = () => {
         var params = '?';
         if (queryParams.name) {
@@ -163,22 +115,14 @@ const Adverts = ({ isLogged, adverts, isLoading, error, favoriteAdverts }) => {
         }
         params += `minPrice=${filters.price[0]}&`
         params += `maxPrice=${filters.price[1]}&`
-=======
-    const handleFavoriteCheck = ev => {
-        if (!favoriteAdverts.includes(ev.target.id)) {
-            dispatch(advertAddFavoritesAction(ev.target.id));
-        } else {
-            dispatch(advertDeleteFavoritesAction(ev.target.id));
+        const handleFavoriteCheck = ev => {
+            if (!favoriteAdverts.includes(ev.target.id)) {
+                dispatch(advertAddFavoritesAction(ev.target.id));
+            } else {
+                dispatch(advertDeleteFavoritesAction(ev.target.id));
+            }
         }
-    }
 
-    return (
-        <div className="adverts-container">
-            <h1>Página de Anuncios</h1>
-            {adsFilteredBySearch &&
->>>>>>> master
-
-        router.push(`/adverts${params}`)
     }
 
     useEffect(() => {
