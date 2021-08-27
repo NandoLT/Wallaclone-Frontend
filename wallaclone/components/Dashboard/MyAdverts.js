@@ -34,7 +34,7 @@ const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
 
    useEffect( async () => {
        await dispatch(fetchMyAdvertsAction());
-       console.log(myAdverts);
+       
        
    }, [])
 
