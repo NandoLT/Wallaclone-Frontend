@@ -24,6 +24,7 @@ import { updateAdvertAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
+import { editMyProfile } from '../../api/users';
 
 
 
@@ -87,25 +88,16 @@ const setPhoto = event => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submit para enviar formulario", newUserProfile);
-    
-    // const formData = new FormData();
 
-    //     formData.append('name', newAdDetails.name);
-    //     formData.append('description', newAdDetails.description);
-    //     formData.append('price', newAdDetails.price);
-    //     formData.append('province', newAdDetails.province);
-    //     newAdDetails.tags.forEach(tag => {
-    //         formData.append('tags', tag)
-    //     })
-    //     formData.append('status', newAdDetails.status);
-    //     formData.append('userId', userId);
-    //     formData.append('productId', productId )
-    //     if (newAdDetails.photo) {
-    //         formData.append('photo', newAdDetails.photo);
-    //     }
+    const formData =new FormData();
+    formData.append('description', newUserProfile.description);
+    formData.append('province', newUserProfile.province);
+    formData.append('description', newUserProfile.description);
+    if (newUserProfile.photo) {
+              formData.append('photo', newUserProfile.photo);
+          }
 
-        
-    // dispatch(updateAdvertAction(formData));
+    editMyProfile(formData);
 
 }
 

@@ -15,6 +15,11 @@ export const getUserImage = async () => {
     return myUserImage;
 }
 
+export const editMyProfile = () => {
+    return client.put(`${usersPath}/updateuser`)
+    
+}
+
 
 
 
