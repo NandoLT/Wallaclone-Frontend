@@ -53,69 +53,40 @@ const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
 
             <div className="ads-container">
 
-            
-                <div className="container">
+                {
+                    myAdverts.map(advert => {
+                        const {photo, tags, name, description, price, province, status, _id} = advert;
+                        return (
+                            <div className="container">
                     <div className="card">
                       <div className="card-header">
-                      <img  src="https://www.newsbtc.com/wp-content/uploads/2020/06/mesut-kaya-LcCdl__-kO0-unsplash-scaled.jpg"  />
+                      
+                      <img  src={photo.length >0 ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${photo[0]}` : '/img/image-not-available.png'} />
+                      
                       </div>
                       <div className="card-body">
-                          
-                     
-                      <div className="price-container"> <div className="price-status"> En venta:  <span className="price-header">65 €</span> </div> </div>
-
-                      {/* <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div> }</div> */}
-
+                        
+                      {status === 0 && <div className="price-container"> <div className="price-status"> En venta:  <span className="price-header">{price} €</span> </div> 
                       
-                                            {/* <div className="tags-container">{advert.tags.map(tag => {
-                                                return <span className="tag tag-teal" key={tag}>{tag}</span>
-                                            })} </div> */}
+                      </div>}
+
+                      {status === 1 && <div className="price-container"> <div className="price-status"> Ofrezco hasta:  <span className="price-header">{price} €</span> </div> 
+                      
+                      </div>}
+                    
 
                         <div className="tags-container"> </div>
                                         
                         <h2>
-                          Globos aerostaticos
+                          {name}
                         </h2>
                         <p>
-                          Los mejores globos aerostaticos para pasar un buen rato en las alturas haciendo el memo
+                          {description}
                         </p>
-                        {/* <div className="user">
-                          <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
-                          <div className="user-info">
-                            <h5>Madrid</h5>
-                            
-                          </div>
-                          
-                    
-                        </div> */}
-                        {/* <div>
-                                    
-                                    
-                                        <div> 
-                                            <Button 
-                                            // onClick={handleEditMode}  
-                                            size="large" className={classes.margin} 
-                                            variant="contained" 
-                                            color="primary" 
-                                            type="submit">
-                                                Editar anuncio
-                                            </Button> 
-                    
-                                            <Button 
-                                            //onClick={handleDeleteAdvert}  
-                                            size="large" 
-                                            className={classes.margin} 
-                                            variant="contained" 
-                                            color="secondary" 
-                                            type="submit">
-                                                Borrar anuncio
-                                            </Button>  </div>  
-                
-                               
-                                            </div>  */}
+                        
 
                                         <div className="button-container">
-                                           
+                                        <Link href={`/adverts/${_id}`} passHref>
                     
                                            <button
                                            //onClick={handleChat}
@@ -123,13 +94,20 @@ const MyAdverts = ({isLogged, isLoading, error, myAdverts}) => {
                                            >
                                                Ver anuncio
                                            </button> 
+                                           </Link>
                                            
                                            </div> 
-                      </div>
-                    </div>
-                    
+                                    </div>
+                            </div>
                     
                     </div>  
+
+                        )
+                    } )
+                }
+
+            
+                
 
             </div>
             </>
