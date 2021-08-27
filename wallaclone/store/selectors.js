@@ -6,4 +6,7 @@ export const getAdverts = state => state.adverts.result;
 export const getUserId = state => state.userId;
 export const getFavoritesAdverts = state => state.favoriteAdverts;
 export const getMyAdverts = state => state.myAdverts;
-export const getMyProfileDetails = state => state.getMyProfileDetails
+export const getMyProfileDetails = state => state.myProfileDetails;
+export const getMyFavoriteAdverts = state => state.myFavoriteAdverts;
+
+

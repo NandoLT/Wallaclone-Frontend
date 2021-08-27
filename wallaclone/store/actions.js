@@ -37,7 +37,10 @@ import {
     FETCH_MY_ADVERTS_FAILURE,
     GET_MY_PROFILE_DETAILS_REQUEST,
     GET_MY_PROFILE_DETAILS_SUCCESS,
-    GET_MY_PROFILE_DETAILS_FAILURE
+    GET_MY_PROFILE_DETAILS_FAILURE,
+    GET_MY_FAVORITE_ADVERTS_REQUEST,
+    GET_MY_FAVORITE_ADVERTS_SUCCESS,
+    GET_MY_FAVORITE_ADVERTS_FAILURE
 } from "./types";
 
 
@@ -239,6 +242,27 @@ export const advertGetFavoritesFailure = (error) => {
     }
 }
 
+export const getMyFavoriteAdvertsRequest = () => {
+    return {
+        type: GET_MY_FAVORITE_ADVERTS_REQUEST,
+    }
+}
+
+export const getMyFavoriteAdvertsSuccess = (myFavoriteAdverts) => {
+    return {
+        type: GET_MY_FAVORITE_ADVERTS_SUCCESS,
+        payload: myFavoriteAdverts
+    }
+}
+
+export const getMyFavoriteAdvertsFailure = (error) => {
+    return {
+        type: GET_MY_FAVORITE_ADVERTS_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
 
 export const getMyProfileRequest = () => {
     return {
@@ -415,6 +439,18 @@ export const fetchMyAdvertsAction = () => {
             dispatch(fetchMyAdvertsSuccess(myAdverts));
         } catch (error) {
             dispatch(fetchMyAdvertsFailure(error.message));
+        }
+    }
+}
+
+export const getMyFavoriteAdvertsAction = () => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(getMyFavoriteAdvertsRequest());
+        try {
+            const myFavoriteAdverts = await api.adverts.getMyFavorites();
+            dispatch(getMyFavoriteAdvertsSuccess(myFavoriteAdverts));
+        } catch (error) {
+            dispatch(getMyFavoriteAdvertsFailure(error.message));
         }
     }
 }

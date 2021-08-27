@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError } from '../../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts, getMyFavoriteAdverts } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
 import { getMyAdverts } from '../../store/selectors';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
-
+import { getMyFavoriteAdvertsAction } from '../../store/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,7 @@ const MyfavoriteAds = ({isLogged, isLoading, error, myFavoriteAdverts}) => {
     
 
    useEffect( async () => {
-       await dispatch(advertGetFavoritesAction());
+       await dispatch(getMyFavoriteAdvertsAction());
        
        
    }, [])
@@ -56,7 +56,9 @@ const MyfavoriteAds = ({isLogged, isLoading, error, myFavoriteAdverts}) => {
                     myFavoriteAdverts.map(advert => {
                         
                         return (
-                            <SimplifiedAdvertCard advert={advert}/>
+                            // <SimplifiedAdvertCard advert={advert}/>
+
+                            <h2> Ha encontrado favoritos</h2>
 
                         )
                     } )
@@ -100,7 +102,7 @@ const mapStateToProps = state => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
     error: getError(state),
-    myFavoriteAdverts: getMyAdverts(state),
+    myFavoriteAdverts: getMyFavoriteAdverts(state),
 })
 
 

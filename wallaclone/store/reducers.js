@@ -38,7 +38,10 @@ import {
     FETCH_MY_ADVERTS_FAILURE,
     GET_MY_PROFILE_DETAILS_SUCCESS,
     GET_MY_PROFILE_DETAILS_REQUEST,
-    GET_MY_PROFILE_DETAILS_FAILURE
+    GET_MY_PROFILE_DETAILS_FAILURE,
+    GET_MY_FAVORITE_ADVERTS_SUCCESS,
+    GET_MY_FAVORITE_ADVERTS_REQUEST,
+    GET_MY_FAVORITE_ADVERTS_FAILURE
 } from "./types";
 import { combineReducers } from 'redux';
 
@@ -48,6 +51,7 @@ const initialState = {
     userId: "",
     myProfileDetails:null,
     favoriteAdverts: [],
+    myFavoriteAdverts:[],
     myAdverts: [],
     ui: {
         loading: false,
@@ -87,6 +91,15 @@ export const adverts = (state = initialState.adverts, action) => {
 export const myAdverts = (state = initialState.myAdverts, action) => {
     switch (action.type) {
         case FETCH_MY_ADVERTS_SUCCESS:
+            return action.payload
+        default:
+            return state;
+    }
+}
+
+export const myFavoriteAdverts = (state = initialState.myFavoriteAdverts, action) => {
+    switch (action.type) {
+        case GET_MY_FAVORITE_ADVERTS_SUCCESS:
             return action.payload
         default:
             return state;
@@ -159,6 +172,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_UPDATE_REQUEST:
         case GET_ADVERTS_REQUEST:
         case FETCH_MY_ADVERTS_REQUEST:
+        case GET_MY_FAVORITE_ADVERTS_REQUEST:
         case GET_MY_PROFILE_DETAILS_REQUEST:
         case AUTH_RECOVER_PASSWORD_REQUEST:
         case AUTH_RESET_PASSWORD_REQUEST:
@@ -172,6 +186,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_SUCCESS:
         case ADVERT_UPDATE_SUCCESS:
         case GET_ADVERTS_SUCCESS:
+        case GET_MY_FAVORITE_ADVERTS_SUCCESS:
         case GET_MY_PROFILE_DETAILS_SUCCESS:
         case FETCH_MY_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
@@ -191,6 +206,7 @@ export const ui = (state = initialState.ui, action) => {
         case ADVERT_CREATION_FAILURE:
         case ADVERT_UPDATE_FAILURE:
         case GET_ADVERTS_FAILURE:
+        case GET_MY_FAVORITE_ADVERTS_FAILURE:
         case FETCH_MY_ADVERTS_FAILURE:
         case GET_MY_PROFILE_DETAILS_FAILURE:
         case AUTH_RECOVER_PASSWORD_FAILURE:
@@ -215,7 +231,8 @@ const reducer = combineReducers({
     adverts,
     favoriteAdverts,
     myAdverts,
-    myProfileDetails
+    myProfileDetails,
+    myFavoriteAdverts,
 })
 
 export default reducer;
