@@ -77,21 +77,21 @@ const LoginForm = ({ isLoading, error }) => {
 
             <form onSubmit={handleSubmit} className="login-form">
                 <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end" xs={12}>
+                    <Grid container spacing={4} alignItems="flex-end">
                         <Grid item xs={1}>
                             <AccountCircle />
                         </Grid>
-                        <Grid item xs={11}>
-                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Username" value={credentials.email} fullWidth />
+                        <Grid item xs={10}>
+                            <TextField required onChange={event => handleInputChange(event)} name="email" id="input-with-icon-grid" label="Email" value={credentials.email} fullWidth />
                         </Grid>
                     </Grid>
                 </div>
                 <div className={classes.margin, "login-input"}>
-                    <Grid container spacing={1} alignItems="flex-end" xs={12}>
+                    <Grid container spacing={4} alignItems="flex-end">
                         <Grid item item xs={1}>
                             <LockIcon />
                         </Grid>
-                        <Grid item item xs={11}>
+                        <Grid item item xs={10}>
                             <TextField required onChange={handleInputChange} name="password" id="input-with-icon-grid" label="Password" type="password" value={credentials.password} fullWidth />
                         </Grid>
                     </Grid>
@@ -132,5 +132,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(LoginForm)
-
-

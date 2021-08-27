@@ -10,7 +10,7 @@ import statusEnum from '../utils/advertsEnum';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        width: '100%',
     },
     media: {
         height: 140,
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function AdvertCard({ price, name, photo, status, description, tags, id }) {
+export default function AdvertCard({ price, name, photo, status, description, tags, id, userId }) {
     const classes = useStyles();
 
     return (
@@ -45,12 +45,12 @@ export default function AdvertCard({ price, name, photo, status, description, ta
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={photo ? `${process.env.REACT_APP_API_BASE_URL_DEPLOYED}/images/${photo}` : '/img/image-not-available.png'}
+                        image={photo ? `${process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY}${userId}/${photo}` : '/img/image-not-available.png'}
                         title="Product image"
                     />
                     <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
-                            {price}
+                            {`${price}€`}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h3">
                             {name}

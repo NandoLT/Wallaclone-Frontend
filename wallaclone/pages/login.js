@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { authResetState } from '../store/actions';
 import { useDispatch } from 'react-redux';
-import LoginForm from '../components/Login/LoginForm'
+import LoginForm from '../components/Auth/LoginForm'
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
@@ -18,8 +18,8 @@ const Login = () => {
 
 
     return (
-        <div className="login-container">
-            <section className="login-content">
+        <div className="auth-container">
+            <section className="auth-content">
 
                 <Typography color="primary" variant="h1">
 
@@ -28,7 +28,7 @@ const Login = () => {
                 </Typography>
                 <LoginForm />
             </section>
-            <section className="login-info">
+            <section className="auth-info">
                 <article>
                     <p className="over-title">Welcome to</p>
                     <h1 className="title">WALLACLONE</h1>

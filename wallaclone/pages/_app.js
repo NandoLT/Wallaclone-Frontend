@@ -1,7 +1,7 @@
 import '../styles/globals.css'
-import '../styles/navbar.css'
 import '../styles/login.css'
 import '../styles/login-form.css'
+import '../styles/register-form.css'
 import '../styles/register.css'
 import '../styles/adverts.css'
 import '@fontsource/roboto';
@@ -13,8 +13,11 @@ import parseAuthToken from '../utils/parseAuthToken';
 import { configureClient } from '../api/client';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { purple, orange } from '@material-ui/core/colors';
-import Button from '@material-ui/core/Button';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../src/theme.js'
 
 const accessToken = storage.get('authToken');
 if (accessToken) {
@@ -24,31 +27,33 @@ const userId = parseAuthToken(accessToken);
 const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });
 
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#0fbfe6',
-    },
-    secondary: {
-      main: '#0e6c81',
-    },
-  },
-});
-
-
 
 
 function MyApp({ Component, pageProps }) {
 
-
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <NavBar />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </Provider>
+    <React.Fragment>
+      <Head>
+        <title>My page</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <NavBar />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </Provider>
+    </React.Fragment>
 
 
   )

@@ -44,9 +44,9 @@ export const adverts = (state = initialState.adverts, action) => {
 }
 
 export const userId = (state = initialState.userId, action) => {
-    switch (action.type){
+    switch (action.type) {
         case AUTH_LOGIN_SUCCESS:
-            
+        case AUTH_REGISTER_SUCCESS:
             return action.userId
         case AUTH_LOGOUT:
             return ""
@@ -55,14 +55,14 @@ export const userId = (state = initialState.userId, action) => {
             return state;
 
     }
-    
-            
-    
+
+
+
 }
 
 export const ui = (state = initialState.ui, action) => {
     if (action.error) {
-        return {...state, loading:false, error:action.payload }
+        return { ...state, loading: false, error: action.payload }
     }
     switch (action.type) {
         case AUTH_RESET_STATE:
