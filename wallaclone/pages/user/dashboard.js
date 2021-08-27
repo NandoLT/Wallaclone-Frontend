@@ -8,7 +8,8 @@ import { Divider } from '@material-ui/core';
 import MyAdverts from '../../components/Dashboard/MyAdverts';
 import MyConversations from '../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
-import MyProfile from '../../components/Dashboard/MyProfile'
+import MyProfile from '../../components/Dashboard/MyProfile';
+import { getUserImage } from '../../api/users';
 
 import React from 'react';
 
@@ -38,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
         })
     };
 
+    const [userImage, setUserImage] = React.useState(null);
+
 
     const resetUi = () => {
         setContent({
@@ -48,8 +51,18 @@ const useStyles = makeStyles((theme) => ({
           })
     }
     
-    React.useEffect(() => {
+    React.useEffect(async () => {
         resetUi();
+        try {
+        const userImageFetched = await getUserImage();
+        console.log(userImageFetched);
+        setUserImage(userImageFetched);
+            
+        } catch (error) {
+            console.log(error);
+        }
+        
+        
         
     }, []);
 

@@ -9,3 +9,12 @@ export const getMyProfile = async () => {
     const myProfile = await client.get(usersPath)
     return myProfile;
 }
+
+export const getUserImage = async () => {
+    const myUserImage = await client.get(`${usersPath}/getUserImage`)
+    return myUserImage;
+}
+
+
+
+

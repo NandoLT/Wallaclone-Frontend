@@ -9,7 +9,7 @@ export const getAdverts = async () => {
 
 export const getMyAdverts = async () => {
     const myAdverts = await client.post(`${advertsPath}/getMyAdverts`)
-    return myAdverts;
+    return myAdverts.result;
 }
 
 export const getAdvertDetail = async (id) => {
