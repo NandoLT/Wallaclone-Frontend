@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { authResetState } from '../store/actions';
 import { useDispatch } from 'react-redux';
 import LoginForm from '../components/Auth/LoginForm'

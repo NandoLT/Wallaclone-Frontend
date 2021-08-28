@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Link from 'next/link';
@@ -146,7 +145,7 @@ const NavBar = ({ isLogged }) => {
               isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
                 <Link href="#" className={classes.margin}>
                   <a className={classes.profile}>
-                    <Image src={pic} />
+                    {/* <Image src={''} /> */}
                     Mi perfil
                   </a>
                 </Link>
