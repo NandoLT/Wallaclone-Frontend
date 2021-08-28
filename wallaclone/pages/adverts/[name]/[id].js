@@ -1,19 +1,18 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
-import { deleteAdvert, getAdvertDetail } from '../../api/adverts';
-import statusEnum from '../../utils/advertsEnum';
+import { deleteAdvert, getAdvertDetail } from '../../../api/adverts';
+import statusEnum from '../../../utils/advertsEnum';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import EditAdvertForm from '../../components/Advert/EditAdvert';
+import EditAdvertForm from '../../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import styles from '../../styles/Home.module.css'
 import { useSelector } from 'react-redux';
-import { getIsLogged } from '../../store/selectors';
-import ConfirmationPopup from '../../components/ConfirmationPopup';
+import { getIsLogged } from '../../../store/selectors';
+import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
-import parseAuthToken from '../../utils/parseAuthToken'
+import parseAuthToken from '../../../utils/parseAuthToken'
 
 
 
@@ -39,16 +38,8 @@ const Advert = () => {
 
 
     const router = useRouter();
-    const  {slug}  = router.query;
-    const id = slug[1];
-    console.log(id);
-    
-    
-    
+    const  {id} = router.query;
 
-    const [advert, setAdvert] = useState(null);
-    const [editMode, setEditMode] = useState(false);
-    const [advertUserId, setAdvertUserId] = useState(null);
 
 
     useEffect(() => {
@@ -63,6 +54,22 @@ const Advert = () => {
         })()
 
     }, [id])
+    
+    
+    
+    
+
+    const [advert, setAdvert] = useState(null);
+    const [editMode, setEditMode] = useState(false);
+    const [advertUserId, setAdvertUserId] = useState(null);
+
+
+
+    
+
+
+
+    
 
     // CÓDIGO DE EDICIÓN DEL ANUNCIO
 
