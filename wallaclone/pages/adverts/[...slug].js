@@ -39,10 +39,10 @@ const Advert = () => {
 
 
     const router = useRouter();
-    const  {...slug}  = router.query;
-    
-    const id = slug.slug[1];
+    const  {slug}  = router.query;
+    const id = slug[1];
     console.log(id);
+    
     
     
 
