@@ -5,11 +5,12 @@ import LoginForm from '../components/Auth/LoginForm'
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { getIsLogged } from '../store/selectors';
+import { useRouter } from 'next/dist/client/router';
 
 
 const Login = ({ isLogged }) => {
 
-
+    const router = useRouter();
 
     const dispatch = useDispatch();
 
