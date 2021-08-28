@@ -39,7 +39,13 @@ const Advert = () => {
 
 
     const router = useRouter();
-    const { id } = router.query;
+    const  {...slug}  = router.query;
+    
+    const id = slug.slug[1];
+    console.log(id);
+    
+    
+
     const [advert, setAdvert] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [advertUserId, setAdvertUserId] = useState(null);
@@ -48,6 +54,7 @@ const Advert = () => {
     useEffect(() => {
         (async () => {
             if (id) {
+                
                 const advert = await getAdvertDetail(id);
                 setAdvert(advert);
                 setAdvertUserId(advert.userId);
