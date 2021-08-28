@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { authResetState } from '../store/actions';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import LoginForm from '../components/Auth/LoginForm'
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import { getIsLogged } from '../store/selectors';
 
 
 const Login = ({ isLogged }) => {

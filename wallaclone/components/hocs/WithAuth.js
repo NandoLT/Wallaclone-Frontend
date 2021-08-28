@@ -5,10 +5,12 @@ import { Router } from "next/router";
 
 const WithAuth = (WrappedComponent) => {
 
-  const Router = useRouter();
-  const isLogged = useSelector(getIsLogged);
 
   return function render(props) {
+
+    const Router = useRouter();
+    const isLogged = useSelector(getIsLogged);
+
     if (typeof window !== "undefined") {
       if (!isLogged) {
         Router.replace("/login");

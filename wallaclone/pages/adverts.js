@@ -38,7 +38,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
     const queryParams = router.query
     const dispatch = useDispatch()
 
-    console.log(adverts)
 
     const classes = useStyles();
 
@@ -143,8 +142,8 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                     <div>
                         <p>Status:</p>
                         <div>
-                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onClick={handleChangeCheck} /> <label htmlFor="statusSale">On Sale</label>
-                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onClick={handleChangeCheck} /> <label htmlFor="statusWanted">Wanted</label>
+                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onChange={handleChangeCheck} /> <label htmlFor="statusSale">On Sale</label>
+                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onChange={handleChangeCheck} /> <label htmlFor="statusWanted">Wanted</label>
                         </div>
                         <p>Price:</p>
                         <Slider

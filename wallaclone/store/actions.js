@@ -193,11 +193,11 @@ export const fetchMyAdvertsRequest = () => {
     }
 }
 
-export const fetchMyAdvertsFailure = error =>{
-    return{
+export const fetchMyAdvertsFailure = error => {
+    return {
         type: FETCH_MY_ADVERTS_FAILURE,
-        payload:error,
-        error:true,
+        payload: error,
+        error: true,
     }
 }
 
@@ -458,7 +458,7 @@ export const advertsGetAction = (filters) => {
         dispatch(getAdvertsRequest());
         try {
             const adverts = await api.adverts.getAdverts(query);
-            dispatch(advertsGet(adverts));
+            dispatch(getAdvertsSuccess(adverts));
         } catch (err) {
             console.log(err)
         }
