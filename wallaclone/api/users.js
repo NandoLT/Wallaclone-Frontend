@@ -15,8 +15,18 @@ export const getUserImage = async () => {
     return myUserImage;
 }
 
-export const editMyProfile = () => {
-    return client.put(`${usersPath}/updateuser`)
+export const editMyProfile = async (formData) => {
+
+    try {
+    const response =   await client.put(`${usersPath}/updateuser`, formData)
+    console.log(response.result);
+    return response.result;
+        
+    } catch (error) {
+        console.log(response)
+    }
+
+    
     
 }
 

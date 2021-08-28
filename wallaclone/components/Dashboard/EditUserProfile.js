@@ -87,12 +87,12 @@ const setPhoto = event => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submit para enviar formulario", newUserProfile);
+    
 
     const formData =new FormData();
     formData.append('description', newUserProfile.description);
     formData.append('province', newUserProfile.province);
-    formData.append('description', newUserProfile.description);
+   
     if (newUserProfile.photo) {
               formData.append('photo', newUserProfile.photo);
           }
