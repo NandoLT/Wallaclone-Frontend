@@ -10,9 +10,10 @@ import EditAdvertForm from '../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import styles from '../../styles/Home.module.css'
 import { useSelector } from 'react-redux';
-import { getIsLogged, getUserId } from '../../store/selectors';
+import { getIsLogged } from '../../store/selectors';
 import ConfirmationPopup from '../../components/ConfirmationPopup';
 import Image from 'next/image'
+import parseAuthToken from '../../utils/parseAuthToken'
 
 
 
@@ -42,7 +43,6 @@ const Advert = () => {
     const [advert, setAdvert] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [advertUserId, setAdvertUserId] = useState(null);
-    const userId = useSelector(getUserId)
 
 
     useEffect(() => {
@@ -78,6 +78,7 @@ const Advert = () => {
     }
 
     const adBelongstoUser = () => {
+        const userId = parseAuthToken();
         if (userId === advertUserId) {
             return true
         }
@@ -104,7 +105,7 @@ const Advert = () => {
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    <Image layout="fill" src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                                    {/* <Image layout="fill" src={advert.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} /> */}
                                 </div>
                                 <div className="card-body">
 
@@ -125,7 +126,7 @@ const Advert = () => {
                                         {advert.description}
                                     </p>
                                     <div className="user">
-                                        <Image src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" />
+                                        {/* <Image src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" /> */}
                                         <div className="user-info">
                                             <h5>{advert.province}</h5>
 
@@ -148,15 +149,14 @@ const Advert = () => {
                                                     Editar anuncio
                                                 </Button>
 
-                                                <Button
-                                                    onClick={handleDeleteAdvert}
-                                                    size="large"
-                                                    className={classes.margin}
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    type="submit">
-                                                    Borrar anuncio
-                                                </Button>  </div>
+                                                <ConfirmationPopup
+                                                    className="delete-button"
+                                                    buttonText="Borrar anuncio"
+                                                    popupTitle="Borrar anuncio"
+                                                    popupDescription="¿Seguro que quieres borrar el anuncio?"
+                                                    handleConfirmation={handleDeleteAdvert}
+                                                />
+                                            </div>
 
                                         }
 

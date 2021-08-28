@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError, getUserId, getMyProfileDetails } from '../../store/selectors';
+import { getIsLogged, getAdverts, getIsLoading, getError, getMyProfileDetails } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction, fetchMyAdvertsAction, getMyProfileAction } from '../../store/actions';
 import { getMyAdverts } from '../../store/selectors';
@@ -168,7 +168,6 @@ const mapStateToProps = (state) => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
     error: getError(state),
-    userId: getUserId(state),
     myProfileDetails: getMyProfileDetails(state),
 });
 

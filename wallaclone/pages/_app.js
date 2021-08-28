@@ -10,7 +10,6 @@ import configureStore from '../store';
 import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 import NavBar from '../components/NavBar';
-import parseAuthToken from '../utils/parseAuthToken';
 import { configureClient } from '../api/client';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -28,8 +27,7 @@ if (accessToken && !recoverToken) {
   configureClient(recoverToken.replace(/['"]+/g, ''));
 }
 
-const userId = parseAuthToken(accessToken);
-const store = configureStore({ preloadedState: { auth: !!accessToken, userId: userId } });
+const store = configureStore({ preloadedState: { auth: !!accessToken } });
 
 
 

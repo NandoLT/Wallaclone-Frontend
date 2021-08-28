@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Loading from '/components/Loading';
-import { getIsLogged, getIsLoading, getError, getUserId } from '../../store/selectors';
+import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
 import Alert from '/components/Alert';
 import styles from '../../styles/Home.module.css';
 import Select from '@material-ui/core/Select';
@@ -251,7 +251,6 @@ const mapStateToProps = (state) => ({
   isLogged: getIsLogged(state),
   isLoading: getIsLoading(state),
   error: getError(state),
-  userId: getUserId(state),
 });
 
 export default connect(mapStateToProps)(WithAuth(EditUserProfile))

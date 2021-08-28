@@ -129,7 +129,7 @@ const RegisterForm = ({ isLoading, error }) => {
                     />
                 </div>
                 <div className="auth-buttons">
-                    <Link href='/register'>Already registered? Login</Link>
+                    <Link href='/login'>Already registered? Login</Link>
                     {!isLoading && <Button disabled={validation()} size="large" variant="contained" color="primary" type="submit">
                         Register
                     </Button>}

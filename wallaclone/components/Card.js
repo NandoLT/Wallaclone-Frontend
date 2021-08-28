@@ -36,12 +36,14 @@ const useStyles = makeStyles({
     }
 });
 
-export default function AdvertCard({ price, name, photo, status, description, tags, id, userId }) {
+export default function AdvertCard({ advert }) {
     const classes = useStyles();
+
+    const { price, name, photo, status, description, tags, _id, userId } = advert;
 
     return (
         <Card className={classes.root}>
-            <Link href={`/adverts/${id}`} passHref className={classes.link}>
+            <Link href={`/adverts/${_id}`} passHref className={classes.link}>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}

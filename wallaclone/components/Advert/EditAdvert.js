@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Loading from '/components/Loading';
-import { getIsLogged, getIsLoading, getError, getUserId } from '../../store/selectors';
+import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
 import Alert from '/components/Alert';
 import styles from '../../styles/Home.module.css';
 import Select from '@material-ui/core/Select';
@@ -22,7 +22,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
 import { updateAdvertAction, authResetState } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
-import WithAuth from '/components/hocs/WithAuth';
+import WithAuth from '../../components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
 import Image from 'next/image';
 
@@ -233,7 +233,7 @@ const EditAdvertForm = ({ advert, isLogged, isLoading, error, userId, productId 
                 <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
                 <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
+                    <FormLabel style={{ margin: 8 }} component="legend">*Elige al menos una categoría</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={<Checkbox
@@ -253,7 +253,7 @@ const EditAdvertForm = ({ advert, isLogged, isLoading, error, userId, productId 
                     </FormGroup>
 
                 </FormControl >
-                <Image className="edit-photo" src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                {/* <Image className="edit-photo" src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} /> */}
                 <div className={classes.root}>
 
                     <input
@@ -323,7 +323,6 @@ const mapStateToProps = (state) => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
     error: getError(state),
-    userId: getUserId(state),
 });
 
 export default connect(mapStateToProps)(WithAuth(EditAdvertForm))

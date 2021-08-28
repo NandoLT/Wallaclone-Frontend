@@ -52,8 +52,7 @@ export const authRegister = () => {
 
 export const authLoginSuccess = () => {
     return {
-        type: AUTH_LOGIN_SUCCESS,
-        userId: userId
+        type: AUTH_LOGIN_SUCCESS
     }
 }
 

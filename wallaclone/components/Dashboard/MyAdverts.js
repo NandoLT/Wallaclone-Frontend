@@ -8,6 +8,7 @@ import { getMyAdverts } from '../../store/selectors';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
+import AdvertCard from '../../components/Card';
 
 
 
@@ -58,7 +59,7 @@ const MyAdverts = ({ isLogged, isLoading, error, myAdverts }) => {
                             myAdverts.map(advert => {
 
                                 return (
-                                    <SimplifiedAdvertCard advert={advert} key={advert._id} />
+                                    <AdvertCard advert={advert} key={advert._id} />
 
                                 )
                             })

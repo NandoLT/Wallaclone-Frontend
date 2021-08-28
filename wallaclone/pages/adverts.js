@@ -114,14 +114,17 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         }
         params += `minPrice=${filters.price[0]}&`
         params += `maxPrice=${filters.price[1]}&`
-        const handleFavoriteCheck = ev => {
-            if (!favoriteAdverts.includes(ev.target.id)) {
-                dispatch(advertAddFavoritesAction(ev.target.id));
-            } else {
-                dispatch(advertDeleteFavoritesAction(ev.target.id));
-            }
-        }
 
+        router.push(`adverts/${params}`)
+
+    }
+
+    const handleFavoriteCheck = ev => {
+        if (!favoriteAdverts.includes(ev.target.id)) {
+            dispatch(advertAddFavoritesAction(ev.target.id));
+        } else {
+            dispatch(advertDeleteFavoritesAction(ev.target.id));
+        }
     }
 
     useEffect(() => {
@@ -186,13 +189,13 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                         ?
                         <Box pl={1} pr={1}>
                             <Grid container spacing={1} className="adverts">
-                                {adverts.map(advert => {
+                                {adverts.slice(0).reverse().map(advert => {
                                     const { name, price, status, _id, photo, description, tags, userId } = advert;
 
                                     return (
                                         <Grid container item xs={12} sm={6} md={4} lg={3} key={_id}>
 
-                                            <AdvertCard name={name} price={price} status={status} photo={photo} description={description} tags={tags} id={_id} userId={userId} key={_id} />
+                                            <AdvertCard advert={advert} key={_id} />
 
                                         </Grid>
 
@@ -200,7 +203,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                 })}
                             </Grid>
                         </Box>
-
                         :
                         <h2> No hay anuncios que mostrar</h2>}
 

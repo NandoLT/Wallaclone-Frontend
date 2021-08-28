@@ -48,10 +48,9 @@ import { combineReducers } from 'redux';
 
 const initialState = {
     auth: false,
-    userId: "",
-    myProfileDetails:null,
+    myProfileDetails: null,
     favoriteAdverts: [],
-    myFavoriteAdverts:[],
+    myFavoriteAdverts: [],
     myAdverts: [],
     ui: {
         loading: false,
@@ -115,23 +114,6 @@ export const myProfileDetails = (state = initialState.myProfileDetails, action) 
     }
 }
 
-export const userId = (state = initialState.userId, action) => {
-    /* switch (action.type) {
-        case AUTH_LOGIN_SUCCESS:
-        case AUTH_REGISTER_SUCCESS:
-            return action.userId */
-    switch (action.type) {
-        case AUTH_LOGIN_SUCCESS:
-            return ""
-
-        case AUTH_LOGOUT:
-            return ""
-
-        default:
-            return state;
-
-    }
-}
 
 export const favoriteAdverts = (state = initialState.favoriteAdverts, action) => {
     switch (action.type) {
@@ -230,7 +212,6 @@ export const ui = (state = initialState.ui, action) => {
 
 const reducer = combineReducers({
     auth,
-    userId,
     ui,
     adverts,
     favoriteAdverts,
