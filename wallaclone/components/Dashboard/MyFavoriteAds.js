@@ -8,6 +8,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
 import { getMyFavoriteAdvertsAction } from '../../store/actions';
+import AdvertCard from '../../components/Card';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,11 +56,11 @@ const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
 
                         {
                             myFavoriteAdverts.map(advert => {
+                                
 
                                 return (
-                                    <SimplifiedAdvertCard advert={advert} key={advert._id} />
-
-
+                                    <AdvertCard advert={advert} key={advert._id}  />
+                                
 
                                 )
                             })

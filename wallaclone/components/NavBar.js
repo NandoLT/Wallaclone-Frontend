@@ -108,9 +108,9 @@ const NavBar = ({ isLogged }) => {
       console.log(url)
       setPic(url);
     }
-    if (isLogged) {
-      fetchUserImg();
-    }
+    // if (isLogged) {
+    //   fetchUserImg();
+    // }
   }, [isLogged]);
 
 
