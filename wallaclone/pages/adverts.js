@@ -167,7 +167,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
                                 name="province"
                                 onChange={handleChange}
                             >
-                                {Provinces.map(Province => <MenuItem value={Province.nombre} key={province.nombre}>{Province.nombre}</MenuItem>)}
+                                {Provinces.map(Province => <MenuItem value={Province.nombre} key={Province.nombre}>{Province.nombre}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </div>
