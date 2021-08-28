@@ -104,7 +104,7 @@ const Advert = () => {
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    <Image src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
+                                    <Image layout="fill" src={advert.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                                 </div>
                                 <div className="card-body">
 
