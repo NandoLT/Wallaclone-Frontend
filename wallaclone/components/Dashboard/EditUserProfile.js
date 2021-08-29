@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Loading from '/components/Loading';
-import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
+import { getIsLogged, getIsLoading, getError, getMyProfileDetails } from '../../store/selectors';
 import Alert from '/components/Alert';
 import styles from '../../styles/Home.module.css';
 import Select from '@material-ui/core/Select';
@@ -20,12 +20,13 @@ import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
-import { updateAdvertAction, authResetState } from '../../store/actions';
+import { updateAdvertAction, authResetState, getMyProfileAction } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
 import { editMyProfile } from '../../api/users';
 import Image from 'next/image';
+import router from 'next/router';
 
 
 
@@ -47,15 +48,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditUserProfile = ({ isLoading, error, userId }) => {
+const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEditMode }) => {
 
   const dispatch = useDispatch();
 
 
   const [newUserProfile, setNewUserProfile] = useState({
 
-    description: "",
-    province: "",
+    description: myProfileDetails.description,
+    nickname: myProfileDetails.nickname,
+    province: myProfileDetails.province,
     photo: null,
   })
 
@@ -86,54 +88,54 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
   }
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submit para enviar formulario", newUserProfile);
+    
 
-    const formData = new FormData();
-    formData.append('description', newUserProfile.description);
-    formData.append('province', newUserProfile.province);
-    formData.append('description', newUserProfile.description);
-    if (newUserProfile.photo) {
-      formData.append('photo', newUserProfile.photo);
+    // const formData = new FormData();
+    // formData.append('description', newUserProfile.description);
+    // formData.append('province', newUserProfile.province);
+    // if (newUserProfile.photo) {
+    //   formData.append('photo', newUserProfile.photo);
+    // }
+
+    try {
+      await editMyProfile(newUserProfile);
+      
+    } catch (error) {
+      console.log(error)
     }
-
-    editMyProfile(formData);
+    dispatch(getMyProfileAction())
+    handleEditMode();
+    //router.reload(window.location.pathname)
 
   }
 
-  // const validation = () => {
-  //   if(!newAdDetails.name){
-  //       return true
-  //   };
-  //   if(!newAdDetails.description){
-  //       return true
-  //   };
-  //   if(!newAdDetails.price || newAdDetails.price <=0 || newAdDetails.price >100000 || isNaN(newAdDetails.price) ){
-  //       return true
-  //   };
-
-  //   if(!newAdDetails.province){
-  //       return true
-  //   };
-
-  //   if(newAdDetails.tags.length < 1){
-  //       return true
-  //   }
+  const validation = () => {
+    if(!newUserProfile.nickname){
+        return true;
+    };
+    
 
 
-  //   return false
-  // }
+    return false
+  }
 
   return (
     <div >
       <form onSubmit={handleSubmit} className="register-form">
 
 
-        <div>
-
-
-        </div>
+      <div>
+            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                    <Grid container spacing={1} alignItems="flex-end">
+                       
+                        <Grid item>
+                            <TextField required onChange={event => handleInputChange(event)} name="nickname" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickname} />
+                        </Grid>
+                    </Grid>
+                </div>
+            </div>
 
         <div>
 
@@ -141,23 +143,14 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
             <Grid container spacing={1} alignItems="flex-end">
 
               <Grid item>
-                <TextField required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción sobre tí" value={newUserProfile.description} />
+                <TextField multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción sobre tí" value={newUserProfile.description} />
               </Grid>
             </Grid>
           </div>
         </div>
 
 
-        {/* <div>
-            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                       
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={newAdDetails.price} />
-                        </Grid>
-                    </Grid>
-                </div>
-            </div> */}
+      
 
 
 
@@ -179,7 +172,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
         <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
 
-        <Image className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} />
+        <Image width="100%" height="100%" className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} />
         <div className={classes.root}>
 
           <input
@@ -210,7 +203,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
         {!isLoading &&
 
           <Button
-            // disabled={validation()}
+            disabled={validation()}
             onClick={handleSubmit}
             type="submit"
             color="secondary"
@@ -251,6 +244,7 @@ const mapStateToProps = (state) => ({
   isLogged: getIsLogged(state),
   isLoading: getIsLoading(state),
   error: getError(state),
+  myProfileDetails: getMyProfileDetails(state),
 });
 
 export default connect(mapStateToProps)(WithAuth(EditUserProfile))

@@ -6,7 +6,12 @@ const usersPath = '/api/users'
 
 export const getMyProfile = async () => {
     const myProfile = await client.get(usersPath)
-    return myProfile;
+    return myProfile.result;
+}
+
+export const getOtherUserProfile = async (username) => {
+    const userProfile = await client.get(`${usersPath}/${username}`)
+    return userProfile.result;
 }
 
 export const getUserImage = async () => {
@@ -14,8 +19,10 @@ export const getUserImage = async () => {
     return myUserImage;
 }
 
-export const editMyProfile = () => {
-    return client.put(`${usersPath}/updateuser`)
+export const editMyProfile = async (userData) => {
+    const response =  await client.put(`${usersPath}/updateuser`, userData)
+    console.log(response.result);
+    return response;
 
 }
 

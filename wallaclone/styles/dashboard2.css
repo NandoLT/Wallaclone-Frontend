@@ -26,23 +26,16 @@
 }
 
 .main-container-expanded{
+    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     padding: 0;
-    margin-left:var(--width-collapsed);
-    margin-left:330px;
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #sidemenu{
     background-color: var(--bgcolor);
     color:white;
-    position:fixed;
-    height: 100%;
-    left:0;
-    top:63px;
 }
 
 #sidemenu .href{
@@ -106,7 +99,7 @@ HEADER
     box-sizing: border-box;
     padding: var(--pading);
     margin: 0 auto;
-    cursor:pointer;
+    
 }
 
 #sidemenu #profile #photo img{

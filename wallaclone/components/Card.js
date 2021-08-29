@@ -76,11 +76,11 @@ export default function AdvertCard({ advert }) {
     }
 
     const { price, name, photo, status, description, tags, _id, userId } = advert;
+    const urlName = name.replace(/\s+/g, '-').toLowerCase();
 
     return (
         <Card className={classes.root}>
-
-            <Link href={`/adverts/${_id}`} passHref className={classes.link}>
+            <Link href={`/adverts/${urlName}/${_id}`}   className={classes.link}>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}

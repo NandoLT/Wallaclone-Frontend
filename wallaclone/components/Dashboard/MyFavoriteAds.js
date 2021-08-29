@@ -4,10 +4,11 @@ import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts, g
 import { useDispatch, useSelector } from 'react-redux';
 import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
 import { getMyAdverts } from '../../store/selectors';
-import { Button } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
 import { getMyFavoriteAdvertsAction } from '../../store/actions';
+import AdvertCard from '../../components/Card';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     upload: {
         display: 'none',
     },
+    fullWidth: {
+        width: '100%'
+    }
 }));
 
 const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
@@ -31,16 +35,9 @@ const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
 
 
 
-    useEffect(() => {
-        async function fetch() {
-            await dispatch(getMyFavoriteAdvertsAction());
-        }
-        fetch();
-    }, [])
-
     return (
 
-        <div>
+        <div className={classes.fullWidth}>
 
             {!myFavoriteAdverts.length > 0 ?
 
@@ -51,24 +48,32 @@ const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
 
                     <h1>Mis favoritos</h1>
 
-                    <div className="ads-container">
+                    <Box pl={1} pr={1}>
 
-                        {
-                            myFavoriteAdverts.map(advert => {
+                        <Grid container spacing={1} className="adverts">
 
-                                return (
-                                    <SimplifiedAdvertCard advert={advert} key={advert._id} />
-
+                            {
+                                myFavoriteAdverts.map(advert => {
 
 
-                                )
-                            })
-                        }
+                                    return (
+                                        <Grid container item xs={12} sm={6} md={4} lg={3} key={advert._id}>
+
+                                            <AdvertCard advert={advert} key={advert._id} />
+
+                                        </Grid>
+
+
+                                    )
+                                })
+                            }
 
 
 
 
-                    </div>
+                        </Grid>
+
+                    </Box>
                 </>
             }
 

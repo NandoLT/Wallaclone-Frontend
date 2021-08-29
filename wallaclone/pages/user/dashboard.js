@@ -1,7 +1,7 @@
 import styles from '../../styles/Home.module.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
-import { Link, ListItem, ListItemIcon } from '@material-ui/core';
+import { Avatar, Link, ListItem, ListItemIcon } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { Divider } from '@material-ui/core';
@@ -10,6 +10,17 @@ import MyConversations from '../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
 import MyProfile from '../../components/Dashboard/MyProfile';
 import { getUserImage } from '../../api/users';
+import { getMyProfileAction, fetchMyAdvertsAction, getMyFavoriteAdvertsAction } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import WithAuth from '../../components/hocs/WithAuth';
+import { getMyProfileDetails } from '../../store/selectors';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 import React from 'react';
 
@@ -18,10 +29,23 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         textAlign: 'center',
     },
+    dashboard: {
+        display: 'flex',
+
+    },
+    drawer: {
+        width: 240,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: 240,
+        top: 'auto'
+    },
 
 }));
 
-const Dashboard = () => {
+const Dashboard = ({ myProfileDetails }) => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [content, setContent] = React.useState({
         myAdverts: false,
@@ -51,22 +75,18 @@ const Dashboard = () => {
         })
     }
 
+
+
     React.useEffect(() => {
-        // resetUi();
-        async function fetch() {
-            try {
-                const userImageFetched = await getUserImage();
-                console.log(userImageFetched);
-                setUserImage(userImageFetched);
 
-            } catch (error) {
-                console.log(error);
-            }
+
+        async function fetchMyData() {
+            await dispatch(getMyProfileAction());
+            await dispatch(fetchMyAdvertsAction());
+            await dispatch(getMyFavoriteAdvertsAction());
         }
-        fetch();
-
-
-    }, []);
+        fetchMyData();
+    }, [])
 
     const { myAdverts, myFavorites, myConversations, myProfile } = content;
 
@@ -76,7 +96,34 @@ const Dashboard = () => {
     }
 
     return (
-        <>
+        <div className={classes.dashboard}>
+            <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+                anchor="left"
+            >
+                <Divider />
+                <List>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
+                <List>
+                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
             <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
                 <div id="header">
                     <div id="title"> <span>Mi Perfil</span></div>
@@ -88,11 +135,23 @@ const Dashboard = () => {
 
                 </div>
                 <div id="profile">
-                    <div onClick={() => openTab("myProfile")} id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div>
+
+                    {myProfileDetails
+
+                        &&
+                        <div onClick={() => openTab("myProfile")} id="photo"><Avatar src={myProfileDetails.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${''}` : '/img/image-not-available.png'} alt="me" width="64" height="64" /></div>
+
+
+                    }
 
 
 
-                    <div id="name"><span>Jaime Pérez</span></div>
+                    {myProfileDetails &&
+
+                        <div id="name">{myProfileDetails.nickname ? <span>{myProfileDetails.nickname}</span> : <span> No nickname yet</span>}</div>
+
+                    }
+
                 </div>
 
                 <div id="menu-items">
@@ -130,8 +189,13 @@ const Dashboard = () => {
                 {myProfile && <MyProfile />}
 
             </div>
-        </>
+        </div>
     )
 }
 
-export default Dashboard;
+
+const mapStateToProps = (state) => ({
+    myProfileDetails: getMyProfileDetails(state),
+});
+
+export default connect(mapStateToProps)(WithAuth(Dashboard))
