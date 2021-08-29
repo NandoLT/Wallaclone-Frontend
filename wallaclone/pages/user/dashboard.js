@@ -41,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
         width: 240,
         top: 'auto'
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    iconRoot: {
+        minWidth: 0
+    }
 
 }));
 
@@ -107,21 +116,10 @@ const Dashboard = ({ myProfileDetails }) => {
             >
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    <ListItem button key={text} className={classes.column}>
+                        <ListItemIcon className={classes.iconRoot}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItem>
                 </List>
             </Drawer>
             <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
