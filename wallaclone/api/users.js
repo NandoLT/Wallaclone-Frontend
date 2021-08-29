@@ -14,8 +14,8 @@ export const getUserImage = async () => {
     return myUserImage;
 }
 
-export const editMyProfile = () => {
-    return client.put(`${usersPath}/updateuser`)
+export const editMyProfile = (userData) => {
+    return client.put(`${usersPath}/updateuser`, userData)
 
 }
 

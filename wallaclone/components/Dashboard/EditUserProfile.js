@@ -93,7 +93,6 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
     const formData = new FormData();
     formData.append('description', newUserProfile.description);
     formData.append('province', newUserProfile.province);
-    formData.append('description', newUserProfile.description);
     if (newUserProfile.photo) {
       formData.append('photo', newUserProfile.photo);
     }
@@ -179,7 +178,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
         <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
 
-        <Image className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} />
+        <Image width="100%" height="100%" className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} />
         <div className={classes.root}>
 
           <input
