@@ -1,8 +1,22 @@
 import React from 'react';
-import MediaCard from '../components/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 
-export default function Prueba() {
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
+
+export default function PaginationRounded() {
+    const classes = useStyles();
+
     return (
-        <MediaCard photo={null} />
+        <div className={classes.root}>
+            <Pagination count={10} shape="rounded" />
+            <Pagination count={10} variant="outlined" shape="rounded" />
+        </div>
     );
 }

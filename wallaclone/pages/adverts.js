@@ -18,8 +18,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Provinces from '../utils/spainProvinces';
 import Button from '@material-ui/core/Button';
+import Pagination from '../components/Pagination';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%'
+    },
     formControl: {
         minWidth: 120,
     },
@@ -29,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
     filter: {
         color: '#fff',
         marginTop: 10
-    }
+    },
 }));
 
 
-const Adverts = ({ isLogged, adverts, isLoading, error }) => {
+const Adverts = ({ adverts, isLoading, error }) => {
     const router = useRouter()
     const queryParams = router.query
     const dispatch = useDispatch()
@@ -112,6 +116,12 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
         if (filters.province) {
             params += `province=${filters.province}&`
         }
+        if (filters.limit) {
+            params += `limit=${filters.limit}&`
+        }
+        if (filters.skip) {
+            params += `skip=${filters.skip}&`
+        }
         params += `minPrice=${filters.price[0]}&`
         params += `maxPrice=${filters.price[1]}&`
 
@@ -179,7 +189,7 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
                     adverts
                         ?
-                        <Box pl={1} pr={1}>
+                        <Box pl={1} pr={1} className={classes.root}>
                             <Grid container spacing={1} className="adverts">
                                 {adverts.slice(0).reverse().map(advert => {
                                     const { name, price, status, _id, photo, description, tags, userId } = advert;
@@ -200,6 +210,9 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
 
 
+
+
+                {/* <Pagination /> */}
 
             </section>
 
