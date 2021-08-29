@@ -117,7 +117,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         })
         //formData.append('tags', adDetails.tags);
         formData.append('status', adDetails.status);
-        formData.append('userId', adDetails.userId);
+        //formData.append('userId', adDetails.userId);
         if (adDetails.photo) {
             formData.append('photo', adDetails.photo);
         }
