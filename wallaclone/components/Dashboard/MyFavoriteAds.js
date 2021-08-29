@@ -32,13 +32,6 @@ const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
 
 
 
-    useEffect(() => {
-        async function fetch() {
-            await dispatch(getMyFavoriteAdvertsAction());
-        }
-        fetch();
-    }, [])
-
     return (
 
         <div>

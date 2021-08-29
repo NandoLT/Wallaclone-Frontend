@@ -31,15 +31,6 @@ const MyAdverts = ({ isLogged, isLoading, error, myAdverts }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-
-
-    useEffect(() => {
-        async function fetch() {
-            await dispatch(fetchMyAdvertsAction());
-        }
-        fetch();
-    }, [])
-
     return (
 
         <div>
