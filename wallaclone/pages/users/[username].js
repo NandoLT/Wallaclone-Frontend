@@ -97,7 +97,10 @@ const UserProfile = () => {
                     { userProfileAdverts.map(advert => {
 
                         return (
-                            <AdvertCard advert={advert} key={advert._id} />
+                            <div className="advert-card">
+                                <AdvertCard advert={advert} key={advert._id} />
+                            </div>
+                            
 
                         )
                         })}
@@ -107,16 +110,15 @@ const UserProfile = () => {
                         }
 
                 </div>
-
-                <div className="ads-container">
-                    <h2> ANUNCIOS FAVORITOS</h2>
-
-                </div>
                 
 
             </div>
 
             <style jsx>{`
+
+            .advert-card{
+
+            }
 
              .ads-container{
                 
@@ -136,12 +138,9 @@ const UserProfile = () => {
 
                 .profile-container{
                     
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-size: 18px;
-                    padding: 10px;
+                     margin-top: 30px;
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    justify-content: flex-start;
 
                 }
                     
