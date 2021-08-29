@@ -55,6 +55,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
   const [newUserProfile, setNewUserProfile] = useState({
 
     description: "",
+    nickName:"",
     province: "",
     photo: null,
   })
@@ -101,38 +102,31 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
 
   }
 
-  // const validation = () => {
-  //   if(!newAdDetails.name){
-  //       return true
-  //   };
-  //   if(!newAdDetails.description){
-  //       return true
-  //   };
-  //   if(!newAdDetails.price || newAdDetails.price <=0 || newAdDetails.price >100000 || isNaN(newAdDetails.price) ){
-  //       return true
-  //   };
-
-  //   if(!newAdDetails.province){
-  //       return true
-  //   };
-
-  //   if(newAdDetails.tags.length < 1){
-  //       return true
-  //   }
+  const validation = () => {
+    if(!newUserProfile.nickName){
+        return true;
+    };
+    
 
 
-  //   return false
-  // }
+    return false
+  }
 
   return (
     <div >
       <form onSubmit={handleSubmit} className="register-form">
 
 
-        <div>
-
-
-        </div>
+      <div>
+            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                    <Grid container spacing={1} alignItems="flex-end">
+                       
+                        <Grid item>
+                            <TextField required onChange={event => handleInputChange(event)} name="nickName" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickName} />
+                        </Grid>
+                    </Grid>
+                </div>
+            </div>
 
         <div>
 
@@ -140,23 +134,14 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
             <Grid container spacing={1} alignItems="flex-end">
 
               <Grid item>
-                <TextField required multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción sobre tí" value={newUserProfile.description} />
+                <TextField multiline rows={4} onChange={handleInputChange} name="description" id="input-with-icon-grid" label="Descripción sobre tí" value={newUserProfile.description} />
               </Grid>
             </Grid>
           </div>
         </div>
 
 
-        {/* <div>
-            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                       
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="price" id="input-with-icon-grid" label="Precio" value={newAdDetails.price} />
-                        </Grid>
-                    </Grid>
-                </div>
-            </div> */}
+      
 
 
 
@@ -209,7 +194,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
         {!isLoading &&
 
           <Button
-            // disabled={validation()}
+            disabled={validation()}
             onClick={handleSubmit}
             type="submit"
             color="secondary"
@@ -250,6 +235,7 @@ const mapStateToProps = (state) => ({
   isLogged: getIsLogged(state),
   isLoading: getIsLoading(state),
   error: getError(state),
+  
 });
 
 export default connect(mapStateToProps)(WithAuth(EditUserProfile))
