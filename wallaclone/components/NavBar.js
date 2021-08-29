@@ -4,12 +4,8 @@ import Button from '@material-ui/core/Button';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
-<<<<<<< HEAD
-import { Grid } from '@material-ui/core';
-=======
 import { authLogoutAction } from '../store/actions';
 import { Avatar, Grid, Menu } from '@material-ui/core';
->>>>>>> Wallaclone-71
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from 'next/router';
@@ -32,7 +28,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
 import green from '@material-ui/core/colors/green';
-import Avatar from '@material-ui/core/Avatar';
+
 
 
 const useStyles = makeStyles((theme) => ({
