@@ -55,9 +55,9 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
 
   const [newUserProfile, setNewUserProfile] = useState({
 
-    description: "",
-    nickname: "",
-    province: "",
+    description: myProfileDetails.description,
+    nickname: myProfileDetails.nickname,
+    province: myProfileDetails.province,
     photo: null,
   })
 
