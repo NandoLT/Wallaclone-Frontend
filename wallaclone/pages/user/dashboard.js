@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Dashboard = () => {
+const Dashboard = ({myProfileDetails}) => {
     const dispatch= useDispatch();
     const classes = useStyles();
     const [content, setContent] = React.useState({
@@ -84,11 +84,23 @@ const Dashboard = () => {
 
                 </div>
                 <div id="profile">
-                    <div onClick={() => openTab("myProfile")} id="photo"><Image src="/img/image-not-available.png" alt="me" width="64" height="64" /></div>
 
+                    {myProfileDetails 
+                    
+                    &&
+                    <div onClick={() => openTab("myProfile")} id="photo"><Image src={myProfileDetails.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} alt="me" width="64" height="64" /></div>
 
+                    
+                    }
 
-                    <div id="name"><span>Jaime Pérez</span></div>
+                   
+
+                {myProfileDetails && 
+
+                <div id="name">{myProfileDetails.nickname ? <span>{myProfileDetails.nickname}</span> : <span> No nickname yet</span>}</div>
+
+                  }
+
                 </div>
 
                 <div id="menu-items">
