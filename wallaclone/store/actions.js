@@ -160,7 +160,8 @@ export const authLogout = () => {
 export const getAdvertsSuccess = (adverts) => {
     return {
         type: GET_ADVERTS_SUCCESS,
-        payload: adverts
+        payload: adverts,
+
     }
 }
 
@@ -449,6 +450,12 @@ export const advertsGetAction = (filters) => {
         }
         if (filters.province) {
             query += `province=${filters.province}&`
+        }
+        if (filters.limit) {
+            query += `limit=${filters.limit}&`
+        }
+        if (filters.skip) {
+            query += `skip=${filters.skip}&`
         }
     }
 

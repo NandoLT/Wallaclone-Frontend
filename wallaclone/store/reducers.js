@@ -58,7 +58,8 @@ const initialState = {
         successMessage: null,
     },
 
-    adverts: []
+    adverts: [],
+    totalAdverts: null
 }
 
 

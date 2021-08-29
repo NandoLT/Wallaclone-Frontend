@@ -5,19 +5,19 @@ import '../styles/register-form.css'
 import '../styles/register.css'
 import '../styles/adverts.css'
 import '../styles/dashboard2.css'
+import '../styles/pagination.css'
 import '@fontsource/roboto';
 import configureStore from '../store';
 import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 import NavBar from '../components/NavBar';
 import { configureClient } from '../api/client';
-import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme.js'
+import { useRouter } from 'next/router'
 
 const accessToken = storage.get('authToken');
 const recoverToken = storage.get('recoverToken');
@@ -33,6 +33,9 @@ const store = configureStore({ preloadedState: { auth: !!accessToken } });
 
 
 function MyApp({ Component, pageProps }) {
+
+  const { pathname } = useRouter();
+
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -52,7 +55,7 @@ function MyApp({ Component, pageProps }) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <NavBar />
+          {pathname != '/login' ? pathname != '/register' ? <NavBar /> : '' : ''}
           <Component {...pageProps} />
         </ThemeProvider>
       </Provider>
