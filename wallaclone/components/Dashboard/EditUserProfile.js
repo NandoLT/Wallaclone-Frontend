@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Loading from '/components/Loading';
-import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
+import { getIsLogged, getIsLoading, getError, getMyProfileDetails } from '../../store/selectors';
 import Alert from '/components/Alert';
 import styles from '../../styles/Home.module.css';
 import Select from '@material-ui/core/Select';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditUserProfile = ({ isLoading, error, userId }) => {
+const EditUserProfile = ({ isLoading, error, userId, myProfileDetails }) => {
 
   const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
   const [newUserProfile, setNewUserProfile] = useState({
 
     description: "",
-    nickName:"",
+    nickname: "",
     province: "",
     photo: null,
   })
@@ -103,7 +103,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
   }
 
   const validation = () => {
-    if(!newUserProfile.nickName){
+    if(!newUserProfile.nickname){
         return true;
     };
     
@@ -122,7 +122,7 @@ const EditUserProfile = ({ isLoading, error, userId }) => {
                     <Grid container spacing={1} alignItems="flex-end">
                        
                         <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="nickName" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickName} />
+                            <TextField required onChange={event => handleInputChange(event)} name="nickname" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickname} />
                         </Grid>
                     </Grid>
                 </div>
@@ -235,7 +235,7 @@ const mapStateToProps = (state) => ({
   isLogged: getIsLogged(state),
   isLoading: getIsLoading(state),
   error: getError(state),
-  
+  myProfileDetails: getMyProfileDetails(state),
 });
 
 export default connect(mapStateToProps)(WithAuth(EditUserProfile))
