@@ -16,12 +16,7 @@ import { getMyProfile } from '../../api/users';
 const MyProfile = ({ myProfileDetails }) => {
     const dispatch = useDispatch();
 
-    // const [profileDetails, setProfileDetails] = useState({
-    //     photo: null,
-    //     nickname: "Kevin",
-    //     description: null,
-    //     province: null
-    // });
+   
 
     const [editMode, setEditMode] = useState(false);
 
@@ -40,7 +35,7 @@ const MyProfile = ({ myProfileDetails }) => {
                 <div>
                     <p><button onClick={handleEditMode}>Deshacer cambios</button></p>
                     <h3>Edición de mi perfil</h3>
-                    <EditUserProfile />
+                    <EditUserProfile handleEditMode={handleEditMode} />
                 </div>
 
 

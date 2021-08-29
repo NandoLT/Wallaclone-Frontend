@@ -26,6 +26,7 @@ import WithAuth from '/components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
 import { editMyProfile } from '../../api/users';
 import Image from 'next/image';
+import router from 'next/router';
 
 
 
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditUserProfile = ({ isLoading, error, userId, myProfileDetails }) => {
+const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEditMode }) => {
 
   const dispatch = useDispatch();
 
@@ -87,7 +88,7 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails }) => {
   }
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     
 
@@ -98,7 +99,15 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails }) => {
     //   formData.append('photo', newUserProfile.photo);
     // }
 
-    editMyProfile(newUserProfile);
+    try {
+      await editMyProfile(newUserProfile);
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+    handleEditMode();
+    router.reload(window.location.pathname)
 
   }
 
