@@ -22,12 +22,12 @@ const MissingField = ({message, title}) => {
             <style jsx>{`
                     
                     .container {
-                       background-color: #FDECE9;
+                       background-color: #FFFFCC;
                        padding: 10px 0;
                        margin: 10px 50px;
                        
                        
-                       color:red; 
+                       color: black; 
                        border-radius: 5px;
                     }
                     .icon{
