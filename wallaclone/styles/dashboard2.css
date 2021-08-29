@@ -106,7 +106,7 @@ HEADER
     box-sizing: border-box;
     padding: var(--pading);
     margin: 0 auto;
-    cursor:pointer;
+    
 }
 
 #sidemenu #profile #photo img{

@@ -20,7 +20,7 @@ import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { useDispatch } from 'react-redux';
-import { updateAdvertAction, authResetState } from '../../store/actions';
+import { updateAdvertAction, authResetState, getMyProfileAction } from '../../store/actions';
 import provinces from '../../utils/spainProvinces';
 import WithAuth from '/components/hocs/WithAuth';
 import SuccessAlert from '../SuccessAlert';
@@ -105,9 +105,9 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
     } catch (error) {
       console.log(error)
     }
-
+    dispatch(getMyProfileAction())
     handleEditMode();
-    router.reload(window.location.pathname)
+    //router.reload(window.location.pathname)
 
   }
 
