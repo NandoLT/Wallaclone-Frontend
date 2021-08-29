@@ -31,12 +31,6 @@ const MyProfile = ({ myProfileDetails }) => {
 
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
 
-    useEffect(() => {
-        async function fetch() {
-            await dispatch(getMyProfileAction());
-        }
-        fetch();
-    }, [])
 
     return (
         <div>

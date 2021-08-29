@@ -10,6 +10,11 @@ import MyConversations from '../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../components/Dashboard/MyFavoriteAds';
 import MyProfile from '../../components/Dashboard/MyProfile';
 import { getUserImage } from '../../api/users';
+import { getMyProfileAction } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import WithAuth from '../../components/hocs/WithAuth';
+import { getMyProfileDetails } from '../../store/selectors';
 
 import React from 'react';
 
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+    const dispatch= useDispatch();
     const classes = useStyles();
     const [content, setContent] = React.useState({
         myAdverts: false,
@@ -52,21 +58,11 @@ const Dashboard = () => {
     }
 
     React.useEffect(() => {
-        // resetUi();
         async function fetch() {
-            try {
-                const userImageFetched = await getUserImage();
-                console.log(userImageFetched);
-                setUserImage(userImageFetched);
-
-            } catch (error) {
-                console.log(error);
-            }
+            await dispatch(getMyProfileAction());
         }
         fetch();
-
-
-    }, []);
+    }, [])
 
     const { myAdverts, myFavorites, myConversations, myProfile } = content;
 
@@ -134,4 +130,9 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard;
+
+const mapStateToProps = (state) => ({
+    myProfileDetails: getMyProfileDetails(state),
+});
+
+export default connect(mapStateToProps)(WithAuth(Dashboard))
