@@ -28,7 +28,6 @@ const UserProfile = () => {
     const classes = useStyles();
     const router = useRouter();
     const  {username} = router.query;
-    console.log(username);
     const [userProfile, setUserProfile] = React.useState(null);
 
     useEffect(() => {
@@ -37,6 +36,7 @@ const UserProfile = () => {
 
                 try {
                     const userProfileFetched = await getOtherUserProfile(username);
+                    console.log(userProfileFetched);
                     setUserProfile(userProfileFetched);
                     
                 } catch (error) {

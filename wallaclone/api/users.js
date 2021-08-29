@@ -11,7 +11,7 @@ export const getMyProfile = async () => {
 
 export const getOtherUserProfile = async (username) => {
     const userProfile = await client.get(`${usersPath}/${username}`)
-    return userProfile;
+    return userProfile.result;
 }
 
 export const getUserImage = async () => {
