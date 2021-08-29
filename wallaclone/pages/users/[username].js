@@ -8,6 +8,8 @@ import { getMyProfileDetails } from '../../store/selectors';
 import { connect } from 'react-redux';
 import WithAuth from '../../components/hocs/WithAuth';
 import { getOtherUserProfile } from '../../api/users';
+import RoomIcon from '@material-ui/icons/Room';
+import AdvertCard from '../../components/Card';
 
 
 
@@ -28,7 +30,9 @@ const UserProfile = () => {
     const classes = useStyles();
     const router = useRouter();
     const  {username} = router.query;
-    const [userProfile, setUserProfile] = React.useState(null);
+    const [userProfileData, setUserProfileData] = React.useState(null);
+    const [userProfileAdverts, setUserProfileAdverts] = React.useState(null);
+    
 
     useEffect(() => {
         (async () => {
@@ -37,7 +41,9 @@ const UserProfile = () => {
                 try {
                     const userProfileFetched = await getOtherUserProfile(username);
                     console.log(userProfileFetched);
-                    setUserProfile(userProfileFetched);
+                    setUserProfileData(userProfileFetched.user);
+                    setUserProfileAdverts(userProfileFetched.adverts);
+                    
                     
                 } catch (error) {
                     console.log(error);
@@ -53,147 +59,163 @@ const UserProfile = () => {
 
 
     return (
-        <div >
+        <div className="main-container">
 
-            <h1> Pagina de otro usuario</h1>
 
+        
+        <div className="profile-container" >
+
+            {userProfileData && 
+
+            <div className="card">
+
+                    {userProfileData.photo && <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                        
+                        
+                    }
+
+                         <h1>{userProfileData.nickname}</h1> 
+
+                        <h4 className="title">{userProfileData.description}</h4> 
+
+                        <div> <RoomIcon/> <span className="province">{userProfileData.province}</span> </div>  
+
+
+                        <p><button >Contactar Usuario</button></p>
+                
+                
+             </div>
+             }
             
 
+            </div>
+            <div>
+                <div className="ads-container">
+
+                {userProfileAdverts && <div>
+
+                    { userProfileAdverts.map(advert => {
+
+                        return (
+                            <AdvertCard advert={advert} key={advert._id} />
+
+                        )
+                        })}
+
+                </div>
+                          
+                        }
+
+                </div>
+
+                <div className="ads-container">
+                    <h2> ANUNCIOS FAVORITOS</h2>
+
+                </div>
+                
+
+            </div>
+
             <style jsx>{`
+
+             .ads-container{
+                
+                      display:flex;
+                      justify-content: flex-start;
+                      flex-direction: row;
+                      align-content: center;
+                      flex-wrap: wrap;
                     
+             }
+
+                .main-container{
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                }
+
+                .profile-container{
                     
-                    @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-                        * {
-                        box-sizing: border-box;
-                        }
-                        body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 18px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                }
+                    
+                    .card {
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                        width: 600px;
+                        margin-bottom: 40px;
+                        text-align: center;
+                    }
+
+                    .image-container {
+                        cursor: pointer;
+                        padding: 25px 0;
+                    }
+
+                    .icon-container {
+                        margin: 0 35px;
+                    }
+
+                    .icon-title {
+                        font-size: 15px;
+                    }
+
+                    .icons-container {
+                        padding: 15px 0;
                         display: flex;
+                        flex-direction:row;
                         justify-content: center;
-                        align-items: center;
-                        margin: 0;
-                        background-color: #f7f8fc;
-                        font-family: "Roboto", sans-serif;
-                        color: #10182f;
-                        }
-                        .container {
-                        display: flex;
-                        width: 1040px;
-                        justify-content: space-evenly;
-                        flex-wrap: wrap;
-                        }
-                        .card {
-                        margin: 10px;
-                        background-color: #fff;
-                        border-radius: 10px;
-                        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-                        overflow: hidden;
-                        width: 500px;
                         
-                        }
-                        .card-header img {
+                        border-top: 1px solid black;
+                    }
+                    
+                    .title {
+                        color: grey;
+                        font-size: 16px;
+                        padding: 10px 30px;
+                    }
+
+                    .province{
+                        font-size: 20px;
+                        
+                    }
+                    
+                    button {
+                        border: none;
+                        outline: 0;
+                        display: inline-block;
+                        padding: 8px;
+                        color: white;
+                        background-color: #3F51B5;
+                        text-align: center;
+                        cursor: pointer;
                         width: 100%;
-                        height: 300px;
-                        object-fit: cover;
-                        }
-                        .card-body {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: flex-start;
-                        padding: 20px;
-                        min-height: 250px;
-                        }
+                        font-size: 18px;
+                        margin-bottom: 0px;
+                    }
+                    
+                    a {
+                        text-decoration: none;
+                        font-size: 22px;
+                        color: black;
+                    }
+                    
+                    button:hover, a:hover {
+                        opacity: 0.7;
+                    }
 
-                        .price-header {
-                            padding-bottom: 15px;
-                            color: #f50057 ;
-                            font-size: 25px;
-                            font-weight: bold;
-                        }
+                    .missing-container{
+                        cursor:pointer;
+                    }
 
-                        .price-container {
-                            padding-bottom: 10px;
-                        }
+                    `}</style> 
 
-                        .price-status {
-                            font-weight: bold;
-                            font-size: 20px;
-                            color: #303F9F;
-                        }
-
-                        .tag {
-                        background: #cccccc;
-                        border-radius: 50px;
-                        font-size: 12px;
-                        margin-left: 3px;
-                        margin-right: 3px;
-                        color: #fff;
-                        padding: 2px 10px;
-                        text-transform: uppercase;
-                        
-                        }
-                        .tag-teal {
-                        background-color: #47bcd4;
-                        }
-                        .tag-purple {
-                        background-color: #5e76bf;
-                        }
-                        .tag-pink {
-                        background-color: #cd5b9f;
-                        }
-
-                        .card-body p {
-                        font-size: 13px;
-                        margin: 0 0 40px;
-                        }
-                        .user {
-                        display: flex;
-                        margin-top: auto;
-                        }
-
-                        .user img {
-                        border-radius: 50%;
-                        width: 40px;
-                        height: 40px;
-                        margin-right: 10px;
-                        }
-                        .user-info h5 {
-                        margin: 0;
-                        }
-                        .user-info small {
-                        color: #545d7a;
-                        }
-
-                        .contact-button {
-                            background-color:#f50057;
-                            border-radius:4px;
-                            border: 0;
-                            align-self: center;
-                            cursor:pointer;
-                            color:#ffffff;
-                            font-family:Arial;
-                            font-size:16px;
-                            font-weight:bold;
-                            padding:8px 24px;
-                            text-decoration:none;
-                            
-                        }
-                        .contact-button:hover {
-                            background-color:#eb675e;
-                        }
-                        .contact-button:active {
-                            position:relative;
-                            top:1px;
-                        }
-
-                        .edit-delete-buttons{
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: center;
-                        }
-
-                    `}</style>
-
+        
         </div>
 
 
