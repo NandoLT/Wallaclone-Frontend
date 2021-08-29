@@ -6,7 +6,7 @@ const usersPath = '/api/users'
 
 export const getMyProfile = async () => {
     const myProfile = await client.get(usersPath)
-    return myProfile;
+    return myProfile.result;
 }
 
 export const getUserImage = async () => {
@@ -17,7 +17,7 @@ export const getUserImage = async () => {
 export const editMyProfile = async (userData) => {
     const response =  await client.put(`${usersPath}/updateuser`, userData)
     console.log(response.result);
-    return response.result;
+    return response;
 
 }
 
