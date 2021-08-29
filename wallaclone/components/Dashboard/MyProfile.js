@@ -12,6 +12,7 @@ import MissingField from './MissingField';
 import EditUserProfile from './EditUserProfile';
 import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
+import RoomIcon from '@material-ui/icons/Room';
 
 const MyProfile = ({ myProfileDetails }) => {
     const dispatch = useDispatch();
@@ -66,7 +67,7 @@ const MyProfile = ({ myProfileDetails }) => {
 
 {myProfileDetails.description ? <h4 className="title">{myProfileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" /> </div>}
 
-{myProfileDetails.province ? <h5>{myProfileDetails.province}</h5> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
+{myProfileDetails.province ? <div> <RoomIcon/> <span className="province">{myProfileDetails.province}</span> </div>  : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
 
 
 <p><button onClick={handleEditMode}>Editar perfil</button></p>
@@ -122,7 +123,12 @@ const MyProfile = ({ myProfileDetails }) => {
                     
                     .title {
                         color: grey;
-                        font-size: 18px;
+                        font-size: 16px;
+                        padding: 10px 30px;
+                    }
+
+                    .province{
+                        font-size: 20px;
                     }
                     
                     button {
