@@ -28,7 +28,6 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
 import green from '@material-ui/core/colors/green';
-import Avatar from '@material-ui/core/Avatar';
 
 
 const useStyles = makeStyles((theme) => ({

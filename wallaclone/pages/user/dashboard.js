@@ -17,10 +17,11 @@ import WithAuth from '../../components/hocs/WithAuth';
 import { getMyProfileDetails } from '../../store/selectors';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ChatIcon from '@material-ui/icons/Chat';
+import green from '@material-ui/core/colors/green';
 
 import React from 'react';
 
@@ -34,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
     },
     drawer: {
-        width: 240,
+        width: 150,
         flexShrink: 0,
     },
     drawerPaper: {
-        width: 240,
-        top: 'auto'
+        width: 150,
+        top: 'auto',
+        backgroundColor: '#616161'
     },
     column: {
         display: 'flex',
@@ -48,8 +50,27 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     iconRoot: {
-        minWidth: 0
-    }
+        minWidth: 0,
+    },
+    iconBackground: {
+        backgroundColor: '#ADADAC',
+        padding: 15,
+        borderRadius: 100,
+        color: '#fff'
+    },
+    iconSelected: {
+        backgroundColor: theme.palette.primary.main,
+        padding: 15,
+        borderRadius: 100,
+        color: '#fff'
+    },
+    menuLink: {
+        textDecoration: 'none',
+        color: '#fff',
+        '&:hover': {
+            textDecoration: 'none',
+        }
+    },
 
 }));
 
@@ -115,69 +136,34 @@ const Dashboard = ({ myProfileDetails }) => {
                 anchor="left"
             >
                 <Divider />
-                <List>
-                    <ListItem button key={text} className={classes.column}>
-                        <ListItemIcon className={classes.iconRoot}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
+                <List >
+                    <Link href="/user/dashboard" className={classes.menuLink}>
+                        <ListItem button key={1} className={classes.column}>
+                            <ListItemIcon className={classes.iconRoot}><Avatar>L</Avatar></ListItemIcon>
+                            <ListItemText primary={'Perfil'} />
+                        </ListItem>
+                    </Link>
+                    <Link href="/user/dashboard" className={classes.menuLink}>
+                        <ListItem button key={1} className={classes.column}>
+                            <ListItemIcon className={classes.iconRoot, classes.iconBackground, classes.iconSelected}><LocalAtmIcon /></ListItemIcon>
+                            <ListItemText primary={'Mis anuncios'} />
+                        </ListItem>
+                    </Link>
+                    <Link href="/user/dashboard" className={classes.menuLink}>
+                        <ListItem button key={1} className={classes.column}>
+                            <ListItemIcon className={classes.iconRoot, classes.iconBackground}><FavoriteIcon /></ListItemIcon>
+                            <ListItemText primary={'Favoritos'} />
+                        </ListItem>
+                    </Link>
+                    <Link href="/user/dashboard" className={classes.menuLink}>
+                        <ListItem button key={1} className={classes.column}>
+                            <ListItemIcon className={classes.iconRoot, classes.iconBackground}><ChatIcon /></ListItemIcon>
+                            <ListItemText primary={'Mensajes'} />
+                        </ListItem>
+                    </Link>
                 </List>
             </Drawer>
-            <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
-                <div id="header">
-                    <div id="title"> <span>Mi Perfil</span></div>
-                    <div id="menu-btn" onClick={handleOpenMenu}>
-                        <div className="btn-hamburger"></div>
-                        <div className="btn-hamburger"></div>
-                        <div className="btn-hamburger"></div>
-                    </div>
 
-                </div>
-                <div id="profile">
-
-                    {myProfileDetails
-
-                        &&
-                        <div onClick={() => openTab("myProfile")} id="photo"><Avatar src={myProfileDetails.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${''}` : '/img/image-not-available.png'} alt="me" width="64" height="64" /></div>
-
-
-                    }
-
-
-
-                    {myProfileDetails &&
-
-                        <div id="name">{myProfileDetails.nickname ? <span>{myProfileDetails.nickname}</span> : <span> No nickname yet</span>}</div>
-
-                    }
-
-                </div>
-
-                <div id="menu-items">
-
-                    <div className="item">
-                        <div onClick={() => openTab("myProfile")} className="href">
-                            <div className="icon" ><Image className="icon" src="/user.png" alt="me" width="20" height="20" /></div>
-                            <div className="title">Mi Perfil</div>
-                        </div>
-                        <div className="item separator"> </div>
-                        <div onClick={() => openTab("myAdverts")} className="href">
-                            <div className="icon" ><Image className="icon" src="/star.png" alt="me" width="20" height="20" /></div>
-                            <div className="title">Mis anuncios</div>
-                        </div>
-                        <div className="item separator"> </div>
-                        <div onClick={() => openTab("myFavorites")} className="href">
-                            <div className="icon" ><Image className="icon" src="/heart.png" alt="me" width="20" height="20" /></div>
-                            <div className="title">Mis favoritos</div>
-                        </div>
-                        <div className="item separator"> </div>
-                        <div onClick={() => openTab("myConversations")} className="href">
-                            <div className="icon" ><Image className="icon" src="/email (1).png" alt="me" width="20" height="20" /></div>
-                            <div className="title">Mis conversaciones</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
             <div className={menuExpanded ? "main-container-expanded" : "main-container"}>
 
