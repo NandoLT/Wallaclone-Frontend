@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogoutAction } from '../store/actions';
-import { Grid, Menu } from '@material-ui/core';
+import { Avatar, Grid, Menu } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from 'next/router';
@@ -22,6 +22,9 @@ import Image from 'next/image';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  zIndex: {
+    zIndex: theme.zIndex.drawer + 1,
   },
   logo: {
     fontSize: 50,
@@ -102,20 +105,23 @@ const NavBar = ({ isLogged }) => {
     dispatch(authLogoutAction());
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     async function fetchUserImg() {
-      const url = await client.get(process.env.REACT_APP_API_BASE_URL_DEPLOYED + `/getUserImage`);
-      console.log(url)
-      setPic(url);
+      const url = await client.get(process.env.REACT_APP_API_BASE_URL_DEPLOYED + `/api/users/getUserImage`);
+      console.log('la imagen', url)
+      if (url) {
+        console.log('jiji')
+        setPic(url);
+      }
     }
-    // if (isLogged) {
-    //   fetchUserImg();
-    // }
-  }, [isLogged]);
+    if (isLogged) {
+      fetchUserImg();
+    }
+  }, [isLogged]); */
 
 
   return (
-    <div className={"navbar"} style={{ paddingLeft: 20, paddingRight: 20 }}>
+    <div className={classes.zIndex} style={{ paddingLeft: 20, paddingRight: 20 }}>
       <Grid container className={classes.root, classes.navbar} direction="row"
         justify="space-between"
         alignItems="center">
@@ -146,7 +152,7 @@ const NavBar = ({ isLogged }) => {
               isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
                 <Link href="/user/dashboard" className={classes.margin}>
                   <a className={classes.profile}>
-                    {/* <Image src={''} /> */}
+                    {/*  <Avatar src={pic} /> */}
                     Mi perfil
                   </a>
                 </Link>

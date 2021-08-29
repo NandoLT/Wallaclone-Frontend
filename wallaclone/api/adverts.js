@@ -38,7 +38,6 @@ export const getFavorites = async () => {
 
 export const getMyFavorites = async () => {
     const myFavoriteAdverts = await client.post(`${advertsPath}/getMyFavoriteAdverts `);
-    console.log(myFavoriteAdverts.result);
     return myFavoriteAdverts.result;
 }
 

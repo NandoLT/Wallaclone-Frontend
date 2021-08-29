@@ -119,14 +119,6 @@ const Adverts = ({ isLogged, adverts, isLoading, error }) => {
 
     }
 
-    const handleFavoriteCheck = ev => {
-        if (!favoriteAdverts.includes(ev.target.id)) {
-            dispatch(advertAddFavoritesAction(ev.target.id));
-        } else {
-            dispatch(advertDeleteFavoritesAction(ev.target.id));
-        }
-    }
-
     useEffect(() => {
         if (queryParams) {
             dispatch(advertsGetAction(queryParams))

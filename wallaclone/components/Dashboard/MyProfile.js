@@ -14,10 +14,26 @@ import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
 import RoomIcon from '@material-ui/icons/Room';
 
+const useStyles = makeStyles({
+    root: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    card: {
+        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+        width: '600px',
+        marginTop: '40px',
+        textAlign: 'center'
+    }
+});
+
 const MyProfile = ({ myProfileDetails }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
-   
+
 
     const [editMode, setEditMode] = useState(false);
 
@@ -29,7 +45,7 @@ const MyProfile = ({ myProfileDetails }) => {
 
 
     return (
-        <div>
+        <div className={classes.root}>
 
             {editMode ?
 
@@ -44,40 +60,40 @@ const MyProfile = ({ myProfileDetails }) => {
                 :
 
 
-                <div className="card">
+                <div className={classes.card}>
 
                     {myProfileDetails &&
 
-<div>
-<div onClick={handleEditMode} className="image-container" >
-    {myProfileDetails.photo ? <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
-        :
-        <div>
-            <Image src="/photo-upload.png" alt="me" width="80%" height="80%" />
-            <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"} />
+                        <div>
+                            <div onClick={handleEditMode} className="image-container" >
+                                {myProfileDetails.photo ? <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                                    :
+                                    <div>
+                                        <Image src="/photo-upload.png" alt="me" width="80%" height="80%" />
+                                        <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"} />
 
-        </div>
-    }
-</div>
-
-
+                                    </div>
+                                }
+                            </div>
 
 
-{myProfileDetails.nickname ? <h1>{myProfileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno" /> </div>}
-
-{myProfileDetails.description ? <h4 className="title">{myProfileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" /> </div>}
-
-{myProfileDetails.province ? <div> <RoomIcon/> <span className="province">{myProfileDetails.province}</span> </div>  : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
 
 
-<p><button onClick={handleEditMode}>Editar perfil</button></p>
+                            {myProfileDetails.nickname ? <h1>{myProfileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno" /> </div>}
 
-</div>
-                    
+                            {myProfileDetails.description ? <h4 className="title">{myProfileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" /> </div>}
+
+                            {myProfileDetails.province ? <div> <RoomIcon /> <span className="province">{myProfileDetails.province}</span> </div> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
+
+
+                            <p><button onClick={handleEditMode}>Editar perfil</button></p>
+
+                        </div>
+
                     }
 
 
-                    
+
 
 
 

@@ -1,7 +1,7 @@
 import styles from '../../styles/Home.module.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
-import { Link, ListItem, ListItemIcon } from '@material-ui/core';
+import { Avatar, Link, ListItem, ListItemIcon } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { Divider } from '@material-ui/core';
@@ -15,6 +15,12 @@ import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import WithAuth from '../../components/hocs/WithAuth';
 import { getMyProfileDetails } from '../../store/selectors';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 import React from 'react';
 
@@ -23,11 +29,23 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         textAlign: 'center',
     },
+    dashboard: {
+        display: 'flex',
+
+    },
+    drawer: {
+        width: 240,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: 240,
+        top: 'auto'
+    },
 
 }));
 
-const Dashboard = ({myProfileDetails}) => {
-    const dispatch= useDispatch();
+const Dashboard = ({ myProfileDetails }) => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [content, setContent] = React.useState({
         myAdverts: false,
@@ -57,7 +75,7 @@ const Dashboard = ({myProfileDetails}) => {
         })
     }
 
-   
+
 
     React.useEffect(() => {
 
@@ -78,7 +96,34 @@ const Dashboard = ({myProfileDetails}) => {
     }
 
     return (
-        <>
+        <div className={classes.dashboard}>
+            <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+                anchor="left"
+            >
+                <Divider />
+                <List>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
+                <List>
+                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
             <div id="sidemenu" className={menuExpanded ? "menu-expanded" : "menu-collapsed"}>
                 <div id="header">
                     <div id="title"> <span>Mi Perfil</span></div>
@@ -91,21 +136,21 @@ const Dashboard = ({myProfileDetails}) => {
                 </div>
                 <div id="profile">
 
-                    {myProfileDetails 
-                    
-                    &&
-                    <div onClick={() => openTab("myProfile")} id="photo"><Image src={myProfileDetails.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} alt="me" width="64" height="64" /></div>
+                    {myProfileDetails
 
-                    
+                        &&
+                        <div onClick={() => openTab("myProfile")} id="photo"><Avatar src={myProfileDetails.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${''}` : '/img/image-not-available.png'} alt="me" width="64" height="64" /></div>
+
+
                     }
 
-                   
 
-                {myProfileDetails && 
 
-                <div id="name">{myProfileDetails.nickname ? <span>{myProfileDetails.nickname}</span> : <span> No nickname yet</span>}</div>
+                    {myProfileDetails &&
 
-                  }
+                        <div id="name">{myProfileDetails.nickname ? <span>{myProfileDetails.nickname}</span> : <span> No nickname yet</span>}</div>
+
+                    }
 
                 </div>
 
@@ -144,7 +189,7 @@ const Dashboard = ({myProfileDetails}) => {
                 {myProfile && <MyProfile />}
 
             </div>
-        </>
+        </div>
     )
 }
 
