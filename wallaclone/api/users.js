@@ -14,8 +14,10 @@ export const getUserImage = async () => {
     return myUserImage;
 }
 
-export const editMyProfile = (userData) => {
-    return client.put(`${usersPath}/updateuser`, userData)
+export const editMyProfile = async (userData) => {
+    const response =  await client.put(`${usersPath}/updateuser`, userData)
+    console.log(response.result);
+    return response.result;
 
 }
 
