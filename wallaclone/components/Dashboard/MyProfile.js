@@ -13,25 +13,34 @@ import EditUserProfile from './EditUserProfile';
 import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
 import RoomIcon from '@material-ui/icons/Room';
+import { logout } from '../../api/auth';
+import { useRouter } from 'next/router';
+import { authLogout } from '../../store/actions';
 
 const useStyles = makeStyles({
     root: {
         width: '100%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        gap: 10
     },
     card: {
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
         width: '600px',
         marginTop: '40px',
         textAlign: 'center'
+    },
+    logout: {
+        color: '#fff'
     }
 });
 
 const MyProfile = ({ myProfileDetails }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const router = useRouter();
 
 
 
@@ -42,6 +51,14 @@ const MyProfile = ({ myProfileDetails }) => {
     }
 
     const [photoUploaded, setPhotoUploaded] = React.useState(false);
+
+    const logoutAction = () => {
+        async function fetch() {
+            await logout();
+            dispatch(authLogout());
+        }
+        fetch()
+    }
 
 
     return (
@@ -103,6 +120,7 @@ const MyProfile = ({ myProfileDetails }) => {
 
                 </div>
             }
+            <Button color="primary" className={classes.logout} variant="contained" onClick={logoutAction}>Logout</Button>
 
 
 

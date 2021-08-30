@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
-    palette: {
-        primary: {
-            main: purple[500]
-        }
+    column: {
+        display: 'flex',
+        gap: 5
     }
 }));
 
@@ -106,7 +105,11 @@ const LoginForm = ({ isLoading, error }) => {
                     />
                 </div>
                 <div className="auth-buttons">
-                    <Link href='/register'>Sign up for free</Link>
+                    <div className={classes.column}>
+                        <Link href='/register'>Sign up for free</Link>
+                        |
+                        <Link href='/forgot-password'>Recover password</Link>
+                    </div>
                     {!isLoading && <Button disabled={validation()} size="large" variant="contained" color="primary" type="submit">
                         Login
                     </Button>}
