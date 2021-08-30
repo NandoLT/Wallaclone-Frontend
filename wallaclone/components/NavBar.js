@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
 import { authLogoutAction } from '../store/actions';
-import { Avatar, Grid, Menu } from '@material-ui/core';
+import { Avatar, CardMedia, Grid, Menu } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from 'next/router';
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     fontSize: 50,
-    cursor: 'pointer',
     fontWeight: 300,
     '&:hover': {
       color: theme.palette.primary.main
@@ -97,7 +96,15 @@ const useStyles = makeStyles((theme) => ({
   },
   money: {
     color: green[500]
-  }
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+    cursor: 'pointer',
+    height: 75
+  },
 
 }));
 
@@ -150,7 +157,18 @@ const NavBar = ({ isLogged }) => {
         justify="space-between"
         alignItems="center">
         <Link href='/adverts' passHref>
-          <Typography className={classes.logo}>Wallaclone</Typography>
+          <div className={classes.row}>
+            <CardMedia
+              component="img"
+              alt="Contemplative Reptile"
+              height="50"
+              image="/img/bolso.svg"
+              title="Contemplative Reptile"
+            />
+            <Hidden smDown>
+              <Typography className={classes.logo}>Wallaclone</Typography>
+            </Hidden>
+          </div>
         </Link>
 
         <Hidden smDown>
