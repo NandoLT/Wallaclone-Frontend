@@ -122,7 +122,7 @@ const EditAdvertForm = ({ advert, isLogged, isLoading, error, userId, productId 
             formData.append('tags', tag)
         })
         formData.append('status', newAdDetails.status);
-        formData.append('userId', userId);
+        //formData.append('userId', userId);
         formData.append('productId', productId)
         if (newAdDetails.photo) {
             formData.append('photo', newAdDetails.photo);
