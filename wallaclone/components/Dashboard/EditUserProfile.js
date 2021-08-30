@@ -58,7 +58,6 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
     description: myProfileDetails.description,
     nickname: myProfileDetails.nickname,
     province: myProfileDetails.province,
-    nickname: myProfileDetails.nickname,
     photo: null,
   })
 
