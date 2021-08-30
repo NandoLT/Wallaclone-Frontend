@@ -13,6 +13,7 @@ import { getIsLogged } from '../../../store/selectors';
 import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
 import parseAuthToken from '../../../utils/parseAuthToken'
+import { CardMedia } from '@material-ui/core';
 
 
 
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    image: {
+        height: 500
+    }
 
 }));
 
@@ -38,14 +42,14 @@ const Advert = () => {
 
 
     const router = useRouter();
-    const  {id} = router.query;
+    const { id } = router.query;
 
 
 
     useEffect(() => {
         (async () => {
             if (id) {
-                
+
                 const advert = await getAdvertDetail(id);
                 setAdvert(advert);
                 setAdvertUserId(advert.userId);
@@ -54,10 +58,10 @@ const Advert = () => {
         })()
 
     }, [id])
-    
-    
-    
-    
+
+
+
+
 
     const [advert, setAdvert] = useState(null);
     const [editMode, setEditMode] = useState(false);
@@ -65,11 +69,11 @@ const Advert = () => {
 
 
 
-    
 
 
 
-    
+
+
 
     // CÓDIGO DE EDICIÓN DEL ANUNCIO
 
@@ -119,7 +123,7 @@ const Advert = () => {
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    {/* <Image layout="fill" src={advert.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} /> */}
+                                    <CardMedia className={classes.image} image={advert.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                                 </div>
                                 <div className="card-body">
 
