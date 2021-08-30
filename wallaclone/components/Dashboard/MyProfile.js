@@ -36,7 +36,7 @@ const MyProfile = ({ myProfileDetails }) => {
     const userId= parseAuthToken();
     const classes = useStyles();
     const dispatch = useDispatch();
-
+    const imageRoute = 'https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/' +  userId + '/' + myProfileDetails.photo[0];
 
 
     const [editMode, setEditMode] = useState(false);
@@ -75,11 +75,13 @@ const MyProfile = ({ myProfileDetails }) => {
 
                         <div>
                             <div onClick={handleEditMode} className="image-container" >
-                                {myProfileDetails.photo ?  <CardMedia
-                                            className={classes.media}
-                                            image={myProfileDetails.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${userId}/${myProfileDetails.photo[0]}` : '/img/image-not-available.png'}
-                                            title="Product image"
-                                        /> 
+                                {myProfileDetails.photo ?  
+                                    <img 
+                                        src={imageRoute}
+                                        alt="me" 
+                                        width="100%" 
+                                        height="100%" 
+                                    />
                                     :
                                     <div>
 
