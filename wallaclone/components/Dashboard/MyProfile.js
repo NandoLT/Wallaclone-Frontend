@@ -93,8 +93,8 @@ const MyProfile = ({ myProfileDetails }) => {
                                     <img 
                                         src={'https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/' +  userId + '/' + myProfileDetails.photo[0]}
                                         alt="me" 
-                                        width="100%" 
-                                        height="100%" 
+                                        width="130" 
+                                        height="130" 
                                     />
                                     :
                                     <div>
