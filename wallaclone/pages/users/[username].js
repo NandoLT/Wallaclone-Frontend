@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
 const UserProfile = () => {
     const classes = useStyles();
     const router = useRouter();
-    const  {username} = router.query;
+    const { username } = router.query;
     const [userProfileData, setUserProfileData] = React.useState(null);
     const [userProfileAdverts, setUserProfileAdverts] = React.useState(null);
-    
+
 
     useEffect(() => {
         (async () => {
@@ -43,74 +43,74 @@ const UserProfile = () => {
                     console.log(userProfileFetched);
                     setUserProfileData(userProfileFetched.user);
                     setUserProfileAdverts(userProfileFetched.adverts);
-                    
-                    
+
+
                 } catch (error) {
                     console.log(error);
                 }
-                
-                
+
+
 
             }
         })()
 
     }, [username])
-    
+
 
 
     return (
         <div className="main-container">
 
 
-        
-        <div className="profile-container" >
 
-            {userProfileData && 
+            <div className="profile-container" >
 
-            <div className="card">
+                {userProfileData &&
 
-                    {userProfileData.photo && <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
-                        
-                        
-                    }
+                    <div className="card">
 
-                         <h1>{userProfileData.nickname}</h1> 
+                        {userProfileData.photo && <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
 
-                        <h4 className="title">{userProfileData.description}</h4> 
 
-                        <div> <RoomIcon/> <span className="province">{userProfileData.province}</span> </div>  
+                        }
+
+                        <h1>{userProfileData.nickname}</h1>
+
+                        <h4 className="title">{userProfileData.description}</h4>
+
+                        <div> <RoomIcon /> <span className="province">{userProfileData.province}</span> </div>
 
 
                         <p><button >Contactar Usuario</button></p>
-                
-                
-             </div>
-             }
-            
+
+
+                    </div>
+                }
+
 
             </div>
             <div>
                 <div className="ads-container">
 
-                {userProfileAdverts && <div>
+                    {userProfileAdverts && <div>
 
-                    { userProfileAdverts.map(advert => {
+                        {userProfileAdverts.map(advert => {
 
-                        return (
-                            <div className="advert-card">
-                                <AdvertCard advert={advert} key={advert._id} />
-                            </div>
-                            
+                            return (
+                                <div className="advert-card" key={advert._id}>
+                                    <AdvertCard advert={advert} key={advert._id} />
+                                </div>
 
-                        )
+
+                            )
                         })}
 
-                </div>
-                          
-                        }
+                    </div>
+
+                    }
 
                 </div>
-                
+
 
             </div>
 
@@ -212,9 +212,9 @@ const UserProfile = () => {
                         cursor:pointer;
                     }
 
-                    `}</style> 
+                    `}</style>
 
-        
+
         </div>
 
 

@@ -192,7 +192,7 @@ const NavBar = ({ isLogged }) => {
             </form>
             {
               isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
-                <Link href="/user/dashboard/me" className={classes.margin}>
+                <Link href="/user/dashboard" className={classes.margin}>
                   <a className={classes.profile}>
                     {/*  <Avatar src={pic} /> */}
                     Mi perfil

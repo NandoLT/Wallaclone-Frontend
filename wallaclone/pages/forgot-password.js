@@ -14,6 +14,12 @@ import SuccessAlert from '../components/SuccessAlert';
 
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     margin: {
         margin: theme.spacing(1),
     },
@@ -54,12 +60,12 @@ const ForgotPassword = ({ isLoading, error, successMessage }) => {
     }
 
     return (
-        <div className="login-container">
+        <div className={classes.root}>
             <h1>Recuperar contraseña</h1>
             <p>Por favor, pon tu email para poder reestablecer la contraseña</p>
 
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className={classes.margin, "register-input"}>
+            <form onSubmit={handleSubmit}>
+                <div className={classes.margin}>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
                             <EmailIcon />
