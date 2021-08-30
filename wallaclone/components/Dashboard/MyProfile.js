@@ -13,6 +13,8 @@ import EditUserProfile from './EditUserProfile';
 import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
 import RoomIcon from '@material-ui/icons/Room';
+import parseAuthToken from '../../utils/parseAuthToken';
+import { CardMedia } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -30,6 +32,8 @@ const useStyles = makeStyles({
 });
 
 const MyProfile = ({ myProfileDetails }) => {
+
+    const userId= parseAuthToken();
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -64,12 +68,29 @@ const MyProfile = ({ myProfileDetails }) => {
 
                     {myProfileDetails &&
 
+
+
+
+
+
                         <div>
                             <div onClick={handleEditMode} className="image-container" >
-                                {myProfileDetails.photo ? <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                                {myProfileDetails.photo ?  <CardMedia
+                                            className={classes.media}
+                                            image={myProfileDetails.photo ? `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${userId}/${myProfileDetails.photo[0]}` : '/img/image-not-available.png'}
+                                            title="Product image"
+                                        /> 
                                     :
                                     <div>
-                                        <Image src="/photo-upload.png" alt="me" width="80%" height="80%" />
+
+                                        <CardMedia
+                                            className={classes.media}
+                                            image={"/photo-upload.png"}
+                                            title="Product image"
+                                        /> 
+
+    
+                    
                                         <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"} />
 
                                     </div>
@@ -190,3 +211,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(WithAuth(MyProfile))
+
+
