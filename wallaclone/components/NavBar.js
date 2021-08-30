@@ -174,7 +174,7 @@ const NavBar = ({ isLogged }) => {
             </form>
             {
               isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
-                <Link href="/user/dashboard" className={classes.margin}>
+                <Link href="/user/dashboard/me" className={classes.margin}>
                   <a className={classes.profile}>
                     {/*  <Avatar src={pic} /> */}
                     Mi perfil
@@ -209,26 +209,26 @@ const NavBar = ({ isLogged }) => {
                 onKeyDown={toggleMenu(false)}
               >
                 <List>
-                  <Link href="/user/dashboard">
+                  <Link href="/user/dashboard/me">
                     <ListItem button key={1}>
                       <ListItemIcon><Avatar>L</Avatar></ListItemIcon>
                       <ListItemText primary={'Mi perfil'} />
                     </ListItem>
                   </Link>
                   <Divider />
-                  <Link href="/user/dashboard">
+                  <Link href="/user/dashboard/adverts">
                     <ListItem button key={1}>
                       <ListItemIcon><LocalAtmIcon className={classes.money} /></ListItemIcon>
                       <ListItemText primary={'Mis anuncios'} />
                     </ListItem>
                   </Link>
-                  <Link href="/user/dashboard">
+                  <Link href="/user/dashboard/favorites">
                     <ListItem button key={1}>
                       <ListItemIcon><FavoriteIcon className={classes.favorite} /></ListItemIcon>
                       <ListItemText primary={'Mis favoritos'} />
                     </ListItem>
                   </Link>
-                  <Link href="/user/dashboard">
+                  <Link href="/user/dashboard/messages">
                     <ListItem button key={1}>
                       <ListItemIcon><ChatIcon color="primary" /></ListItemIcon>
                       <ListItemText primary={'Mis conversaciones'} />

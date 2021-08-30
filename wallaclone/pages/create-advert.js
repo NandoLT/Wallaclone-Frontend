@@ -28,6 +28,16 @@ import WithAuth from '../components/hocs/WithAuth';
 import SuccessAlert from '../components/SuccessAlert';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
     margin: {
         margin: theme.spacing(1),
     },
@@ -165,11 +175,10 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
 
     return (
-        <div className="register-container">
+        <div className={classes.root}>
             <h1>Publica un nuevo anuncio</h1>
 
-            <form onSubmit={handleSubmit} className="register-form">
-
+            <form onSubmit={handleSubmit} className={classes.form}>
 
                 <div>
                     <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
@@ -185,7 +194,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
                 <div>
 
-                    <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+                    <div style={{ margin: 8 }} className={classes.margin}>
                         <Grid container spacing={1} alignItems="flex-end">
 
                             <Grid item>
@@ -207,11 +216,8 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
                     </div>
                 </div>
 
-                <div>
 
-                </div>
-
-
+                <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
                 <FormControl style={{ margin: 8 }} className={classes.margin}>
                     <Select style={{ margin: 8 }} required
                         labelId="demo-simple-select-label"
@@ -225,8 +231,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
                     </Select>
                 </FormControl>
-                <InputLabel id="demo-simple-select-label">¿Vendes o compras?</InputLabel>
-
+                <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
                 <FormControl style={{ margin: 8 }} className={classes.margin}>
                     <Select style={{ margin: 8 }} required
                         labelId="demo-simple-select-label"
@@ -240,7 +245,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
 
                     </Select>
                 </FormControl>
-                <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+
 
                 <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel style={{ margin: 8 }} component="legend">Elige al menos una categoría</FormLabel>
@@ -297,11 +302,6 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
             </form>
             {isLoading && <Loading />}
             {error && <Alert />}
-            <Link className={styles.card} href='/' passHref>
-                <div className={styles.card} >
-                    <h3>  Go Back Home &rarr;  </h3>
-                </div>
-            </Link>
 
         </div>
     )

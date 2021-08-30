@@ -81,7 +81,7 @@ export default function AdvertCard({ advert }) {
     return (
         <Card className={classes.root}>
 
-            <Link href={`/adverts/${_id}`} passHref className={classes.link}>
+            <Link href={`/adverts/${name}/${_id}`} passHref className={classes.link}>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
