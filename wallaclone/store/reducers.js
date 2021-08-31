@@ -41,7 +41,19 @@ import {
     GET_MY_PROFILE_DETAILS_FAILURE,
     GET_MY_FAVORITE_ADVERTS_SUCCESS,
     GET_MY_FAVORITE_ADVERTS_REQUEST,
-    GET_MY_FAVORITE_ADVERTS_FAILURE
+    GET_MY_FAVORITE_ADVERTS_FAILURE,
+    GET_MY_CONVERSATIONS_REQUEST,
+    GET_MY_CONVERSATIONS_SUCCESS,
+    GET_MY_CONVERSATIONS_FAILURE,
+    GET_CONVERSATION_REQUEST,
+    GET_CONVERSATION_SUCCESS,
+    GET_CONVERSATION_FAILURE,
+    CREATE_CONVERSATION_REQUEST,
+    CREATE_CONVERSATION_SUCCESS,
+    CREATE_CONVERSATION_FAILURE,
+    ADD_MESSAGE_REQUEST,
+    ADD_MESSAGE_SUCCESS,
+    ADD_MESSAGE_FAILURE
 } from "./types";
 import { combineReducers } from 'redux';
 
@@ -59,6 +71,7 @@ const initialState = {
     },
 
     adverts: [],
+    myConversations: [],
     totalAdverts: null
 }
 
@@ -137,6 +150,25 @@ export const favoriteAdverts = (state = initialState.favoriteAdverts, action) =>
     }
 };
 
+export const myConversations = (state = initialState.myConversations, action) => {
+    switch (action.type) {
+        case GET_MY_CONVERSATIONS_SUCCESS:
+            return action.payload
+
+        case CREATE_CONVERSATION_SUCCESS:
+            return [...state, action.payload]
+
+        case ADD_MESSAGE_SUCCESS:
+            const conversation = state.findIndex(c => c.conversationId === action.payload.conversationId);
+            let conversations = [...state]
+            conversations[conversation] = action.payload
+            return conversations
+
+        default:
+            return state;
+    }
+}
+
 export const ui = (state = initialState.ui, action) => {
     if (action.error) {
         return { ...state, loading: false, error: action.payload }
@@ -163,6 +195,10 @@ export const ui = (state = initialState.ui, action) => {
         case GET_MY_PROFILE_DETAILS_REQUEST:
         case AUTH_RECOVER_PASSWORD_REQUEST:
         case AUTH_RESET_PASSWORD_REQUEST:
+        case GET_MY_CONVERSATIONS_REQUEST:
+        case GET_CONVERSATION_REQUEST:
+        case CREATE_CONVERSATION_REQUEST:
+        case ADD_MESSAGE_REQUEST:
             return {
                 loading: true,
                 error: null,
@@ -178,6 +214,10 @@ export const ui = (state = initialState.ui, action) => {
         case FETCH_MY_ADVERTS_SUCCESS:
         case AUTH_REGISTER_SUCCESS:
         case AUTH_RECOVER_PASSWORD_SUCCESS:
+        case GET_MY_CONVERSATIONS_SUCCESS:
+        case GET_CONVERSATION_SUCCESS:
+        case CREATE_CONVERSATION_SUCCESS:
+        case ADD_MESSAGE_SUCCESS:
             return {
                 loading: false,
                 error: null,
@@ -198,6 +238,10 @@ export const ui = (state = initialState.ui, action) => {
         case GET_MY_PROFILE_DETAILS_FAILURE:
         case AUTH_RECOVER_PASSWORD_FAILURE:
         case AUTH_RESET_PASSWORD_FAILURE:
+        case GET_MY_CONVERSATIONS_FAILURE:
+        case GET_CONVERSATION_FAILURE:
+        case CREATE_CONVERSATION_FAILURE:
+        case ADD_MESSAGE_FAILURE:
             return {
                 loading: false,
                 error: true,
