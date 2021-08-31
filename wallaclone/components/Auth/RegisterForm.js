@@ -32,7 +32,7 @@ const RegisterForm = ({ isLoading, error }) => {
 
     const [credentials, setCredentials] = React.useState({
         name: '',
-        username: '',
+        nickname: '',
         email: '',
         password: ''
     })
@@ -94,7 +94,7 @@ const RegisterForm = ({ isLoading, error }) => {
                             <AccountCircle />
                         </Grid>
                         <Grid item xs={11}>
-                            <TextField required onChange={event => handleInputChange(event)} name="username" id="input-with-icon-grid" label="Username" value={credentials.username} fullWidth />
+                            <TextField required onChange={event => handleInputChange(event)} name="nickname" id="input-with-icon-grid" label="Username" value={credentials.nickname} fullWidth />
                         </Grid>
                     </Grid>
                 </div>

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts, getMyFavoriteAdverts } from '../../store/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
-import { getMyAdverts } from '../../store/selectors';
-import { Box, Button, Grid } from '@material-ui/core';
+import { getIsLogged, getIsLoading, getError, getMyFavoriteAdverts } from '../../store/selectors';
+import { useDispatch } from 'react-redux';
+import { Box, Button, Grid, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
-import { getMyFavoriteAdvertsAction } from '../../store/actions';
 import AdvertCard from '../../components/Card';
 
 
@@ -26,6 +22,21 @@ const useStyles = makeStyles((theme) => ({
     },
     fullWidth: {
         width: '100%'
+    },
+    button: {
+        color: '#fff',
+        width: 'fit-content'
+    },
+    center: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    link: {
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none'
+        }
     }
 }));
 
@@ -40,8 +51,13 @@ const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
         <div className={classes.fullWidth}>
 
             {!myFavoriteAdverts.length > 0 ?
+                <div className={classes.center}>
+                    <h1>Todavía no has seleccionado anuncios favoritos, ¿a que esperas?</h1>
+                    <Link className={classes.link} href="/adverts">
+                        <Button className={classes.button} variant="contained" color="primary">Anuncios</Button>
+                    </Link>
+                </div>
 
-                <h1>Todavía no has seleccionado anuncios favoritos, vago</h1>
                 :
 
                 <>

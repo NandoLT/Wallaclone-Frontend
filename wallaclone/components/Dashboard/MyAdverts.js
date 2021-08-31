@@ -1,13 +1,11 @@
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
-import { getIsLogged, getAdverts, getIsLoading, getError } from '../../store/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction, fetchMyAdvertsAction } from '../../store/actions';
+import { getIsLogged, getIsLoading, getError } from '../../store/selectors';
+import { useDispatch } from 'react-redux';
 import { getMyAdverts } from '../../store/selectors';
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SimplifiedAdvertCard from '../Advert/SimplifiedAdvertCard';
 import AdvertCard from '../../components/Card';
 
 
@@ -27,6 +25,21 @@ const useStyles = makeStyles((theme) => ({
     },
     fullWidth: {
         width: '100%'
+    },
+    button: {
+        color: '#fff',
+        width: 'fit-content'
+    },
+    center: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    link: {
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none'
+        }
     }
 }));
 
@@ -39,7 +52,12 @@ const MyAdverts = ({ isLogged, isLoading, error, myAdverts }) => {
         <div className={classes.fullWidth}>
             {!myAdverts.length > 0 ?
 
-                <h1>Todavía no has publicado anuncios, vago</h1>
+                <div className={classes.center}>
+                    <h1>Todavía no has creado ningún anuncio, ¿a que esperas?</h1>
+                    <Link className={classes.link} href="/create-advert">
+                        <Button className={classes.button} variant="contained" color="primary">Subir producto</Button>
+                    </Link>
+                </div>
                 :
 
                 <>

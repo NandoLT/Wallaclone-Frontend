@@ -16,9 +16,7 @@ export const login = (remember, credentials) => {
                 storage.set('authToken', token)
             }
         })
-
 }
-
 
 export const recoverPassword = (email) => {
     return client.post(`${authPath}/recoverpassword`, email).then(({ token }) => {
@@ -41,7 +39,6 @@ export const register = (remember, credentials) => {
             }
         })
 }
-
 
 export const resetPassword = (passwords) => {
     return client.post(`${authPath}/resetpassword`, passwords).then(() => {

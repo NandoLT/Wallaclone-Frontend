@@ -1,6 +1,5 @@
 
 import React, { useEffect } from 'react'
-import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +8,6 @@ import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
 import Alert from '../components/Alert';
-import styles from '../styles/Home.module.css';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -131,10 +129,7 @@ const CreateNewAd = ({ isLogged, isLoading, error, userId }) => {
         if (adDetails.photo) {
             formData.append('photo', adDetails.photo);
         }
-
-
         dispatch(advertCreationAction(formData));
-
     }
 
 

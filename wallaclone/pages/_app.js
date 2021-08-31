@@ -29,9 +29,6 @@ if (accessToken && !recoverToken) {
 
 const store = configureStore({ preloadedState: { auth: !!accessToken } });
 
-
-
-
 function MyApp({ Component, pageProps }) {
 
   const { pathname } = useRouter();

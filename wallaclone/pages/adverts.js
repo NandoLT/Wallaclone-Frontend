@@ -43,6 +43,7 @@ const Adverts = ({ adverts, isLoading, error }) => {
     const dispatch = useDispatch()
 
 
+
     const classes = useStyles();
 
     const maxPrice = 200;
@@ -135,6 +136,10 @@ const Adverts = ({ adverts, isLoading, error }) => {
         }
     }, [queryParams])
 
+    useEffect(() => {
+        dispatch(advertGetFavoritesAction());
+
+    }, [])
 
     return (
         <div className="adverts-container">

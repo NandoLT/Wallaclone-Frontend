@@ -28,6 +28,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
 import green from '@material-ui/core/colors/green';
+import parseAuthToken from '../utils/parseAuthToken';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,10 +49,18 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.text.disabled}`,
   },
   profile: {
+    cursor: 'pointer',
     width: 'fit-content',
+    padding: '0 10px',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 5,
+    textDecoration: 'none',
     '&:hover': {
       color: theme.palette.primary.main,
       borderBottom: `1px solid ${theme.palette.primary.main}`,
+      textDecoration: 'none'
     }
   },
   search: {
@@ -87,8 +96,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
-    margin: {
-      marginRight: 10
+  },
+  link: {
+    textDecoration: 'none',
+    marginRight: 10,
+    '&:hover': {
+      textDecoration: 'none'
     }
   },
   favorite: {
@@ -105,6 +118,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     height: 75
   },
+  container: {
+    height: '75px'
+  }
 
 }));
 
@@ -114,7 +130,9 @@ const NavBar = ({ isLogged }) => {
   const classes = useStyles();
   const router = useRouter();
   const [pic, setPic] = useState('');
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+
+  const userId = parseAuthToken();
 
   const [menu, setMenu] = React.useState(false);
 
@@ -136,7 +154,7 @@ const NavBar = ({ isLogged }) => {
     setMenu(open);
   };
 
-  /* useEffect(() => {
+  useEffect(() => {
     async function fetchUserImg() {
       const url = await client.get(process.env.REACT_APP_API_BASE_URL_DEPLOYED + `/api/users/getUserImage`);
       console.log('la imagen', url)
@@ -148,7 +166,7 @@ const NavBar = ({ isLogged }) => {
     if (isLogged) {
       fetchUserImg();
     }
-  }, [isLogged]); */
+  }, [isLogged]);
 
 
   return (
@@ -172,7 +190,7 @@ const NavBar = ({ isLogged }) => {
         </Link>
 
         <Hidden smDown>
-          <Grid container item md={7} lg={5} direction="row" justify="space-between" alignItems="center">
+          <Grid container item className={classes.container} md={8} lg={5} direction="row" justify="space-between" alignItems="center">
             <form onSubmit={submitSearch}>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
@@ -191,12 +209,12 @@ const NavBar = ({ isLogged }) => {
               </div>
             </form>
             {
-              isLogged ? <Grid container item md={5} lg={5} direction="row" justify="space-between" alignItems="center">
-                <Link href="/user/dashboard" className={classes.margin}>
-                  <a className={classes.profile}>
-                    {/*  <Avatar src={pic} /> */}
+              isLogged ? <Grid container item md={6} lg={5} className={classes.container} direction="row" justify="space-between" alignItems="center">
+                <Link href="/user/dashboard" className={classes.link}>
+                  <div className={classes.profile}>
+                    <Avatar src={`${process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY}${userId}/${pic.result}`} />
                     Mi perfil
-                  </a>
+                  </div>
                 </Link>
 
 
