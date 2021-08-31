@@ -41,13 +41,15 @@ import {
     GET_MY_PROFILE_DETAILS_FAILURE,
     GET_MY_FAVORITE_ADVERTS_SUCCESS,
     GET_MY_FAVORITE_ADVERTS_REQUEST,
-    GET_MY_FAVORITE_ADVERTS_FAILURE
+    GET_MY_FAVORITE_ADVERTS_FAILURE,
+    SET_USER_ID
 } from "./types";
 import { combineReducers } from 'redux';
 
 
 const initialState = {
     auth: false,
+    userId: null,
     myProfileDetails: null,
     favoriteAdverts: [],
     myFavoriteAdverts: [],
@@ -82,6 +84,15 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
     switch (action.type) {
         case GET_ADVERTS_SUCCESS:
+            return action.payload
+        default:
+            return state;
+    }
+}
+
+export const setUserId = (state = initialState.userId, action) => {
+    switch (action.type) {
+        case SET_USER_ID:
             return action.payload
         default:
             return state;
@@ -219,6 +230,7 @@ const reducer = combineReducers({
     myAdverts,
     myProfileDetails,
     myFavoriteAdverts,
+    setUserId,
 })
 
 export default reducer;

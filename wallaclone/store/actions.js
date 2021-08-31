@@ -43,6 +43,8 @@ import {
     GET_MY_FAVORITE_ADVERTS_FAILURE
 } from "./types";
 
+import login from '../api/auth'
+
 
 export const authRegister = () => {
     return {
@@ -567,6 +569,13 @@ export const updateAdvertAction = (newAdvertDetails) => {
         } catch (error) {
             dispatch(advertUpdateFailure(error.message));
         }
+    }
+}
+
+export const setUserIdAction = (userId) => {
+    return {
+        type: SET_USER_ID,
+        payload:userId,
     }
 }
 
