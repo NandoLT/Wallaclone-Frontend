@@ -1,9 +1,9 @@
 const storage = {
     get(key) {
         if (typeof window !== "undefined"){
-            const value = sessionStorage.getItem(key);
+            const value = localStorage.getItem(key);
             if (!value) {
-                const value = localStorage.getItem(key);
+                const value = sessionStorage.getItem(key);
                 return value;
             }
             return value;
