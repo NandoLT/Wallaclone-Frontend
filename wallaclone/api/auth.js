@@ -4,19 +4,27 @@ import { configureClient, resetClient } from "./client";
 
 const authPath = '/api/users'
 
-export const login = (remember, credentials) => {
-    return client.post(`${authPath}/login`, credentials).then(({ token }) => {
+// export const login = (remember, credentials) => {
+//     return client.post(`${authPath}/login`, credentials).then(({ token }) => {
 
+//         return token;
+//     })
+//         .then(token => {
+//             configureClient(token);
+//             if (remember) {
+
+//                 storage.set('authToken', token)
+//             }
+//         })
+
+// }
+
+export const login = async ( remember, credentials) => {
+        const token = await client.post(`${authPath}/login`, credentials);
+        configureClient(token);
         return token;
-    })
-        .then(token => {
-            configureClient(token);
-            if (remember) {
-
-                storage.set('authToken', token)
-            }
-        })
-
+        
+    
 }
 
 

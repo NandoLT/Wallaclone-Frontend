@@ -90,7 +90,7 @@ export const adverts = (state = initialState.adverts, action) => {
     }
 }
 
-export const setUserId = (state = initialState.userId, action) => {
+export const userId = (state = initialState.userId, action) => {
     switch (action.type) {
         case SET_USER_ID:
             return action.payload
@@ -230,7 +230,7 @@ const reducer = combineReducers({
     myAdverts,
     myProfileDetails,
     myFavoriteAdverts,
-    setUserId,
+    userId
 })
 
 export default reducer;

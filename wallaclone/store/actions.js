@@ -40,10 +40,12 @@ import {
     GET_MY_PROFILE_DETAILS_FAILURE,
     GET_MY_FAVORITE_ADVERTS_REQUEST,
     GET_MY_FAVORITE_ADVERTS_SUCCESS,
-    GET_MY_FAVORITE_ADVERTS_FAILURE
+    GET_MY_FAVORITE_ADVERTS_FAILURE,
+    SET_USER_ID
 } from "./types";
 
-import login from '../api/auth'
+import parseAuthToken from "../utils/parseAuthToken";
+import storage from "../utils/storage";
 
 
 export const authRegister = () => {
@@ -357,8 +359,15 @@ export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authLoginRequest())
         try {
-            await api.auth.login(remember, credentials);
+            const response= await api.auth.login(remember, credentials);
+            const token = response.token;
+          
+            if (remember) {
+                storage.set('authToken', token)}
+            const userId = parseAuthToken(token);
+            
             dispatch(authLoginSuccess());
+            dispatch(setUserIdAction(userId));
             router.push('/adverts');
         } catch (error) {
             dispatch(authLoginFailure(error.message))
