@@ -49,7 +49,7 @@ import { combineReducers } from 'redux';
 
 const initialState = {
     auth: false,
-    userId: null,
+    userId: '',
     myProfileDetails: null,
     favoriteAdverts: [],
     myFavoriteAdverts: [],

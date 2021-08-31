@@ -9,12 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import EditAdvertForm from '../../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { useSelector } from 'react-redux';
-import { getIsLogged } from '../../../store/selectors';
+import { getIsLogged, getUserId } from '../../../store/selectors';
 import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
 import parseAuthToken from '../../../utils/parseAuthToken'
 import { CardMedia } from '@material-ui/core';
-
+import { connect } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Advert = () => {
+const Advert = ({userId}) => {
 
     const isLogged = useSelector(getIsLogged)
 
@@ -96,7 +96,7 @@ const Advert = () => {
     }
 
     const adBelongstoUser = () => {
-        const userId = parseAuthToken();
+        //const userId = parseAuthToken();
         if (userId === advertUserId) {
             return true
         }
@@ -353,4 +353,12 @@ const Advert = () => {
     );
 }
 
-export default Advert
+
+
+const mapStateToProps = state => ({
+   userId: getUserId(state)
+})
+
+
+
+export default connect(mapStateToProps)(Advert)
