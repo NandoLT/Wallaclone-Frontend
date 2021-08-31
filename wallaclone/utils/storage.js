@@ -1,29 +1,38 @@
 const storage = {
     get(key) {
         if (typeof window !== "undefined"){
-            const value = localStorage.getItem(key);
+            const value = sessionStorage.getItem(key);
             if (!value) {
-                return null;
+                const value = localStorage.getItem(key);
+                return value;
             }
             return value;
         }
         return null        
     },
 
-    set(key, value) {
+    set(key, value, remember) {
         if (typeof window !== "undefined"){
-            localStorage.setItem(key, JSON.stringify(value));        }
+            if(remember){
+                localStorage.setItem(key, JSON.stringify(value)); 
+            }
+                sessionStorage.setItem(key, JSON.stringify(value));        
+                   
+        }
     },
 
     remove(key) {
         if (typeof window !== "undefined"){
             localStorage.removeItem(key);
+            sessionStorage.removeItem(key);
+            
         }
     },
 
     clear() {
         if (typeof window !== "undefined"){
             localStorage.clear();
+            sessionStorage.clear();
         }
     },
 };

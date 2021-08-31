@@ -13,7 +13,9 @@ export const login = (remember, credentials) => {
             configureClient(token);
             if (remember) {
 
-                storage.set('authToken', token)
+                storage.set('authToken', token, true)
+            } else {
+                storage.set('authToken', token, false)
             }
         })
 
@@ -54,5 +56,6 @@ export const logout = () => {
     return Promise.resolve().then(() => {
         resetClient();
         storage.remove('authToken');
+        
     });
 };
