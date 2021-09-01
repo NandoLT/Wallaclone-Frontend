@@ -148,6 +148,17 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
 
     }
 
+    const resetFilters = () => {
+        setFilters({
+            status: [],
+            price: [0, 1000],
+            tags: [],
+            province: ''
+    
+        })
+        router.push('/adverts');
+    }
+
     useEffect(() => {
         if (!queryParams.limit) {
             router.replace('/adverts?')
@@ -214,7 +225,15 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
                             </Select>
                         </FormControl>
                     </div>
-                    <Button variant="contained" color="primary" className={classes.filter} onClick={() => filter()}>Filter</Button>
+                    <div>
+                        <Button variant="contained" color="primary" className={classes.filter} onClick={() => filter()}>Filter</Button>
+
+                    </div>
+                   <div>
+                    <Button variant="contained" color="secondary" className={classes.filter} onClick={resetFilters}>Quitar filtros</Button>
+
+                   </div>
+                    
                 </div>
             </div>
             <div>
