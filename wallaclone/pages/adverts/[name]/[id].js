@@ -14,13 +14,8 @@ import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
 import parseAuthToken from '../../../utils/parseAuthToken'
 import { CardMedia } from '@material-ui/core';
-import {
-    EmailShareButton,
-    FacebookShareButton,
-    TwitterShareButton,
-    WhatsappShareButton,
-   
-  } from "react-share";
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -133,7 +128,31 @@ const Advert = () => {
                                 </div>
                                 <div className="card-body">
 
+                                    <div className="social-icons-container"> 
+                                        <span className="social-icon" >
+                                        <FacebookShareButton url={window.location.href} quote={advert.name}>
+                                            <FacebookIcon size={32} round={true} />
+                                        </FacebookShareButton> 
 
+                                        </span>
+                                        
+                                        <span className="social-icon">
+                                        <TwitterShareButton  url={window.location.href} title={advert.name} hashtags={advert.tags}>
+                                            <TwitterIcon size={32} round={true} />
+                                        </TwitterShareButton>
+
+                                        </span>
+                                        
+                                        <span className="social-icon">
+                                        <WhatsappShareButton url={window.location.href}>
+                                            <WhatsappIcon size={32} round={true} />
+                                        </WhatsappShareButton>
+                                        </span>
+                                        
+                                            
+                                    </div>
+                                    
+                                    
                                     <div className="price-container">{advert.status === 0 && <div className="price-status"> En venta:  <span className="price-header">{advert.price} €</span> </div>}</div>
 
                                     <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div>}</div>
@@ -239,6 +258,15 @@ const Advert = () => {
                         width: 1040px;
                         justify-content: space-evenly;
                         flex-wrap: wrap;
+                        }
+
+                        .social-icons-container{
+                            margin-top: -25px;
+                            margin-bottom: 10px;
+                        }
+
+                        .social-icon{
+                            padding:0 5px;
                         }
                         .card {
                         margin: 10px;
