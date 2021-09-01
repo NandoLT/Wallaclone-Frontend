@@ -11,6 +11,7 @@ import AdvertCard from '../components/Card';
 import Loading from '../components/Loading';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { useRouter } from 'next/router'
+import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     filter: {
         color: '#fff',
         marginTop: 10
-    },
+    }
 }));
 
 
@@ -46,11 +47,9 @@ const Adverts = ({ adverts, isLoading, error }) => {
 
     const classes = useStyles();
 
-    const maxPrice = 200;
-
     const [filters, setFilters] = useState({
         status: [],
-        price: [0, maxPrice],
+        price: [0, 1000],
         tags: [],
         province: ''
 
@@ -61,7 +60,7 @@ const Adverts = ({ adverts, isLoading, error }) => {
     const handleChangeCheck = ev => {
         setFilters(oldFilters => {
             const newArray = oldFilters[ev.target.name];
-            if (newArray.includes(ev.target.value)) {
+            if (!ev.target.checked) {
                 newArray.splice(newArray.indexOf(ev.target.value), 1);
             } else {
                 newArray.push(ev.target.value);
@@ -70,6 +69,7 @@ const Adverts = ({ adverts, isLoading, error }) => {
                 ...oldFilters,
                 [ev.target.name]: newArray
             }
+            console.log(newFilters);
             return newFilters;
         });
     };
@@ -81,9 +81,26 @@ const Adverts = ({ adverts, isLoading, error }) => {
                 ...oldFilters,
                 price: newValue
             }
+            console.log(newFilters);
             return newFilters
         });
     };
+
+    const handleTextFieldPrice = (ev) => {
+        setFilters(oldFilters => {
+            const newPrice = oldFilters.price;
+            if (ev.target.name === "minPrice") {
+                newPrice[0] = ev.target.value;
+            } else {
+                newPrice[1] = ev.target.value;
+            }
+
+            return {
+                ...oldFilters,
+                price: newPrice
+            };
+        })
+    }
 
     const handleChange = ev => {
         setFilters(oldFilters => {
@@ -92,6 +109,7 @@ const Adverts = ({ adverts, isLoading, error }) => {
                 ...oldFilters,
                 [ev.target.name]: ev.target.value,
             }
+            console.log(newFilters);
             return newFilters
         });
 
@@ -152,20 +170,25 @@ const Adverts = ({ adverts, isLoading, error }) => {
                     <div>
                         <p>Status:</p>
                         <div>
-                            <input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onChange={handleChangeCheck} /> <label htmlFor="statusSale">On Sale</label>
-                            <input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onChange={handleChangeCheck} /> <label htmlFor="statusWanted">Wanted</label>
+                            <label><input type="checkbox" name="status" value="0" id="statusSale" checked={filters.status.includes("0")} onChange={handleChangeCheck} /> On Sale</label>
+                            <label><input type="checkbox" name="status" value="1" id="statusWanted" checked={filters.status.includes("1")} onChange={handleChangeCheck} /> Wanted</label>
                         </div>
                         <p>Price:</p>
                         <Slider
                             onChange={handleChangePrice}
                             value={filters.price}
                             valueLabelDisplay="auto"
-                            max={maxPrice}
-                        />
+                            max={filters.price[1] > 1000 ? filters.price[1] : 1000}
+                        >
+                        </Slider>
+                        <div>
+                            <TextField name="minPrice" label="min price" value={filters.price[0]} onChange={handleTextFieldPrice}/>
+                            <TextField name="maxPrice" label="max price" value={filters.price[1]} onChange={handleTextFieldPrice}/>
+                        </div>
                         <p>Tags:</p>
                         <div>
-                            <input type="checkbox" /> <label>Tecnología</label>
-                            <input type="checkbox" /> <label>Móvil</label>
+                            <label><input type="checkbox" name="tags" value="tecnologia" id="tecnologia" checked={filters.tags.includes("tecnologia")} onChange={handleChangeCheck} /> Tecnología</label>
+                            <label><input type="checkbox" name="tags" value="movil" id="movil" checked={filters.tags.includes("movil")} onChange={handleChangeCheck} /> Móvil</label>
                         </div>
                         <p>Province:</p>
                         <FormControl className={classes.formControl}>
