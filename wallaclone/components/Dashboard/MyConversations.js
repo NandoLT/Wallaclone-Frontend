@@ -5,66 +5,54 @@ import { getMyConversationsAction, addMessageAction, getConversationAction } fro
 import { connect } from 'react-redux';
 import WithAuth from '../hocs/WithAuth';
 import { getMyConversations } from '../../store/selectors';
-
-
-
-const Conversation = ({ conversation, currentUser }) => {
-  return (
-    <div className="conversation">
-      <span className="conversationName">{conversation.members} ------ {conversation.productId}</span>
-    </div>
-  );
-}
-
-
+import parseAuthToken from '../../utils/parseAuthToken';
 
 const MyConversations = ({ myConversations }) => {
     const [currentChat, setCurrentChat] = useState();
     const [newMessage, setNewMessage] = useState("");
-    // const [arrivalMessage, setArrivalMessage] = useState(null);
-    // const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
     const scrollRef = useRef();
 
+    const userId = parseAuthToken();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getMyConversationsAction('adri'));
-    }, []);
+        dispatch(getMyConversationsAction(userId));
+    }, [myConversations]);
+
 
     const handleCurrentChat = (conversation) => {
-      socket.current = io("ws://localhost:3005");
-      socket.current.on("getMessage", (data) => {
-        setArrivalMessage({
-            sender: data.senderId,
-            text: data.text,
-            createdAt: Date.now(),
-        });
-      });
+        socket.current = io("ws://localhost:3005");
+        socket.current.emit("addUser", userId, conversation.conversationId);
 
-      setCurrentChat(conversation);
-      // dispatch(getConversationAction());
+        setCurrentChat(conversation);
+        socket.current.on("getMessage", data => {
+            console.log(myConversations);
+            console.log(conversation);
+            const index = myConversations.findIndex(
+                conv => conv.conversationId === conversation.conversationId && conv.productId === conversation.productId);
+            myConversations[index].conversation.push({ sender: data.senderId, text: data.text })
+        })
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const message = {
-          sender: currentChat.members[0],
+          sender: userId,
           text: newMessage,
           conversationId: currentChat.conversationId,
           productId: currentChat.productId
         };
 
+        const receiverIndex = currentChat.members.findIndex(member => member !== userId)
         socket.current.emit("sendMessage", {
-          senderId: currentChat.members[0],
-          receiverId: currentChat.members[1],
+          senderId: userId,
+          receiverId: currentChat.members[receiverIndex],
           text: newMessage,
         });
 
         dispatch(addMessageAction(message));
         setNewMessage("");
-
-        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
@@ -73,8 +61,11 @@ const MyConversations = ({ myConversations }) => {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             {myConversations.map(conversation => {
-              return (<div onClick={() => handleCurrentChat(conversation)}>
-                <Conversation conversation={conversation} currentUser={{ _id: 'userId' , name: conversation.members[0] }} />
+              return (
+              <div onClick={() => handleCurrentChat(conversation)}>
+                  <div className="conversation">
+                    <span className="conversationName">{conversation.members} ------ {conversation.productId}</span>
+                </div>
               </div>)
                 })}
           </div>
@@ -84,12 +75,17 @@ const MyConversations = ({ myConversations }) => {
             {currentChat ? (
               <>
                 <div className="chatBoxTop">
-                  {currentChat.conversation.map((message) => (
-                    <div ref={scrollRef}>
-                      {/* <Message message={m} own={m.sender === user._id} /> */}
-                      {message.text} ----- {message.sender}
-                    </div>
-                  ))}
+                    {currentChat.conversation.map((message) => {
+                        return (
+                            <div ref={scrollRef}>
+                                <div className={message.sender === userId ? "message own" : "message"}>
+                                    <div className="messageTop">
+                                        <p className="messageText">{message.text} ------ {message.sender}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
                 <div className="chatBoxBottom">
                   <textarea
@@ -108,15 +104,6 @@ const MyConversations = ({ myConversations }) => {
                 Open a conversation to start a chat.
               </span>
             )}
-          </div>
-        </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            {/* <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user._id}
-              setCurrentChat={setCurrentChat}
-            /> */}
           </div>
         </div>
       </div>
