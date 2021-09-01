@@ -10,29 +10,26 @@ import parseAuthToken from '../../utils/parseAuthToken';
 const MyConversations = ({ myConversations }) => {
   const [currentChat, setCurrentChat] = useState();
   const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const socket = useRef();
-  const scrollRef = useRef();
 
   const userId = parseAuthToken();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMyConversationsAction(userId));
-  }, [myConversations]);
+    socket.current = io("ws://18.188.214.80:3005");
+    socket.current.on("getMessage", data => {
+      messages.push({ sender: data.senderId, text: data.text })
+      setMessages(messages);
+    });
+  }, []);
 
 
   const handleCurrentChat = (conversation) => {
-    socket.current = io("ws://localhost:3005");
     socket.current.emit("addUser", userId, conversation.conversationId);
-
     setCurrentChat(conversation);
-    socket.current.on("getMessage", data => {
-      console.log(myConversations);
-      console.log(conversation);
-      const index = myConversations.findIndex(
-        conv => conv.conversationId === conversation.conversationId && conv.productId === conversation.productId);
-      myConversations[index].conversation.push({ sender: data.senderId, text: data.text })
-    })
+    setMessages(conversation.conversation);
   }
 
   const handleSubmit = async (e) => {
@@ -75,9 +72,9 @@ const MyConversations = ({ myConversations }) => {
             {currentChat ? (
               <>
                 <div className="chatBoxTop">
-                  {currentChat.conversation.map((message) => {
+                  {messages.map((message) => {
                     return (
-                      <div ref={scrollRef}>
+                      <div>
                         <div className={message.sender === userId ? "message own" : "message"}>
                           <div className="messageTop">
                             <p className="messageText">{message.text} ------ {message.sender}</p>

@@ -103,7 +103,7 @@ const Advert = () => {
         }
         
         await dispatch(createConversationAction(newConversation));
-        //router.push('/user/dashboard/messages');
+        router.push('/user/dashboard/messages');
     }
 
     const adBelongstoUser = () => {
