@@ -210,7 +210,7 @@ const NavBar = ({ isLogged }) => {
             </form>
             {
               isLogged ? <Grid container item md={6} lg={5} className={classes.container} direction="row" justify="space-between" alignItems="center">
-                <Link href="/user/dashboard" className={classes.link}>
+                <Link href="/user/dashboard/me" className={classes.link}>
                   <div className={classes.profile}>
                     <Avatar src={`${process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY}${userId}/${pic.result}`} />
                     Mi perfil

@@ -149,6 +149,14 @@ const Adverts = ({ adverts, isLoading, error }) => {
     }
 
     useEffect(() => {
+        if (!queryParams.limit) {
+            router.replace('/adverts?')
+        }
+    }, [])
+
+
+
+    useEffect(() => {
         if (queryParams) {
             dispatch(advertsGetAction(queryParams))
         }
@@ -182,8 +190,8 @@ const Adverts = ({ adverts, isLoading, error }) => {
                         >
                         </Slider>
                         <div>
-                            <TextField name="minPrice" label="min price" value={filters.price[0]} onChange={handleTextFieldPrice}/>
-                            <TextField name="maxPrice" label="max price" value={filters.price[1]} onChange={handleTextFieldPrice}/>
+                            <TextField name="minPrice" label="min price" value={filters.price[0]} onChange={handleTextFieldPrice} />
+                            <TextField name="maxPrice" label="max price" value={filters.price[1]} onChange={handleTextFieldPrice} />
                         </div>
                         <p>Tags:</p>
                         <div>
@@ -240,7 +248,7 @@ const Adverts = ({ adverts, isLoading, error }) => {
 
 
 
-                {/* <Pagination /> */}
+                <Pagination />
 
             </section>
 

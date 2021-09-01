@@ -1,15 +1,11 @@
 
 import { makeStyles } from '@material-ui/core/styles';
-import Image from 'next/image';
 import { Avatar, Hidden, Link, ListItem, ListItemIcon } from '@material-ui/core';
-import { Button } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
 import { Divider } from '@material-ui/core';
 import MyAdverts from '../../../components/Dashboard/MyAdverts';
 import MyConversations from '../../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../../components/Dashboard/MyFavoriteAds';
 import MyProfile from '../../../components/Dashboard/MyProfile';
-import { getUserImage } from '../../../api/users';
 import { getMyProfileAction, fetchMyAdvertsAction, getMyFavoriteAdvertsAction } from '../../../store/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
@@ -21,10 +17,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
-import green from '@material-ui/core/colors/green';
-
 import React, { useEffect } from 'react';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+import parseAuthToken from '../../../utils/parseAuthToken';
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -42,13 +37,31 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: 150,
         top: 'auto',
-        backgroundColor: '#616161'
+        backgroundColor: 'transparent',
+        border: 'none'
     },
-    column: {
+    menuLink: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        textDecoration: 'none',
+        color: theme.palette.text.secondary,
+        '&:hover': {
+            textDecoration: 'none',
+        }
+    },
+    menuLinkSelected: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textDecoration: 'none',
+        color: theme.palette.text.secondary,
+        '&:hover': {
+            textDecoration: 'none',
+        },
+        backgroundColor: '#D9D9D9'
     },
     iconRoot: {
         minWidth: 0,
@@ -58,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 15,
         borderRadius: 100,
         color: '#fff',
-        opacity: 0.3
+        opacity: 0.3,
     },
     iconSelected: {
         backgroundColor: theme.palette.primary.main,
@@ -66,19 +79,25 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 100,
         color: '#fff'
     },
-    menuLink: {
-        textDecoration: 'none',
-        color: '#fff',
-        '&:hover': {
-            textDecoration: 'none',
-        }
+    mainContent: {
+        width: '100%',
+        fontSize: 18,
+        padding: 0,
+        display: 'flex',
+        justifyContent: 'center'
     },
+    iconMenu: {
+        width: 50,
+        height: 50
+    }
 
 }));
 
 const Dashboard = ({ myProfileDetails }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const userId = parseAuthToken();
+    const router = useRouter();
 
     const { query } = useRouter();
     const contentShow = query.content;
@@ -93,6 +112,9 @@ const Dashboard = ({ myProfileDetails }) => {
     const [userImage, setUserImage] = React.useState(null);
 
 
+    const navigate = (content) => {
+        router.push(`/user/dashboard/${content}`, undefined, { shallow: true })
+    }
 
 
 
@@ -152,36 +174,41 @@ const Dashboard = ({ myProfileDetails }) => {
                 >
                     <Divider />
                     <List >
-                        <Link href="/user/dashboard/me" className={classes.menuLink}>
-                            <ListItem button key={1} className={classes.column}>
-                                <ListItemIcon className={classes.iconRoot}><Avatar>L</Avatar></ListItemIcon>
-                                <ListItemText primary={'Perfil'} />
-                            </ListItem>
-                        </Link>
-                        <Link href="/user/dashboard/adverts" className={classes.menuLink}>
-                            <ListItem button key={1} className={classes.column}>
-                                <ListItemIcon className={classes.iconRoot, content.myAdverts ? classes.iconSelected : classes.icon}><LocalAtmIcon /></ListItemIcon>
-                                <ListItemText primary={'Mis anuncios'} />
-                            </ListItem>
-                        </Link>
-                        <Link href="/user/dashboard/favorites" className={classes.menuLink}>
-                            <ListItem button key={1} className={classes.column}>
-                                <ListItemIcon className={classes.iconRoot, content.myFavorites ? classes.iconSelected : classes.icon}><FavoriteIcon /></ListItemIcon>
-                                <ListItemText primary={'Favoritos'} />
-                            </ListItem>
-                        </Link>
-                        <Link href="/user/dashboard/messages" className={classes.menuLink}>
-                            <ListItem button key={1} className={classes.column}>
-                                <ListItemIcon className={classes.iconRoot, content.myConversations ? classes.iconSelected : classes.icon}><ChatIcon /></ListItemIcon>
-                                <ListItemText primary={'Mensajes'} />
-                            </ListItem>
-                        </Link>
+                        <ListItem button key={1} name="myProfile" className={content.myProfile ? classes.menuLinkSelected : classes.menuLink} onClick={() => navigate("me")}>
+                            <ListItemIcon className={classes.iconRoot}>
+                                {myProfileDetails ?
+                                    myProfileDetails.photo ? <Avatar className={classes.iconMenu} src={process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + userId + '/' + myProfileDetails.photo[0]} /> : ''
+                                    :
+                                    <Avatar></Avatar>
+                                }
+                            </ListItemIcon>
+                            <ListItemText primary={'Perfil'} />
+                        </ListItem>
+
+
+                        <ListItem button key={1} name="myAdverts" className={content.myAdverts ? classes.menuLinkSelected : classes.menuLink} onClick={() => navigate("adverts")}>
+                            <ListItemIcon className={classes.iconRoot, content.myAdverts ? classes.iconSelected : classes.icon}><LocalAtmIcon /></ListItemIcon>
+                            <ListItemText primary={'Mis anuncios'} />
+                        </ListItem>
+
+
+                        <ListItem button key={1} name="myFavorites" className={content.myFavorites ? classes.menuLinkSelected : classes.menuLink} onClick={() => navigate("favorites")}>
+                            <ListItemIcon className={classes.iconRoot, content.myFavorites ? classes.iconSelected : classes.icon}><FavoriteIcon /></ListItemIcon>
+                            <ListItemText primary={'Favoritos'} />
+                        </ListItem>
+
+
+                        <ListItem button key={1} name="myConversations" className={content.myConversations ? classes.menuLinkSelected : classes.menuLink} onClick={() => navigate("messages")}>
+                            <ListItemIcon className={classes.iconRoot, content.myConversations ? classes.iconSelected : classes.icon}><ChatIcon /></ListItemIcon>
+                            <ListItemText primary={'Mensajes'} />
+                        </ListItem>
+
                     </List>
                 </Drawer>
             </Hidden>
 
 
-            <div className={"main-container"}>
+            <div className={classes.mainContent}>
 
                 {myAdverts && <MyAdverts />}
                 {myFavorites && <MyFavoriteAds />}
