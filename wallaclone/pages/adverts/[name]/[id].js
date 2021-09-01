@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import EditAdvertForm from '../../../components/Advert/EditAdvert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getIsLogged } from '../../../store/selectors';
 import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
@@ -16,6 +16,7 @@ import parseAuthToken from '../../../utils/parseAuthToken'
 import { CardMedia } from '@material-ui/core';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
+import { createConversationAction } from '../../../store/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +69,8 @@ const Advert = () => {
     const [editMode, setEditMode] = useState(false);
     const [advertUserId, setAdvertUserId] = useState(null);
 
-
+    const userId = parseAuthToken();
+    const dispatch = useDispatch();
 
 
 
@@ -93,11 +95,19 @@ const Advert = () => {
         if (!isLogged) {
             router.push('/login');
         }
-        console.log('Iniciando chat')
+        const newConversation = {
+            conversationId: `${userId}-${advertUserId}-${id}`,
+            members: [userId, advertUserId],
+            conversation: [],
+            productId: id
+        }
+        
+        dispatch(createConversationAction(newConversation));
+        router.push('/user/dashboard/messages');
     }
 
     const adBelongstoUser = () => {
-        const userId = parseAuthToken();
+        
         if (userId === advertUserId) {
             return true
         }
