@@ -136,10 +136,10 @@ const Adverts = ({ adverts, isLoading, error }) => {
         }
     }, [queryParams])
 
-    // useEffect(() => {
-    //     dispatch(advertGetFavoritesAction());
+    useEffect(() => {
+        dispatch(advertGetFavoritesAction());
 
-    // }, [])
+    }, [])
 
     return (
         <div className="adverts-container">
