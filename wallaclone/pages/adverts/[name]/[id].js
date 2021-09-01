@@ -14,7 +14,13 @@ import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
 import parseAuthToken from '../../../utils/parseAuthToken'
 import { CardMedia } from '@material-ui/core';
-
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+   
+  } from "react-share";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -157,10 +163,10 @@ const Advert = () => {
 
                                             &&
 
-                                            <div>
+                                            <div className="owner-buttons">
                                                 <Button
                                                     onClick={handleEditMode}
-                                                    size="large" className={classes.margin}
+                                                    size="medium" className={classes.margin}
                                                     variant="contained"
                                                     color="primary"
                                                     type="submit">
@@ -330,6 +336,12 @@ const Advert = () => {
                             padding:8px 24px;
                             text-decoration:none;
                             
+                        }
+
+                        .owner-buttons{
+                            display: flex;
+                            flex-direction:row,
+                            justify-content:center
                         }
                         .contact-button:hover {
                             background-color:#eb675e;
