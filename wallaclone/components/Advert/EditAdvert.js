@@ -208,10 +208,12 @@ const EditAdvertForm = ({ advert, isLogged, isLoading, error, userId, productId 
                         id="demo-simple-select"
                         value={newAdDetails.status}
                         onChange={handleInputChange}
-                        name="statusEnum"
+                        name="status"
                     >
                         <MenuItem value={0}>Vendo</MenuItem>
                         <MenuItem value={1}>Compro</MenuItem>
+                        <MenuItem value={2}>Reservado</MenuItem>
+                        <MenuItem value={3}>Vendido</MenuItem>
 
                     </Select>
                 </FormControl>
