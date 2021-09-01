@@ -91,7 +91,7 @@ const Advert = () => {
 
     }
 
-    const handleChat = () => {
+    const handleChat = async () => {
         if (!isLogged) {
             router.push('/login');
         }
@@ -102,8 +102,8 @@ const Advert = () => {
             productId: id
         }
         
-        dispatch(createConversationAction(newConversation));
-        router.push('/user/dashboard/messages');
+        await dispatch(createConversationAction(newConversation));
+        //router.push('/user/dashboard/messages');
     }
 
     const adBelongstoUser = () => {

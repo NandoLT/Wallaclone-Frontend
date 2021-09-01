@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Adverts = ({ adverts, isLoading, error }) => {
+const Adverts = ({ adverts, isLoading, error, isLogged }) => {
     const router = useRouter()
     const queryParams = router.query
     const dispatch = useDispatch()
@@ -163,7 +163,10 @@ const Adverts = ({ adverts, isLoading, error }) => {
     }, [queryParams])
 
     useEffect(() => {
-        dispatch(advertGetFavoritesAction());
+        if (isLogged){
+
+            dispatch(advertGetFavoritesAction());
+        }
 
     }, [])
 
