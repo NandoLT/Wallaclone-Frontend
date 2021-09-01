@@ -21,6 +21,7 @@ import { authLogout } from '../../store/actions';
 import EditIcon from '@material-ui/icons/Edit';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Avatar } from '@material-ui/core';
+import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MyProfile = ({ myProfileDetails }) => {
+const MyProfile = ({ myProfileDetails, isLoading, error }) => {
     const userId = parseAuthToken();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -88,6 +89,9 @@ const MyProfile = ({ myProfileDetails }) => {
 
     return (
         <div className={classes.root}>
+
+            {isLoading && <Loading/> }
+            
             {
                 !editMode &&
                 <Button className={classes.logout} variant="outlined" onClick={logoutAction} startIcon={<ClearIcon />}>Logout</Button>
@@ -101,9 +105,11 @@ const MyProfile = ({ myProfileDetails }) => {
                 </div>
 
                 :
-
+                
                 <div className={classes.card}>
 
+                    
+                
                     {myProfileDetails &&
 
                         <div>
