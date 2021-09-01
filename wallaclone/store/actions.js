@@ -40,7 +40,19 @@ import {
     GET_MY_PROFILE_DETAILS_FAILURE,
     GET_MY_FAVORITE_ADVERTS_REQUEST,
     GET_MY_FAVORITE_ADVERTS_SUCCESS,
-    GET_MY_FAVORITE_ADVERTS_FAILURE
+    GET_MY_FAVORITE_ADVERTS_FAILURE,
+    GET_MY_CONVERSATIONS_REQUEST,
+    GET_MY_CONVERSATIONS_SUCCESS,
+    GET_MY_CONVERSATIONS_FAILURE,
+    GET_CONVERSATION_REQUEST,
+    GET_CONVERSATION_SUCCESS,
+    GET_CONVERSATION_FAILURE,
+    CREATE_CONVERSATION_REQUEST,
+    CREATE_CONVERSATION_SUCCESS,
+    CREATE_CONVERSATION_FAILURE,
+    ADD_MESSAGE_REQUEST,
+    ADD_MESSAGE_SUCCESS,
+    ADD_MESSAGE_FAILURE
 } from "./types";
 
 
@@ -351,6 +363,90 @@ export const advertUpdateFailure = error => {
     }
 }
 
+export const getMyConversationsRequest = () => {
+    return {
+        type: GET_MY_CONVERSATIONS_REQUEST
+    }
+}
+
+export const getMyConversationsSuccess = (conversations) => {
+    return {
+        type: GET_MY_CONVERSATIONS_SUCCESS,
+        payload: conversations
+    }
+}
+
+export const getMyConversationsFailure = (error) => {
+    return {
+        type: GET_MY_CONVERSATIONS_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+export const getConversationRequest = () => {
+    return {
+        type: GET_CONVERSATION_REQUEST
+    }
+}
+
+export const getConversationSuccess = (conversation) => {
+    return {
+        type: GET_CONVERSATION_SUCCESS,
+        payload: conversation
+    }
+}
+
+export const getConversationFailure = (error) => {
+    return {
+        type: GET_CONVERSATION_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+export const createConversationRequest = () => {
+    return {
+        type: CREATE_CONVERSATION_REQUEST
+    }
+}
+
+export const createConversationSuccess = (conversation) => {
+    return {
+        type: CREATE_CONVERSATION_SUCCESS,
+        payload: conversation
+    }
+}
+
+export const createConversationFailure = (error) => {
+    return {
+        type: CREATE_CONVERSATION_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
+export const addMessageRequest = () => {
+    return {
+        type: ADD_MESSAGE_REQUEST
+    }
+}
+
+export const addMessageSuccess = (message) => {
+    return {
+        type: ADD_MESSAGE_SUCCESS,
+        payload: message
+    }
+}
+
+export const addMessageFailure = (error) => {
+    return {
+        type: ADD_MESSAGE_FAILURE,
+        payload: error,
+        error: true
+    }
+}
+
 export const authLoginAction = (remember, credentials) => {
     return async function (dispatch, getState, { api, router }) {
         dispatch(authLoginRequest())
@@ -566,6 +662,54 @@ export const updateAdvertAction = (newAdvertDetails) => {
             router.push('/adverts');
         } catch (error) {
             dispatch(advertUpdateFailure(error.message));
+        }
+    }
+}
+
+export const getMyConversationsAction = (userId) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(getMyConversationsRequest());
+        try {
+            const conversations = await api.chat.getConversations(userId);
+            dispatch(getMyConversationsSuccess(conversations));
+        } catch (error) {
+            dispatch(getMyConversationsFailure(error));
+        }
+    }
+}
+
+export const getConversationAction = (userId, secondUserId, productId) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(getConversationRequest());
+        try {
+            const conversation = await api.chat.getConversation(userId, secondUserId, productId);
+            dispatch(getConversationSuccess(conversation));
+        } catch (error) {
+            dispatch(getConversationFailure(error))
+        }
+    }
+}
+
+export const createConversationAction = (conversation) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(createConversationRequest());
+        try {
+            const newConversation = await api.chat.createConversation(conversation);
+            dispatch(createConversationSuccess(newConversation));
+        } catch (error) {
+            dispatch(createConversationFailure(error));
+        }
+    }
+}
+
+export const addMessageAction = (message) => {
+    return async function (dispatch, getState, { api, router }) {
+        dispatch(addMessageRequest());
+        try {
+            const newMessage = await api.chat.addMessage(message);
+            dispatch(addMessageSuccess(newMessage));
+        } catch (error) {
+            dispatch(addMessageFailure(error));
         }
     }
 }
