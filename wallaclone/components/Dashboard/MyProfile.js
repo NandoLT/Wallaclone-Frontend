@@ -13,27 +13,62 @@ import EditUserProfile from './EditUserProfile';
 import WithAuth from '../hocs/WithAuth';
 import { getMyProfile } from '../../api/users';
 import RoomIcon from '@material-ui/icons/Room';
+import parseAuthToken from '../../utils/parseAuthToken';
+import { CardMedia } from '@material-ui/core';
+import { logout } from '../../api/auth';
+import { useRouter } from 'next/router';
+import { authLogout } from '../../store/actions';
+import EditIcon from '@material-ui/icons/Edit';
+import ClearIcon from '@material-ui/icons/Clear';
+import { Avatar } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
+        width: '50%',
+        maxWidth: '700px',
+        minWidth: '300px',
+        marginTop: 30,
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        gap: 10,
+        position: 'relative'
     },
     card: {
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-        width: '600px',
+        width: '100%',
         marginTop: '40px',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        padding: 20
+    },
+    logout: {
+        color: theme.palette.text.secondary,
+        alignSelf: 'flex-end'
+    },
+    editButton: {
+        minWidth: '0',
+        color: theme.palette.text.secondary,
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
+    profilePicContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+
+    },
+    profilePic: {
+        width: 150,
+        height: 150
     }
-});
+}));
 
 const MyProfile = ({ myProfileDetails }) => {
+    const userId = parseAuthToken();
     const classes = useStyles();
     const dispatch = useDispatch();
-
-
 
     const [editMode, setEditMode] = useState(false);
 
@@ -41,12 +76,22 @@ const MyProfile = ({ myProfileDetails }) => {
         setEditMode(!editMode);
     }
 
-    const [photoUploaded, setPhotoUploaded] = React.useState(false);
+
+    const logoutAction = () => {
+        async function fetch() {
+            await logout();
+            dispatch(authLogout());
+        }
+        fetch()
+    }
 
 
     return (
         <div className={classes.root}>
-
+            {
+                !editMode &&
+                <Button className={classes.logout} variant="outlined" onClick={logoutAction} startIcon={<ClearIcon />}>Logout</Button>
+            }
             {editMode ?
 
                 <div>
@@ -55,70 +100,67 @@ const MyProfile = ({ myProfileDetails }) => {
                     <EditUserProfile handleEditMode={handleEditMode} />
                 </div>
 
-
-
                 :
-
 
                 <div className={classes.card}>
 
                     {myProfileDetails &&
 
                         <div>
-                            <div onClick={handleEditMode} className="image-container" >
-                                {myProfileDetails.photo ? <Image src="/profilePhoto.jpg" alt="me" width="100%" height="100%" />
+                            <div className={classes.profilePicContainer}>
+                                {myProfileDetails.photo ?
+                                    <Avatar
+                                        src={process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + userId + '/' + myProfileDetails.photo[0]}
+                                        alt="me"
+                                        className={classes.profilePic}
+                                    />
                                     :
                                     <div>
-                                        <Image src="/photo-upload.png" alt="me" width="80%" height="80%" />
+
+                                        <Avatar
+                                            image={"/photo-upload.png"}
+                                        />
                                         <MissingField title="Foto de perfil" message={"Aún no has subido una imagen. Haz click en editar para subir tu foto de perfil"} />
 
                                     </div>
                                 }
                             </div>
 
+                            {myProfileDetails.nickname ?
+                                <h1>{myProfileDetails.nickname}</h1>
+                                :
+                                <div className="missing-container" onClick={handleEditMode}>
+                                    <MissingField title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno" />
+                                </div>}
 
+                            {myProfileDetails.description ?
+                                <h4 className="title">{myProfileDetails.description}</h4>
+                                :
+                                <div className="missing-container" onClick={handleEditMode}>
+                                    <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" />
+                                </div>}
 
+                            {myProfileDetails.province ?
+                                <div>
+                                    <RoomIcon /> <span className="province">{myProfileDetails.province}</span> </div>
+                                :
+                                <div className="missing-container" onClick={handleEditMode}>
+                                    <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." />
+                                </div>}
 
-                            {myProfileDetails.nickname ? <h1>{myProfileDetails.nickname}</h1> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Nickname" message=" Todavía no has elegido un nickname para tu perfil. Haz click para elegir uno" /> </div>}
-
-                            {myProfileDetails.description ? <h4 className="title">{myProfileDetails.description}</h4> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Descripción" message=" Todavía no has añadido una descripción a tu perfil. Hac click en editar para contarnos sobre tí" /> </div>}
-
-                            {myProfileDetails.province ? <div> <RoomIcon /> <span className="province">{myProfileDetails.province}</span> </div> : <div className="missing-container" onClick={handleEditMode}> <MissingField title="Provincia" message=" Aún no has especificado tu provincia. Hac click en editar para añadirla a tu perfil y hacer que otros usuarios encuentren tus anuncios más fácilmente." /> </div>}
-
-
-                            <p><button onClick={handleEditMode}>Editar perfil</button></p>
+                            <Button className={classes.editButton} size="small" variant="text" color="primary" disableElevation onClick={handleEditMode}><EditIcon /></Button>
 
                         </div>
 
                     }
 
-
-
-
-
-
-
-
-
-
                 </div>
             }
 
-
-
             <style jsx>{`
                     
-                    .card {
-                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                        width: 600px;
-                        margin-top: 40px;
-                        text-align: center;
-                    }
 
-                    .image-container {
-                        cursor: pointer;
-                        padding: 25px 0;
-                    }
+                    
 
                     .icon-container {
                         margin: 0 35px;
@@ -147,28 +189,12 @@ const MyProfile = ({ myProfileDetails }) => {
                         font-size: 20px;
                     }
                     
-                    button {
-                        border: none;
-                        outline: 0;
-                        display: inline-block;
-                        padding: 8px;
-                        color: white;
-                        background-color: #3F51B5;
-                        text-align: center;
-                        cursor: pointer;
-                        width: 100%;
-                        font-size: 18px;
-                    }
-                    
                     a {
                         text-decoration: none;
                         font-size: 22px;
                         color: black;
                     }
                     
-                    button:hover, a:hover {
-                        opacity: 0.7;
-                    }
 
                     .missing-container{
                         cursor:pointer;
@@ -180,8 +206,6 @@ const MyProfile = ({ myProfileDetails }) => {
     )
 }
 
-
-
 const mapStateToProps = (state) => ({
     isLogged: getIsLogged(state),
     isLoading: getIsLoading(state),
@@ -190,3 +214,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(WithAuth(MyProfile))
+
+

@@ -13,7 +13,9 @@ import { getIsLogged } from '../../../store/selectors';
 import ConfirmationPopup from '../../../components/ConfirmationPopup';
 import Image from 'next/image'
 import parseAuthToken from '../../../utils/parseAuthToken'
-
+import { CardMedia } from '@material-ui/core';
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    image: {
+        height: 350
+    }
 
 }));
 
@@ -38,14 +43,14 @@ const Advert = () => {
 
 
     const router = useRouter();
-    const  {id} = router.query;
+    const { id } = router.query;
 
 
 
     useEffect(() => {
         (async () => {
             if (id) {
-                
+
                 const advert = await getAdvertDetail(id);
                 setAdvert(advert);
                 setAdvertUserId(advert.userId);
@@ -54,10 +59,10 @@ const Advert = () => {
         })()
 
     }, [id])
-    
-    
-    
-    
+
+
+
+
 
     const [advert, setAdvert] = useState(null);
     const [editMode, setEditMode] = useState(false);
@@ -65,11 +70,11 @@ const Advert = () => {
 
 
 
-    
 
 
 
-    
+
+
 
     // CÓDIGO DE EDICIÓN DEL ANUNCIO
 
@@ -119,11 +124,35 @@ const Advert = () => {
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    {/* <Image layout="fill" src={advert.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} /> */}
+                                    <CardMedia className={classes.image} image={advert.photo ? process.env.REACT_APP_BASE_URL_IMAGES_DIRECTORY + `${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} />
                                 </div>
                                 <div className="card-body">
 
+                                    <div className="social-icons-container"> 
+                                        <span className="social-icon" >
+                                        <FacebookShareButton url={window.location.href} quote={advert.name}>
+                                            <FacebookIcon size={32} round={true} />
+                                        </FacebookShareButton> 
 
+                                        </span>
+                                        
+                                        <span className="social-icon">
+                                        <TwitterShareButton  url={window.location.href} title={advert.name} hashtags={advert.tags}>
+                                            <TwitterIcon size={32} round={true} />
+                                        </TwitterShareButton>
+
+                                        </span>
+                                        
+                                        <span className="social-icon">
+                                        <WhatsappShareButton url={window.location.href}>
+                                            <WhatsappIcon size={32} round={true} />
+                                        </WhatsappShareButton>
+                                        </span>
+                                        
+                                            
+                                    </div>
+                                    
+                                    
                                     <div className="price-container">{advert.status === 0 && <div className="price-status"> En venta:  <span className="price-header">{advert.price} €</span> </div>}</div>
 
                                     <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div>}</div>
@@ -153,10 +182,10 @@ const Advert = () => {
 
                                             &&
 
-                                            <div>
+                                            <div className="owner-buttons">
                                                 <Button
                                                     onClick={handleEditMode}
-                                                    size="large" className={classes.margin}
+                                                    size="medium" className={classes.margin}
                                                     variant="contained"
                                                     color="primary"
                                                     type="submit">
@@ -229,6 +258,15 @@ const Advert = () => {
                         width: 1040px;
                         justify-content: space-evenly;
                         flex-wrap: wrap;
+                        }
+
+                        .social-icons-container{
+                            margin-top: -25px;
+                            margin-bottom: 10px;
+                        }
+
+                        .social-icon{
+                            padding:0 5px;
                         }
                         .card {
                         margin: 10px;
@@ -326,6 +364,12 @@ const Advert = () => {
                             padding:8px 24px;
                             text-decoration:none;
                             
+                        }
+
+                        .owner-buttons{
+                            display: flex;
+                            flex-direction:row,
+                            justify-content:center
                         }
                         .contact-button:hover {
                             background-color:#eb675e;

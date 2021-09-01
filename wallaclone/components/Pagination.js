@@ -18,7 +18,7 @@ const Pagination = () => {
             {totalAdverts}
             <ul>
                 {numbers.map(number => {
-                    return <Link href={`/adverts?limit=8&skip=${(number - 1) * 8}`}> <li>{number}</li></Link>
+                    return <Link href={`/adverts?limit=8&skip=${(number - 1) * 8}`} key={number}> <li>{number}</li></Link>
                 })}
             </ul>
         </div>

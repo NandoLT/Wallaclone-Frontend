@@ -92,15 +92,17 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
     event.preventDefault();
     
 
-    // const formData = new FormData();
-    // formData.append('description', newUserProfile.description);
-    // formData.append('province', newUserProfile.province);
-    // if (newUserProfile.photo) {
-    //   formData.append('photo', newUserProfile.photo);
-    // }
+    const formData = new FormData();
+    formData.append('description', newUserProfile.description);
+    formData.append('province', newUserProfile.province);
+    formData.append('nickname', newUserProfile.nickname);
+
+    if (newUserProfile.photo) {
+      formData.append('photo', newUserProfile.photo);
+    }
 
     try {
-      await editMyProfile(newUserProfile);
+      await editMyProfile(formData);
       
     } catch (error) {
       console.log(error)
@@ -172,7 +174,7 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
         <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
 
-        <Image width="100%" height="100%" className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} />
+        {/* <Image width="100%" height="100%" className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} /> */}
         <div className={classes.root}>
 
           <input

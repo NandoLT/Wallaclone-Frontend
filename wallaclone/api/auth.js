@@ -13,12 +13,12 @@ export const login = (remember, credentials) => {
             configureClient(token);
             if (remember) {
 
-                storage.set('authToken', token)
+                storage.set('authToken', token, true)
+            } else {
+                storage.set('authToken', token, false)
             }
         })
-
 }
-
 
 export const recoverPassword = (email) => {
     return client.post(`${authPath}/recoverpassword`, email).then(({ token }) => {
@@ -42,7 +42,6 @@ export const register = (remember, credentials) => {
         })
 }
 
-
 export const resetPassword = (passwords) => {
     return client.post(`${authPath}/resetpassword`, passwords).then(() => {
         resetClient();
@@ -54,5 +53,6 @@ export const logout = () => {
     return Promise.resolve().then(() => {
         resetClient();
         storage.remove('authToken');
+        
     });
 };

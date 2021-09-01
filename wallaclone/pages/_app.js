@@ -20,6 +20,7 @@ import theme from '../src/theme.js'
 import { useRouter } from 'next/router'
 
 const accessToken = storage.get('authToken');
+console.log(accessToken);
 const recoverToken = storage.get('recoverToken');
 if (accessToken && !recoverToken) {
   configureClient(accessToken.replace(/['"]+/g, ''));
@@ -28,9 +29,6 @@ if (accessToken && !recoverToken) {
 }
 
 const store = configureStore({ preloadedState: { auth: !!accessToken } });
-
-
-
 
 function MyApp({ Component, pageProps }) {
 

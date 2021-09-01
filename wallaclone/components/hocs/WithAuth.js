@@ -6,7 +6,7 @@ import { Router } from "next/router";
 const WithAuth = (WrappedComponent) => {
 
 
-  return function render(props) {
+  return function Render(props) {
 
     const Router = useRouter();
     const isLogged = useSelector(getIsLogged);
