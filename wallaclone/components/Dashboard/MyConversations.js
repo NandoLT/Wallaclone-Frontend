@@ -95,8 +95,7 @@ const MyConversations = ({ myConversations }) => {
     dispatch(getMyConversationsAction(userId));
     socket.current = io("ws://18.188.214.80:3005");
     socket.current.on("getMessage", data => {
-      messages.push({ sender: data.senderId, text: data.text })
-      setMessages(messages);
+      setMessages(arr => [...arr, { sender: data.senderId, text: data.text }]);
     });
   }, []);
 

@@ -69,7 +69,6 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
                 ...oldFilters,
                 [ev.target.name]: newArray
             }
-            console.log(newFilters);
             return newFilters;
         });
     };

@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 const ChatLink = ({ conversation, action }) => {
     const classes = useStyles();
     const [product, setProduct] = useState();
-    const userId = parseAuthToken();
 
 
 
@@ -37,15 +36,6 @@ const ChatLink = ({ conversation, action }) => {
         fetch();
     }, [])
 
-    useEffect(() => {
-        if (conversation) {
-            if (userId === conversation.members[0]) {
-                setOtherUser(conversation.members[1])
-            } else {
-                setOtherUser(conversation.members[0])
-            }
-        }
-    }, [conversation])
 
 
     return (
