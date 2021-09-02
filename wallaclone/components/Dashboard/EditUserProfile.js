@@ -90,7 +90,7 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
 
     const formData = new FormData();
     formData.append('description', newUserProfile.description);
@@ -103,7 +103,7 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
 
     try {
       await editMyProfile(formData);
-      
+
     } catch (error) {
       console.log(error)
     }
@@ -114,10 +114,10 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
   }
 
   const validation = () => {
-    if(!newUserProfile.nickname){
-        return true;
+    if (!newUserProfile.nickname) {
+      return true;
     };
-    
+
 
 
     return false
@@ -128,16 +128,16 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
       <form onSubmit={handleSubmit} className="register-form">
 
 
-      <div>
-            <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                       
-                        <Grid item>
-                            <TextField required onChange={event => handleInputChange(event)} name="nickname" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickname} />
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
+        <div>
+          <div style={{ margin: 8 }} className={classes.margin, "register-input"}>
+            <Grid container spacing={1} alignItems="flex-end">
+
+              <Grid item>
+                <TextField required onChange={event => handleInputChange(event)} name="nickname" id="input-with-icon-grid" label="NickName" value={newUserProfile.nickname} />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
 
         <div>
 
@@ -152,7 +152,7 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
         </div>
 
 
-      
+
 
 
 
@@ -174,7 +174,6 @@ const EditUserProfile = ({ isLoading, error, userId, myProfileDetails, handleEdi
         <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
 
 
-        {/* <Image width="100%" height="100%" className="edit-photo" src={newUserProfile.photo ? `/profilePhoto.jpg` : '/img/image-not-available.png'} /> */}
         <div className={classes.root}>
 
           <input
@@ -250,5 +249,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(WithAuth(EditUserProfile))
-
-{/* <img  className="edit-photo"  src={newUserProfile.photo ?  `https://pruebas-wallaclone.s3.eu-west-3.amazonaws.com/${advert.userId}/${advert.photo[0]}` : '/img/image-not-available.png'} /> */ }

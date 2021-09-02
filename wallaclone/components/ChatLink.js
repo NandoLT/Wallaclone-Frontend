@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 const ChatLink = ({ conversation, action }) => {
     const classes = useStyles();
     const [product, setProduct] = useState();
-    const [otherUser, setOtherUser] = useState("");
     const userId = parseAuthToken();
 
 
@@ -52,7 +51,6 @@ const ChatLink = ({ conversation, action }) => {
     return (
         <div className={classes.conversation} onClick={action}>
             <span>{product ? product.name : ''}</span>
-            {/* <span>{otherUser}</span> */}
         </div>
     );
 }

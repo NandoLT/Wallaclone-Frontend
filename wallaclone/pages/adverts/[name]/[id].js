@@ -43,7 +43,6 @@ const Advert = () => {
     const { id } = router.query;
 
     const [advert, setAdvert] = useState(null);
-    const [user, setUser] = useState();
     const [editMode, setEditMode] = useState(false);
     const [advertUserId, setAdvertUserId] = useState(null);
 
@@ -176,7 +175,6 @@ const Advert = () => {
                                         {advert.description}
                                     </p>
                                     <div className="user">
-                                        {/* <Image src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" /> */}
                                         <div className="user-info">
                                             <h5>{advert.province}</h5>
 

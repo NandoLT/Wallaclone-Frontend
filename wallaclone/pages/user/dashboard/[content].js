@@ -109,7 +109,6 @@ const Dashboard = ({ myProfileDetails }) => {
         myConversations: false,
     });
 
-    const [userImage, setUserImage] = React.useState(null);
 
 
     const navigate = (content) => {
@@ -157,10 +156,6 @@ const Dashboard = ({ myProfileDetails }) => {
 
     const { myAdverts, myFavorites, myConversations, myProfile } = content;
 
-    const [menuExpanded, setMenuExpanded] = React.useState(true);
-    const handleOpenMenu = () => {
-        setMenuExpanded(!menuExpanded);
-    }
 
     return (
         <div className={classes.dashboard}>

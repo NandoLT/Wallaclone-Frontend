@@ -242,7 +242,6 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
                         ?
                         <Box pl={1} pr={1} className={classes.root}>
                             <Grid container spacing={1} className="adverts">
-                                {/* adverts.slice(0).reverse().map */}
                                 {adverts.map(advert => {
                                     const { name, price, status, _id, photo, description, tags, userId } = advert;
 

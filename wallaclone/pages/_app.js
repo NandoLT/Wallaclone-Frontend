@@ -52,7 +52,6 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           {pathname != '/login' ? pathname != '/register' ? pathname != '/' ? <NavBar /> : '' : '' : ''}
           <Component {...pageProps} />
