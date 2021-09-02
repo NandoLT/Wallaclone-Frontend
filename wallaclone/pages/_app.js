@@ -11,7 +11,6 @@ import configureStore from '../store';
 import { Provider } from 'react-redux';
 import storage from '../utils/storage';
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer'
 import { configureClient } from '../api/client';
 import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
@@ -55,7 +54,6 @@ function MyApp({ Component, pageProps }) {
           <CssBaseline />
           {pathname != '/login' ? pathname != '/register' ? pathname != '/' ? <NavBar /> : '' : '' : ''}
           <Component {...pageProps} />
-          {pathname != '/login' ? pathname != '/register' ? <Footer /> : '' : ''}
         </ThemeProvider>
       </Provider>
     </React.Fragment>
