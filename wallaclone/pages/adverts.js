@@ -155,6 +155,7 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
             tags: [],
             province: ''
         })
+        router.push('/adverts?limit=8&skip=0');
     }
 
 
