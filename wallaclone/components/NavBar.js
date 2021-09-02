@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { getIsLogged } from '../store/selectors';
-import { authLogoutAction } from '../store/actions';
 import { Avatar, CardMedia, Grid, Menu } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,20 +14,18 @@ import MenuIcon from '@material-ui/icons/Menu';
 import client from "../api/client";
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
-import Image from 'next/image';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
 import green from '@material-ui/core/colors/green';
 import parseAuthToken from '../utils/parseAuthToken';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -157,9 +154,7 @@ const NavBar = ({ isLogged }) => {
   useEffect(() => {
     async function fetchUserImg() {
       const url = await client.get(process.env.REACT_APP_API_BASE_URL_DEPLOYED + `/api/users/getUserImage`);
-      console.log('la imagen', url)
       if (url) {
-        console.log('jiji')
         setPic(url);
       }
     }
@@ -174,14 +169,14 @@ const NavBar = ({ isLogged }) => {
       <Grid container className={classes.root, classes.navbar} direction="row"
         justify="space-between"
         alignItems="center">
-        <Link href='/adverts' passHref>
+        <Link href='/adverts?limit=8&skip=0' passHref>
           <div className={classes.row}>
             <CardMedia
               component="img"
-              alt="Contemplative Reptile"
+              alt="Logo"
               height="50"
               image="/img/bolso.svg"
-              title="Contemplative Reptile"
+              title="Logo"
             />
             <Hidden smDown>
               <Typography className={classes.logo}>Wallaclone</Typography>
@@ -268,6 +263,12 @@ const NavBar = ({ isLogged }) => {
                     <ListItem button key={1}>
                       <ListItemIcon><ChatIcon color="primary" /></ListItemIcon>
                       <ListItemText primary={'Mis conversaciones'} />
+                    </ListItem>
+                  </Link>
+                  <Link href="/create-advert">
+                    <ListItem button key={1}>
+                      <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
+                      <ListItemText primary={'Subir producto'} />
                     </ListItem>
                   </Link>
                 </List>

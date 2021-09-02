@@ -6,7 +6,7 @@ import MyAdverts from '../../../components/Dashboard/MyAdverts';
 import MyConversations from '../../../components/Dashboard/MyConversations';
 import MyFavoriteAds from '../../../components/Dashboard/MyFavoriteAds';
 import MyProfile from '../../../components/Dashboard/MyProfile';
-import { getMyProfileAction, fetchMyAdvertsAction, getMyFavoriteAdvertsAction } from '../../../store/actions';
+import { getMyProfileAction, fetchMyAdvertsAction, getMyFavoriteAdvertsAction, advertGetFavoritesAction } from '../../../store/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import WithAuth from '../../../components/hocs/WithAuth';
@@ -120,6 +120,7 @@ const Dashboard = ({ myProfileDetails }) => {
 
     useEffect(() => {
         async function fetchMyData() {
+            await dispatch(advertGetFavoritesAction())
             await dispatch(getMyProfileAction());
             await dispatch(fetchMyAdvertsAction());
             await dispatch(getMyFavoriteAdvertsAction());

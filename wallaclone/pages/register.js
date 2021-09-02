@@ -2,30 +2,28 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmailIcon from '@material-ui/icons/Email';
-import LockIcon from '@material-ui/icons/Lock';
-import Button from '@material-ui/core/Button';
-import { authRegisterAction, authResetState } from '../store/actions';
+import { authResetState } from '../store/actions';
 import { useDispatch, connect } from 'react-redux';
-import Loading from '../components/Loading';
 import { getIsLogged, getIsLoading, getError } from '../store/selectors';
-import Alert from '../components/Alert';
-import styles from '../styles/Home.module.css'
 import RegisterForm from '../components/Auth/RegisterForm'
 import { Typography } from '@material-ui/core';
+import { CardMedia } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
+    logo: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        width: 50,
+        cursor: 'pointer'
+    }
 }));
 
 
 
 const Register = () => {
+
+    const classes = useStyles();
 
     const dispatch = useDispatch();
 
@@ -37,6 +35,15 @@ const Register = () => {
 
     return (
         <div className="auth-container">
+            <Link href="/">
+                <CardMedia
+                    component="img"
+                    alt="Logo"
+                    image="/img/bolso.svg"
+                    title="Logo"
+                    className={classes.logo}
+                />
+            </Link>
             <section className="auth-content">
 
                 <Typography color="primary" variant="h1">

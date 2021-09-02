@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { getIsLogged, getAdverts, getIsLoading, getError, getFavoritesAdverts } from '../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { advertsGetAction, advertGetFavoritesAction, advertAddFavoritesAction, advertDeleteFavoritesAction } from '../store/actions';
+import { advertsGetAction, advertGetFavoritesAction, } from '../store/actions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     filter: {
         color: '#fff',
-        marginTop: 10
+        marginTop: 10,
     }
 }));
 
@@ -154,16 +154,8 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
             price: [0, 1000],
             tags: [],
             province: ''
-    
         })
-        router.push('/adverts');
     }
-
-    useEffect(() => {
-        if (!queryParams.limit) {
-            router.replace('/adverts?')
-        }
-    }, [])
 
 
 
@@ -174,7 +166,7 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
     }, [queryParams])
 
     useEffect(() => {
-        if (isLogged){
+        if (isLogged) {
 
             dispatch(advertGetFavoritesAction());
         }
@@ -229,11 +221,11 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
                         <Button variant="contained" color="primary" className={classes.filter} onClick={() => filter()}>Filter</Button>
 
                     </div>
-                   <div>
-                    <Button variant="contained" color="secondary" className={classes.filter} onClick={resetFilters}>Quitar filtros</Button>
+                    <div>
+                        <Button variant="contained" color="secondary" className={classes.filter} onClick={resetFilters}>Quitar filtros</Button>
 
-                   </div>
-                    
+                    </div>
+
                 </div>
             </div>
             <div>
@@ -249,11 +241,12 @@ const Adverts = ({ adverts, isLoading, error, isLogged }) => {
                         ?
                         <Box pl={1} pr={1} className={classes.root}>
                             <Grid container spacing={1} className="adverts">
-                                {adverts.slice(0).reverse().map(advert => {
+                                {/* adverts.slice(0).reverse().map */}
+                                {adverts.map(advert => {
                                     const { name, price, status, _id, photo, description, tags, userId } = advert;
 
                                     return (
-                                        <Grid container item xs={12} sm={6} md={4} lg={3} key={_id}>
+                                        <Grid container item xs={12} sm={6} md={4} lg={3} key={_id} zeroMinWidth>
 
                                             <AdvertCard advert={advert} key={_id} />
 

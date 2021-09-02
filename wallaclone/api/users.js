@@ -14,13 +14,14 @@ export const getOtherUserProfile = async (username) => {
     return userProfile.result;
 }
 
+
 export const getUserImage = async () => {
     const myUserImage = await client.get(`${usersPath}/getUserImage`)
     return myUserImage;
 }
 
 export const editMyProfile = async (userData) => {
-    const response =  await client.put(`${usersPath}/updateuser`, userData)
+    const response = await client.put(`${usersPath}/updateuser`, userData)
     console.log(response.result);
     return response;
 

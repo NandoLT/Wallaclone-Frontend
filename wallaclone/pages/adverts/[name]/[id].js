@@ -38,15 +38,17 @@ const useStyles = makeStyles((theme) => ({
 const Advert = () => {
 
     const isLogged = useSelector(getIsLogged)
-
-
     const classes = useStyles();
-
-
     const router = useRouter();
     const { id } = router.query;
 
+    const [advert, setAdvert] = useState(null);
+    const [user, setUser] = useState();
+    const [editMode, setEditMode] = useState(false);
+    const [advertUserId, setAdvertUserId] = useState(null);
 
+    const userId = parseAuthToken();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
@@ -65,12 +67,6 @@ const Advert = () => {
 
 
 
-    const [advert, setAdvert] = useState(null);
-    const [editMode, setEditMode] = useState(false);
-    const [advertUserId, setAdvertUserId] = useState(null);
-
-    const userId = parseAuthToken();
-    const dispatch = useDispatch();
 
 
 
@@ -87,8 +83,7 @@ const Advert = () => {
     const handleDeleteAdvert = async () => {
 
         await deleteAdvert(id);
-        router.push('/adverts');
-
+        router.push('/adverts?limit=8&skip=0');
     }
 
     const handleChat = async () => {
@@ -101,17 +96,19 @@ const Advert = () => {
             conversation: [],
             productId: id
         }
-        
+
         await dispatch(createConversationAction(newConversation));
         router.push('/user/dashboard/messages');
     }
 
     const adBelongstoUser = () => {
-        
+
         if (userId === advertUserId) {
             return true
         }
     }
+
+
 
 
     return (
@@ -138,31 +135,31 @@ const Advert = () => {
                                 </div>
                                 <div className="card-body">
 
-                                    <div className="social-icons-container"> 
+                                    <div className="social-icons-container">
                                         <span className="social-icon" >
-                                        <FacebookShareButton url={window.location.href} quote={advert.name}>
-                                            <FacebookIcon size={32} round={true} />
-                                        </FacebookShareButton> 
+                                            <FacebookShareButton url={window.location.href} quote={advert.name}>
+                                                <FacebookIcon size={32} round={true} />
+                                            </FacebookShareButton>
 
                                         </span>
-                                        
+
                                         <span className="social-icon">
-                                        <TwitterShareButton  url={window.location.href} title={advert.name} hashtags={advert.tags}>
-                                            <TwitterIcon size={32} round={true} />
-                                        </TwitterShareButton>
+                                            <TwitterShareButton url={window.location.href} title={advert.name} hashtags={advert.tags}>
+                                                <TwitterIcon size={32} round={true} />
+                                            </TwitterShareButton>
 
                                         </span>
-                                        
+
                                         <span className="social-icon">
-                                        <WhatsappShareButton url={window.location.href}>
-                                            <WhatsappIcon size={32} round={true} />
-                                        </WhatsappShareButton>
+                                            <WhatsappShareButton url={window.location.href}>
+                                                <WhatsappIcon size={32} round={true} />
+                                            </WhatsappShareButton>
                                         </span>
-                                        
-                                            
+
+
                                     </div>
-                                    
-                                    
+
+
                                     <div className="price-container">{advert.status === 0 && <div className="price-status"> En venta:  <span className="price-header">{advert.price} €</span> </div>}</div>
 
                                     <div className="price-container">{advert.status === 1 && <div className="price-status"> Ofrezco máximo:  <span className="price-header">{advert.price} €</span> </div>}</div>

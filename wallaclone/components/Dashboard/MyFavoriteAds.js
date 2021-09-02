@@ -42,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MyfavoriteAds = ({ isLogged, isLoading, error, myFavoriteAdverts }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-
 
     return (
 

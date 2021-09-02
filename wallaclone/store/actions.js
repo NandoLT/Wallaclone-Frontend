@@ -453,7 +453,7 @@ export const authLoginAction = (remember, credentials) => {
         try {
             await api.auth.login(remember, credentials);
             dispatch(authLoginSuccess());
-            router.push('/adverts');
+            router.push('/adverts?limit=8&skip=0');
         } catch (error) {
             dispatch(authLoginFailure(error.message))
         }
@@ -509,7 +509,7 @@ export const authRegisterAction = (remember, credentials) => {
         try {
             const userId = await api.auth.register(remember, credentials)
             dispatch(authRegisterSuccess(userId));
-            router.push('/adverts')
+            router.push('/adverts?limit=8&skip=0')
         } catch (error) {
             dispatch(authLoginFailure(error.message))
 
@@ -659,7 +659,7 @@ export const updateAdvertAction = (newAdvertDetails) => {
         try {
             await api.adverts.updateAdvert(newAdvertDetails);
             dispatch(advertUpdateSuccess(newAdvertDetails));
-            router.push('/adverts');
+            router.push('/adverts?limit=8&skip=0');
         } catch (error) {
             dispatch(advertUpdateFailure(error.message));
         }
