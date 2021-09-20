@@ -1,6 +1,6 @@
 # Wallaclone
 
-Final Project developed for Web develpoment Bootcamp.
+Final Project developed for Web develpoment Bootcamp using Next.js and Material UI
 
 ## What is it
 
